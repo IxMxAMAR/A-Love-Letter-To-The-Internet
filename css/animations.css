@@ -1,0 +1,182 @@
+/* =============================================================
+   animations.css — Keyframes, scroll-driven, stagger, reveals
+   A Love Letter to the Web
+   ============================================================= */
+
+/* ── Keyframes ──────────────────────────────────────────────── */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 8px oklch(60% 0.18 265 / 0.4);
+  }
+  50% {
+    box-shadow: 0 0 24px oklch(60% 0.18 265 / 0.8), 0 0 48px oklch(60% 0.18 265 / 0.3);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Scroll-driven Reveal ───────────────────────────────────── */
+@supports (animation-timeline: view()) {
+  .scroll-reveal {
+    animation: fade-in-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+}
+
+/* JS-based fallback for .js-reveal */
+.js-reveal {
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
+}
+
+.js-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Scroll Progress Bar ────────────────────────────────────── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: var(--z-toast);
+  background: linear-gradient(
+    to right,
+    var(--color-primary),
+    var(--color-accent)
+  );
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: grow-progress linear;
+    animation-timeline: scroll(root);
+    transform: none;
+  }
+}
+
+@keyframes grow-progress {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ── @starting-style Animations ─────────────────────────────── */
+dialog[open] {
+  animation: fade-in-scale var(--duration-slow) var(--ease-out) both;
+}
+
+@starting-style {
+  dialog[open] {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+
+[popover]:popover-open {
+  animation: fade-in-up var(--duration-slow) var(--ease-out) both;
+}
+
+@starting-style {
+  [popover]:popover-open {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+}
+
+/* ── Stagger Children ───────────────────────────────────────── */
+.stagger-children > * {
+  animation: fade-in-up var(--duration-slow) var(--ease-out) both;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay:   0ms; }
+.stagger-children > *:nth-child(2) { animation-delay:  75ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 150ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 225ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 375ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 450ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 525ms; }
+
+/* ── Utility Animation Classes ──────────────────────────────── */
+.animate-fade-in       { animation: fade-in       var(--duration-slow)  var(--ease-out) both; }
+.animate-fade-in-up    { animation: fade-in-up    var(--duration-slow)  var(--ease-out) both; }
+.animate-fade-in-scale { animation: fade-in-scale var(--duration-slow)  var(--ease-out) both; }
+.animate-pulse         { animation: pulse         2s                    ease-in-out infinite; }
+.animate-glow          { animation: glow          2s                    ease-in-out infinite; }
+.animate-float         { animation: float         4s                    ease-in-out infinite; }
+.animate-rotate-slow   { animation: rotate-slow   12s                   linear infinite; }
+
+/* ── Reduced Motion Overrides ───────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .js-reveal,
+  .stagger-children > *,
+  .animate-fade-in,
+  .animate-fade-in-up,
+  .animate-fade-in-scale,
+  .animate-pulse,
+  .animate-glow,
+  .animate-float,
+  .animate-rotate-slow {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .js-reveal.revealed {
+    transition: none;
+  }
+
+  .scroll-progress {
+    animation: none;
+    display: none;
+  }
+}
