@@ -1,0 +1,113 @@
+/* =============================================================
+   transitions.css — View Transitions API definitions
+   A Love Letter to the Web
+   ============================================================= */
+
+/* ── Cross-document opt-in ──────────────────────────────────── */
+@view-transition {
+  navigation: auto;
+}
+
+/* ── Default Root Transition: Crossfade ─────────────────────── */
+::view-transition-old(root) {
+  animation: vt-fade-out var(--duration-slow) var(--ease-in-out) both;
+}
+
+::view-transition-new(root) {
+  animation: vt-fade-in var(--duration-slow) var(--ease-in-out) both;
+}
+
+@keyframes vt-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes vt-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Named: zone-hero — Shrink out / Expand in ──────────────── */
+::view-transition-old(zone-hero) {
+  animation: vt-shrink-out var(--duration-xslow) var(--ease-in-out) both;
+}
+
+::view-transition-new(zone-hero) {
+  animation: vt-expand-in var(--duration-xslow) var(--ease-in-out) both;
+}
+
+@keyframes vt-shrink-out {
+  from { transform: scale(1);    opacity: 1; }
+  to   { transform: scale(0.85); opacity: 0; }
+}
+
+@keyframes vt-expand-in {
+  from { transform: scale(1.1); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* ── Named: zone-content — Slide out left / Slide in right ─── */
+::view-transition-old(zone-content) {
+  animation: vt-slide-out-left var(--duration-slow) var(--ease-in-out) both;
+}
+
+::view-transition-new(zone-content) {
+  animation: vt-slide-in-right var(--duration-slow) var(--ease-in-out) both;
+}
+
+@keyframes vt-slide-out-left {
+  from { transform: translateX(0);     opacity: 1; }
+  to   { transform: translateX(-3rem); opacity: 0; }
+}
+
+@keyframes vt-slide-in-right {
+  from { transform: translateX(3rem); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+/* ── Named: hub-node — Zoom out / Zoom in ──────────────────── */
+::view-transition-old(hub-node) {
+  animation: vt-zoom-out var(--duration-xslow) var(--ease-in-out) both;
+}
+
+::view-transition-new(hub-node) {
+  animation: vt-zoom-in var(--duration-xslow) var(--ease-in-out) both;
+}
+
+@keyframes vt-zoom-out {
+  from {
+    transform: scale(1);
+    filter: blur(0);
+    opacity: 1;
+  }
+  to {
+    transform: scale(2);
+    filter: blur(8px);
+    opacity: 0;
+  }
+}
+
+@keyframes vt-zoom-in {
+  from {
+    transform: scale(0.5);
+    filter: blur(8px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+/* ── Reduced Motion — kill all named transitions ────────────── */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(zone-hero),
+  ::view-transition-new(zone-hero),
+  ::view-transition-old(zone-content),
+  ::view-transition-new(zone-content),
+  ::view-transition-old(hub-node),
+  ::view-transition-new(hub-node) {
+    animation: none !important;
+  }
+}
