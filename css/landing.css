@@ -633,3 +633,38 @@ a.platform-chip {
   text-decoration: none;
   display: inline-block;
 }
+
+/* === Chiptune Player Button === */
+.chiptune-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #000066;
+  color: #00ffff;
+  border: 2px outset #3333ff;
+  padding: 0.4rem 0.8rem;
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 12px;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s;
+}
+
+.chiptune-btn:hover {
+  background: #000099;
+  color: #ffff00;
+}
+
+.chiptune-btn:active {
+  border-style: inset;
+}
+
+.chiptune-btn.playing {
+  animation: btn-pulse 1s ease-in-out infinite;
+  color: #ffff00;
+}
+
+@keyframes btn-pulse {
+  0%, 100% { box-shadow: 0 0 4px #3333ff; }
+  50% { box-shadow: 0 0 12px #3333ff, 0 0 20px #00ffff; }
+}

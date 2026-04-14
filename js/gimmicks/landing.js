@@ -298,4 +298,19 @@ document.addEventListener('DOMContentLoaded', () => {
   initCardTilt();
   initDarkModeCard();
   initFlexPopover();
+
+// ─── 1996: Chiptune Music ───────────────────────────────────
+try {
+  const chipBtn = document.getElementById('chiptune-toggle');
+  if (chipBtn) {
+    // Dynamic import so it does not block page load
+    chipBtn.addEventListener('click', async () => {
+      const { toggleMusic } = await import('./chiptune.js');
+      const playing = toggleMusic();
+      chipBtn.textContent = playing ? '⏸ Pause Music' : '🎵 Play Music';
+      chipBtn.classList.toggle('playing', playing);
+    });
+  }
+} catch {}
+
 });
