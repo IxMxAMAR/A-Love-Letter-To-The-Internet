@@ -29,3 +29,20 @@
 | 18 | landing.js:125-150 | Info | Hampster dance triple-click handler and 5s bounce timeout verified correct | OK |
 | 19 | landing.js:153-180 | Info | Hypermedia font cycle (7 fonts, mouseenter/mouseleave) verified correct | OK |
 | 20 | landing.js:250-288 | Info | Flex centering popover triple-click and popover API usage verified correct | OK |
+| 21 | hub.html | Major | SVG constellation line coordinates did not match actual node positions — all 8 lines misaligned | FIXED |
+| 22 | hub.css | Major | `animation-delay: calc(var(--node-x) * 10ms)` invalid — percentage string can't multiply with ms unit — pulse stagger never worked | FIXED |
+| 23 | hub.js | Minor | No try-catch wrapper, inconsistent with hub-gm.js graceful degradation pattern | FIXED |
+| 24 | hub-gm.js | Major | Konami code explosion set transform clobbering CSS centering `translate(-50%, -50%)` — nodes jumped to wrong positions | FIXED |
+| 25 | playground-gm.js | Critical | Duplicate Tab key handler — both playground.js and playground-gm.js handled Tab, inserting 4 spaces instead of 2 | FIXED |
+| 26 | playground-gm.js | Critical | Gimmick triggers (`!important`, `display: none`, `color: red`, `rotate(180deg)`) used `text.includes()` without tracking previous state — every keystroke re-triggered effects | FIXED |
+| 27 | playground.js | Info | Line number scroll sync is a no-op (harmless — siblings scroll together via parent) | OK |
+| 28 | playground.js | Info | `document.execCommand` deprecated but no alternative exists for contenteditable undo history | OK |
+| 29 | components.html | Critical | Copy buttons non-functional — `.copy-btn` elements lack `data-copy-target` attribute; `initCopyButtons()` found zero buttons | FIXED |
+| 30 | toolkit.css | Critical | Tab panel switching broken — no CSS rules for panel visibility toggling; both panels displayed simultaneously | FIXED |
+| 31 | toolkit.css | Major | Copy button not positioned — missing `position: absolute`; buttons rendered in normal flow | FIXED |
+| 32 | toolkit.css | Major | Tab-group base layout missing — nav lacked `display: flex`, labels lacked cursor/transitions, radio inputs not hidden | FIXED |
+| 33 | components.html | Major | Missing ARIA on popover — no `aria-expanded` or `aria-controls`, state not synced on open/close | FIXED |
+| 34 | components.html | Minor | Missing ARIA on toast — no `role="status"` or `aria-live="polite"` for screen reader announcement | FIXED |
+| 35 | components.html | Minor | Missing ARIA on dialog — no `aria-labelledby` linking dialog to its title heading | FIXED |
+| 36 | toolkit.css | Major | Dark backgrounds hardcoded — component demos use oklch dark values that don't adapt to light theme | FIXED |
+| 37 | components.html | Minor | Module timing issue — `DOMContentLoaded` inside `type="module"` may have already fired | FIXED |
