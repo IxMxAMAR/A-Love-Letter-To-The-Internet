@@ -66,13 +66,17 @@ try {
   );
 } catch (e) {}
 
-// 2. Tab title on visibility change
+// 2. Tab title on visibility change (debounced to prevent flicker)
 try {
   const _originalTitle = document.title;
+  let _titleTimeout;
   document.addEventListener('visibilitychange', () => {
-    document.title = document.hidden
-      ? 'Come back! The CSS misses you...'
-      : _originalTitle;
+    clearTimeout(_titleTimeout);
+    _titleTimeout = setTimeout(() => {
+      document.title = document.hidden
+        ? 'Come back! The CSS misses you...'
+        : _originalTitle;
+    }, 150);
   });
 } catch (e) {}
 
@@ -144,23 +148,26 @@ try {
 
   document.addEventListener('keydown', (e) => {
     const tag = document.activeElement && document.activeElement.tagName;
-    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
     if (document.activeElement && document.activeElement.isContentEditable) return;
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     switch (e.key) {
       case '?':
-        if (helpPopover.showPopover) helpPopover.showPopover();
+        try { if (helpPopover.showPopover) helpPopover.showPopover(); } catch (_) {}
         break;
       case 't':
         toggleTheme();
         break;
       case 'h':
+        e.preventDefault();
         location.href = pathTo('hub.html');
         break;
       case 'p':
+        e.preventDefault();
         location.href = pathTo('playground.html');
         break;
       case 'c':
+        e.preventDefault();
         location.href = pathTo('components.html');
         break;
       default:
@@ -200,25 +207,25 @@ try {
       e.preventDefault();
       ctxMenu.style.left = Math.min(e.clientX, window.innerWidth - 200) + 'px';
       ctxMenu.style.top  = Math.min(e.clientY, window.innerHeight - 250) + 'px';
-      if (ctxMenu.showPopover) ctxMenu.showPopover();
+      try { if (ctxMenu.showPopover) ctxMenu.showPopover(); } catch (_) {}
     });
   }
 
   document.addEventListener('click', () => {
-    if (ctxMenu.hidePopover) ctxMenu.hidePopover();
+    try { if (ctxMenu.hidePopover) ctxMenu.hidePopover(); } catch (_) {}
   });
 
   ctxMenu.addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-action]');
     if (!btn) return;
     const action = btn.dataset.action;
-    if (ctxMenu.hidePopover) ctxMenu.hidePopover();
+    try { if (ctxMenu.hidePopover) ctxMenu.hidePopover(); } catch (_) {}
     if (action === 'view-source') {
       window.open('view-source:' + location.href);
     } else if (action === 'inspect') {
       console.info('Tip: Press F12 or Cmd+Option+I to open DevTools.');
     } else if (action === 'copy-link') {
-      if (navigator.clipboard) navigator.clipboard.writeText(location.href);
+      if (navigator.clipboard) navigator.clipboard.writeText(location.href).catch(() => {});
     } else if (action === 'surprise') {
       location.href = pathTo(ZONE_LIST[Math.floor(Math.random() * ZONE_LIST.length)]);
     } else if (action === 'toggle-theme') {
