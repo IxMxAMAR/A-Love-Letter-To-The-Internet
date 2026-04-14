@@ -25,15 +25,20 @@ export function navigateWithTransition(url, transitionName) {
     return;
   }
 
-  document.startViewTransition(() => {
-    if (transitionName) {
-      document.documentElement.style.setProperty(
-        'view-transition-name',
-        transitionName
-      );
-    }
+  try {
+    document.startViewTransition(() => {
+      if (transitionName) {
+        document.documentElement.style.setProperty(
+          'view-transition-name',
+          transitionName
+        );
+      }
+      window.location.href = url;
+    });
+  } catch (err) {
+    console.warn('[transitions] View transition failed, falling back:', err);
     window.location.href = url;
-  });
+  }
 }
 
 /**
@@ -49,7 +54,13 @@ export function initTransitionLinks() {
       const href = link.getAttribute('href');
       const transitionName = link.dataset.transition;
 
+      // Skip empty hrefs, anchors, external links, and new-tab links
       if (!href || href.startsWith('#')) return;
+      if (link.target === '_blank') return;
+      try {
+        const linkUrl = new URL(href, window.location.origin);
+        if (linkUrl.origin !== window.location.origin) return;
+      } catch { /* relative URL — safe to intercept */ }
 
       event.preventDefault();
       navigateWithTransition(href, transitionName);
