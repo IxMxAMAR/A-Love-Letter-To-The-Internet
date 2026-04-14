@@ -550,8 +550,6 @@
 
 .card-flip-front,
 .card-flip-back {
-  position: absolute;
-  inset: 0;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   display: flex;
@@ -560,11 +558,19 @@
 }
 
 .card-flip-front {
+  position: relative;
   background: transparent;
 }
 
 .card-flip-back {
+  position: absolute;
+  inset: 0;
+}
+
+.card-flip-back {
   background: linear-gradient(145deg, rgba(233,69,96,0.15), rgba(245,166,35,0.1));
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
   transform: rotateY(180deg);
   align-items: center;
   justify-content: center;
