@@ -75,3 +75,39 @@
 | 64 | landing.js | Major | Rapid-click race condition on chiptune — overlapping toggleMusic calls | FIXED |
 | 65 | transitions.js | Major | No error handling — if startViewTransition throws, navigation fails silently | FIXED |
 | 66 | transitions.js | Minor | No external link filtering — links with target="_blank" or external origins intercepted | FIXED |
+| 67 | zone-scroll.css, landing.css | Critical | `animation-timeline: scroll()` without `@supports` — Firefox fires animation at 0s duration, elements jump to end state | FIXED |
+| 68 | zones/popover-dialog | Major | `showPopover()`/`hidePopover()` called without API existence check — TypeError in older browsers | FIXED |
+| 69 | zone-popover.css | Major | `position-area: center` Chromium-only, no fallback — popover unpredictably positioned in Firefox/Safari | FIXED |
+| 70 | zone-container.css, zone-houdini.css | Major | `oklch(from ...)` relative color syntax unsupported in Firefox <128 — borders/backgrounds disappear | FIXED |
+| 71 | zones/popover-dialog | Minor | Clipboard API calls without `.catch()` or existence check — unhandled rejection on non-HTTPS | FIXED |
+| 72 | 404, lol, secret.html | Major | Missing skip-to-main-content links (present on all other pages) | FIXED |
+| 73 | 404, lol, secret.html | Major | Missing `<main>` landmark element | FIXED |
+| 74 | index.html | Minor | Guestbook dialog missing `aria-modal="true"` | FIXED |
+| 75 | zones/popover-dialog | Minor | Demo dialog missing `aria-labelledby`, popover triggers missing `aria-haspopup`/`aria-expanded` | FIXED |
+| 76 | components-gm.js | Minor | CSS-only tab groups missing `aria-selected` sync on tab change | FIXED |
+| 77 | zones/has-selector | Minor | Incorrect `role="tablist"` on non-tab container (cards displayed simultaneously) | FIXED |
+| 78 | zone-scroll.css | Minor | Range slider missing `:focus-visible` outline (had `outline: none` with no replacement) | FIXED |
+| 79 | zone-houdini.css | Minor | Houdini slider missing `:focus-visible` outline | FIXED |
+| 80 | playground.css | Minor | Code editor missing `:focus-visible` indicator | FIXED |
+| 81 | zone-transitions.js | Minor | Card detail overlay missing focus trap and focus restore | FIXED |
+| 82 | landing.js | Minor | CSS3 flip cards not keyboard-operable (no tabindex, role, or key handler) | FIXED |
+| 83 | 404, lol, secret.html | Minor | Missing `prefers-reduced-motion` overrides for page-specific animations | FIXED |
+| 84 | css/base.css | Minor | Input font-size not forced to 16px on mobile — iOS auto-zoom on focus | FIXED |
+| 85 | landing.css | Minor | Guestbook input fields at 0.85rem (13.6px) — iOS auto-zoom trigger | FIXED |
+| 86 | playground.css | Minor | Pane icon buttons at 24x24px — below 44px minimum touch target | FIXED |
+| 87 | landing.css | Minor | Close, submit, and chiptune buttons below 44px minimum touch target | FIXED |
+| 88 | gimmicks.css | Minor | Shortcut help close button and reduced-motion badge button below 44px touch target | FIXED |
+| 89 | zone-container.css | Minor | Grid min column 240px exceeds 375px viewport with padding — horizontal overflow | FIXED |
+| 90 | zone-houdini.css | Minor | 4-column support grid overflows on mobile — needs 2-column fallback | FIXED |
+| 91 | zone-layers.css | Minor | Glass stack art overflows on 375px viewport | FIXED |
+| 92 | landing.js | Minor | Card 3D tilt fires on touch devices where mousemove doesn't apply | FIXED |
+
+## Summary
+
+| Severity | Count | Fixed |
+|----------|-------|-------|
+| Critical | 10 | 10 |
+| Major | 30 | 30 |
+| Minor | 37 | 37 |
+| Info/OK | 15 | N/A |
+| **Total bugs** | **77** | **77 fixed** |
