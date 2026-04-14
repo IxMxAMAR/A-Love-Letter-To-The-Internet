@@ -99,6 +99,7 @@ try {
     const nodes = document.querySelectorAll('.zone-node');
     const cx = window.innerWidth / 2;
     const cy = window.innerHeight / 2;
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
     nodes.forEach((node) => {
       const r = node.getBoundingClientRect();
@@ -106,8 +107,9 @@ try {
       const ny = r.top  + r.height / 2;
       const dx = (nx - cx) * 1.8;
       const dy = (ny - cy) * 1.8;
+      const base = isMobile ? '' : 'translate(-50%, -50%) ';
       node.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 1, 1), opacity 0.5s';
-      node.style.transform  = `translate(${dx}px, ${dy}px) scale(0.5)`;
+      node.style.transform  = `${base}translate(${dx}px, ${dy}px) scale(0.5)`;
       node.style.opacity    = '0.3';
     });
 

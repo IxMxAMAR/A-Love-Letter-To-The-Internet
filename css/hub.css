@@ -61,7 +61,7 @@
   transition: all var(--duration-normal) var(--ease-out);
   filter: drop-shadow(0 0 8px var(--zone-color));
   animation: pulse 3s ease-in-out infinite;
-  animation-delay: calc(var(--node-x, 0) * 10ms);
+  animation-delay: calc(var(--stagger, 0) * 0.15s);
 }
 
 .node-label {
