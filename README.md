@@ -2,7 +2,7 @@
 
 A cinematic, interactive journey through the evolution of the web platform — from 1991 to 2026.
 
-**[View Live Site →](https://ixmxamar.github.io/HTML/)**
+**[View Live Site →]([https://ixmxamar.github.io/HTML/](https://ixmxamar.github.io/A-Love-Letter-To-The-Internet/))**
 
 ## What Is This?
 
