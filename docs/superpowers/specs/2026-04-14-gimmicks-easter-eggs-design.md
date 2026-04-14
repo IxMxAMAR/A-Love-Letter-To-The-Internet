@@ -218,14 +218,17 @@ If `prefers-reduced-motion: reduce` is active, show a small fixed badge at botto
 **Trigger:** Clicking "Guestbook" link.
 **Effect:** Opens a `<dialog>` styled in full Geocities aesthetic:
 - Dark blue background, green/yellow text, Comic Sans
-- 4 hardcoded entries:
+- `spinning-earth.gif` in the header, `divider-rainbow.gif` between entries
+- 4 hardcoded entries (each with a random retro GIF avatar — `dragon-purple.gif`, `wolf-purple.gif`, `star-gold.gif`, `angel.gif`):
   - "Cool site!! -xXDarkAngelXx, 1997"
   - "how do i download the internet? -dave, 1998"
   - "FIRST!!! -anonymous, 1999"
   - "Please sign my guestbook too! www.angelfire.com/~sparkle -☆Sparkle☆, 1997"
+- `rose-sparkle.gif` as footer decoration
 - A fake form with Name and Message fields
-- Submit button shows: "Thanks for signing! Your entry will appear in 3-5 business days."
+- Submit button shows `handshake.gif` + "Thanks for signing! Your entry will appear in 3-5 business days."
 - Close button styled as a 90s gray [X] button
+- `divider-music.gif` at the bottom
 
 ### 2.5 Live Visitor Counter — 1996 Era
 
@@ -727,6 +730,56 @@ The "Under Construction" popover includes: "Visit the original Geocities" → `h
 ### 12.4 "It works on my machine"
 
 If any zone's JS module fails to load (caught by a global error handler), the fallback message says: "Works on my machine ¯\\_(ツ)_/¯ — Try refreshing?"
+
+---
+
+## 13. Asset Inventory
+
+### 13.1 Downloaded GIFs (`assets/gifs/`)
+
+Authentic retro GIFs scraped from Cameron's World and classic GIF archives. Used in the 1996 era section and guestbook dialog.
+
+**Decorative (1996 era scene dressing):**
+| File | Content | Usage |
+|------|---------|-------|
+| `spinning-earth.gif` | Classic spinning globe | Guestbook dialog, 1996 sidebar |
+| `star-gold.gif` | Animated gold star | 1996 era accents |
+| `star-blue.gif` | Animated blue star | Space Jam easter egg |
+| `star-green.gif` | Animated green star | 1996 era accents |
+| `dragon-purple.gif` | Purple dragon | Guestbook entry avatar |
+| `wolf-purple.gif` | Purple wolf | Guestbook entry avatar |
+| `rose-sparkle.gif` | Sparkly purple rose with water reflection | Guestbook decoration |
+| `angel.gif` | Blue angel figure | 1996 era decoration |
+| `energy-orb.gif` | Purple energy orb | Under construction popover |
+| `crescent-sparkle.gif` | Sparkly crescent moon | 1996 era night sky |
+| `sun-glow.gif` | Glowing sun | 1996 era decoration |
+| `moon.gif` | Moon surface | 1996 background |
+| `globe-small.gif` | Small spinning globe | 1996 sidebar nav |
+| `space-shuttle.gif` | Space shuttle | Space Jam easter egg |
+| `ufo-small.gif` | Small UFO | 1996 era accent |
+| `ufo-color.gif` | Colorful UFO | 1996 era accent |
+| `handshake.gif` | Two businessmen shaking hands | Guestbook "thank you" |
+
+**Animated Dividers (1996 era section separators):**
+| File | Content |
+|------|---------|
+| `divider-purple.gif` | Purple light show line |
+| `divider-rainbow.gif` | Rolling rainbow color bar |
+| `divider-smiley.gif` | Smiley face line |
+| `divider-music.gif` | Musical notes line |
+| `divider-cat-mouse.gif` | Cat chasing mouse line |
+| `divider-rope.gif` | Animated rope line |
+
+### 13.2 CSS-Crafted Assets (built during implementation)
+
+These are created in pure CSS to match the site's zero-dependency philosophy:
+- **Under construction worker** — `steps(2)` animation alternating between 2 pose frames
+- **Email envelope** — CSS shapes with animated flap
+- **Fire divider** — `background: linear-gradient()` animated via `@property`
+- **Rainbow divider** — CSS `conic-gradient` animated hue rotation
+- **Confetti** — `@property` animated gradient particles
+- **Snowflakes** — Randomized falling `::before`/`::after` pseudo-elements
+- **Shooting star** — Linear gradient on thin element with translateX animation
 
 ---
 
