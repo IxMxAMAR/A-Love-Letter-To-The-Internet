@@ -7,9 +7,10 @@
 try {
   const scrollProgress = document.querySelector('.scroll-progress');
   if (scrollProgress) {
-    const zoneColor = getComputedStyle(document.documentElement)
-      .getPropertyValue('--zone-color')
-      .trim();
+    const zoneColor = (
+      getComputedStyle(document.documentElement).getPropertyValue('--zone-color').trim() ||
+      getComputedStyle(document.body).getPropertyValue('--zone-color').trim()
+    );
     if (zoneColor) {
       scrollProgress.style.background = zoneColor;
     }

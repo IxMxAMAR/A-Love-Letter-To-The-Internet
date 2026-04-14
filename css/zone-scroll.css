@@ -244,7 +244,7 @@
 }
 
 /* ── Scroll Progress Bar ────────────────────────────────────── */
-.scroll-progress-bar {
+.scroll-progress {
   position: fixed;
   top: 0;
   left: 0;
@@ -800,7 +800,7 @@
   .nebula-3,
   .planet-1,
   .planet-2,
-  .scroll-progress-bar {
+  .scroll-progress {
     animation: none !important;
   }
 

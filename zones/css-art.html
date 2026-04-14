@@ -23,8 +23,9 @@
 <script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
   <link rel="stylesheet" href="../css/gimmicks.css">
 </head>
-<body class="zone-page">
+<body class="zone-page" style="--zone-color: #f472b6;">
   <a href="#main-content" class="visually-hidden">Skip to main content</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
 
   <!-- Nav -->
   <header class="zone-header" role="banner">
@@ -483,9 +484,9 @@
       </a>
       <div class="zone-nav-meta">
         <span class="zone-nav-symbol" aria-hidden="true">●</span>
-        <span class="zone-nav-number">Zone 3 of 9</span>
+        <span class="zone-nav-number">Zone 3 of 8</span>
       </div>
-      <a href="../hub.html" class="zone-nav-link zone-nav-link--next">
+      <a href="container-queries.html" class="zone-nav-link zone-nav-link--next">
         <span>Next Zone</span>
         <span aria-hidden="true">→</span>
       </a>
@@ -526,7 +527,14 @@
         readout.innerHTML = '<div class="readout-line"><span class="readout-prop">/* toggle properties above */</span></div>';
         return;
       }
+      const clipChecked = document.getElementById('toggle-clip').checked;
+      const radiusChecked = document.getElementById('toggle-radius').checked;
       readout.innerHTML = active.map(id => {
+        // When both clip-path and border-radius are active, border-radius wins
+        if (id === 'toggle-clip' && radiusChecked) {
+          const parts = 'clip-path: none; /* overridden by border-radius */'.split(':');
+          return `<div class="readout-line readout-line--overridden"><span class="readout-prop-name">${parts[0]}</span><span class="readout-colon">:</span><span class="readout-prop-val">${parts.slice(1).join(':')}</span></div>`;
+        }
         const parts = propLabels[id].split(':');
         return `<div class="readout-line"><span class="readout-prop-name">${parts[0]}</span><span class="readout-colon">:</span><span class="readout-prop-val">${parts.slice(1).join(':')}</span></div>`;
       }).join('');

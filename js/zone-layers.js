@@ -333,7 +333,11 @@ function setupNativeDragFallback() {
     if (!target || target === dragSrc) return;
     const rect = target.getBoundingClientRect();
     const before = e.clientX < rect.left + rect.width / 2;
-    insertCard(dragSrc, before);
+    if (before) {
+      deck.insertBefore(dragSrc, target);
+    } else {
+      target.insertAdjacentElement('afterend', dragSrc);
+    }
     applyLayerOrder(readDOMOrder());
   });
 
