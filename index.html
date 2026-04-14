@@ -4,10 +4,160 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A Love Letter to the Web</title>
+  <meta name="description" content="A cinematic journey through the evolution of the web platform — from 1991 to 2026.">
+
+  <meta property="og:title" content="A Love Letter to the Web">
+  <meta property="og:description" content="A cinematic journey through the evolution of the web platform.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/transitions.css">
   <link rel="stylesheet" href="css/landing.css">
 </head>
-<body class="landing">
+<body>
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <main id="main-content" class="landing">
+
+    <section class="era era-1991" id="era-1991" aria-label="1991 — The Beginning">
+      <div class="era-content">
+        <span class="label">1991</span>
+        <h1>The Beginning</h1>
+        <hr>
+        <p>This is a page about the World Wide Web. The WorldWideWeb (W3) is a wide-area <a href="#">hypermedia</a> information retrieval initiative aiming to give universal access to a large universe of documents.</p>
+        <p>Everything there is online about W3 is linked directly or indirectly to this document, including an <a href="#">executive summary</a> of the project, <a href="#">Mailing lists</a>, <a href="#">Policy</a>, November's <a href="#">W3 news</a>, <a href="#">Frequently Asked Questions</a>.</p>
+        <address>
+          <a href="#">Tim Berners-Lee</a><br>
+          CERN, Geneva, Switzerland
+        </address>
+      </div>
+    </section>
+
+    <section class="era era-1996" id="era-1996" aria-label="1996 — CSS Arrives">
+      <div class="era-content">
+        <span class="label">1996</span>
+        <h2>CSS Arrives</h2>
+        <table class="era-1996-table" role="presentation" aria-hidden="true">
+          <tr>
+            <td class="sidebar-cell">
+              <div class="sidebar-nav">
+                <div class="sidebar-title">Navigation</div>
+                <a href="#">Home</a>
+                <a href="#">About Me</a>
+                <a href="#">Guestbook</a>
+                <a href="#">Links</a>
+                <a href="#">WebRing</a>
+              </div>
+            </td>
+            <td class="main-cell">
+              <div class="geocities-content">
+                <p class="welcome-text">Welcome to my homepage!!</p>
+                <p>Background colors appear. Fonts change. The <code>&lt;table&gt;</code> becomes the layout tool. A sidebar emerges. The web gets its first taste of design.</p>
+                <div class="visitor-counter">
+                  You are visitor #<span class="counter-num">004,271</span>
+                </div>
+                <p class="construction">🚧 Under Construction 🚧</p>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <section class="era era-2010" id="era-2010" aria-label="2010 — CSS3 Revolution">
+      <div class="era-content">
+        <span class="label">2010</span>
+        <h2>The CSS3 Revolution</h2>
+        <p class="subtitle">Border-radius changed everything.</p>
+        <div class="css3-showcase">
+          <div class="css3-card">
+            <div class="css3-card-icon">◉</div>
+            <h3>Rounded Corners</h3>
+            <p>No more corner images. <code>border-radius</code> gave us curves.</p>
+          </div>
+          <div class="css3-card">
+            <div class="css3-card-icon">◈</div>
+            <h3>Gradients</h3>
+            <p>Glossy buttons and skeuomorphic depth — all in CSS.</p>
+          </div>
+          <div class="css3-card">
+            <div class="css3-card-icon">◐</div>
+            <h3>Transforms</h3>
+            <p>Rotation, scaling, 3D. The web learned to move.</p>
+          </div>
+          <div class="css3-card">
+            <div class="css3-card-icon">◧</div>
+            <h3>Box Shadows</h3>
+            <p>Depth without images. The flat-to-material pipeline begins.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="era era-2020" id="era-2020" aria-label="2020 — Modern CSS">
+      <div class="era-content">
+        <span class="label">2020</span>
+        <h2>Modern CSS</h2>
+        <p class="subtitle">The dark mode era. Custom properties. Grid. Flex. Clean.</p>
+        <div class="modern-grid">
+          <div class="modern-feature">
+            <code>--custom-properties</code>
+            <p>Design tokens in pure CSS. Themes became trivial.</p>
+          </div>
+          <div class="modern-feature">
+            <code>display: grid</code>
+            <p>Two-dimensional layouts without hacks. Tables retired.</p>
+          </div>
+          <div class="modern-feature">
+            <code>display: flex</code>
+            <p>Centering a div finally made sense.</p>
+          </div>
+          <div class="modern-feature">
+            <code>prefers-color-scheme</code>
+            <p>Dark mode became a first-class citizen.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="era era-2026" id="era-2026" aria-label="2026 — The Platform">
+      <div class="era-content">
+        <span class="label">2026</span>
+        <h2>The Platform</h2>
+        <p class="subtitle">The browser is the runtime. CSS is the framework. HTML is the API.</p>
+        <div class="platform-features stagger-children">
+          <div class="platform-chip">scroll-driven animations</div>
+          <div class="platform-chip">container queries</div>
+          <div class="platform-chip">:has() selector</div>
+          <div class="platform-chip">view transitions</div>
+          <div class="platform-chip">popover API</div>
+          <div class="platform-chip">cascade layers</div>
+          <div class="platform-chip">CSS nesting</div>
+          <div class="platform-chip">oklch colors</div>
+          <div class="platform-chip">@property</div>
+          <div class="platform-chip">Houdini paint</div>
+          <div class="platform-chip">@scope</div>
+          <div class="platform-chip">anchor positioning</div>
+        </div>
+        <div class="portal-cta">
+          <a href="hub.html" class="portal-link" data-transition="hub-node">
+            <span class="portal-text">Enter the Observatory</span>
+            <span class="portal-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="js/transitions.js"></script>
+</body>
+</html>
