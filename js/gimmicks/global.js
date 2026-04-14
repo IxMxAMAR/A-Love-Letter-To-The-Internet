@@ -319,3 +319,132 @@ window.secrets = function secrets() {
   console.table(data);
   return '\u2726 Found ' + data.length + ' secrets on this page.';
 };
+
+// 11. Seasonal effects
+try {
+  const _now = new Date();
+  const _month = _now.getMonth();  // 0=Jan, 11=Dec
+  const _day   = _now.getDate();
+
+  // --- December Snowfall (month === 11) ---
+  if (_month === 11 && !sessionStorage.getItem('snow-dismissed')) {
+    // Keyframes
+    const _snowStyle = document.createElement('style');
+    _snowStyle.textContent = '@keyframes snowfall{'
+      + 'from{transform:translateY(-10px) rotate(0deg);opacity:1;}'
+      + 'to{transform:translateY(110vh) rotate(360deg);opacity:0.6;}'
+      + '}';
+    document.head.appendChild(_snowStyle);
+
+    // Dismiss button
+    const _snowBtn = document.createElement('button');
+    _snowBtn.id = 'snow-dismiss';
+    _snowBtn.textContent = '\u2744\ufe0f \u00d7';
+    _snowBtn.style.cssText = [
+      'position:fixed',
+      'bottom:16px',
+      'right:16px',
+      'z-index:99998',
+      'padding:6px 12px',
+      'border-radius:20px',
+      'border:1px solid rgba(255,255,255,0.3)',
+      'background:rgba(0,0,0,0.5)',
+      'color:#fff',
+      'cursor:pointer',
+      'font-size:12px',
+      'backdrop-filter:blur(4px)',
+    ].join(';');
+    document.body.appendChild(_snowBtn);
+
+    // Snowflakes
+    const _flakes = [];
+    for (let i = 0; i < 25; i++) {
+      const f = document.createElement('div');
+      const size = 4 + Math.random() * 8;
+      const left = Math.random() * 100;
+      const delay = Math.random() * 8;
+      const dur = 6 + Math.random() * 8;
+      f.style.cssText = [
+        'position:fixed',
+        'top:-10px',
+        'left:' + left + 'vw',
+        'width:' + size + 'px',
+        'height:' + size + 'px',
+        'border-radius:50%',
+        'background:rgba(255,255,255,0.85)',
+        'pointer-events:none',
+        'z-index:99997',
+        'animation:snowfall ' + dur + 's linear ' + delay + 's infinite',
+      ].join(';');
+      document.body.appendChild(f);
+      _flakes.push(f);
+    }
+
+    _snowBtn.addEventListener('click', () => {
+      _flakes.forEach(f => f.remove());
+      _snowBtn.remove();
+      sessionStorage.setItem('snow-dismissed', '1');
+    });
+  }
+
+  // --- April Fools (month === 3, day === 1) ---
+  if (_month === 3 && _day === 1) {
+    document.documentElement.style.fontFamily = "'Comic Sans MS', cursive";
+    const _logo = document.querySelector('.site-title, .logo, h1');
+    if (_logo) _logo.textContent = '\u2726 Web Letter (Professional Edition\u2122)';
+    console.log(
+      '%c\ud83e\udd21 April Fools! Comic Sans activated. You\u2019re welcome.',
+      'color:#f472b6;font-size:14px;font-family:"Comic Sans MS",cursive;'
+    );
+  }
+
+  // --- New Year (month === 0, day === 1) ---
+  if (_month === 0 && _day === 1 && !sessionStorage.getItem('ny-burst-done')) {
+    sessionStorage.setItem('ny-burst-done', '1');
+
+    const _nyStyle = document.createElement('style');
+    _nyStyle.textContent = '@keyframes ny-burst{'
+      + '0%{transform:scale(0) translate(0,0);opacity:1;}'
+      + '80%{opacity:1;}'
+      + '100%{transform:scale(1) translate(var(--nx),var(--ny));opacity:0;}'
+      + '}';
+    document.head.appendChild(_nyStyle);
+
+    const _colors = ['#f472b6','#818cf8','#34d399','#fbbf24','#60a5fa','#f87171','#a78bfa'];
+    const _bursts = [];
+    for (let i = 0; i < 30; i++) {
+      const b = document.createElement('div');
+      const x = 10 + Math.random() * 80;
+      const y = 10 + Math.random() * 80;
+      const nx = (Math.random() - 0.5) * 200 + 'px';
+      const ny = (Math.random() - 0.5) * 200 + 'px';
+      const size = 6 + Math.random() * 10;
+      const color = _colors[Math.floor(Math.random() * _colors.length)];
+      const delay = Math.random() * 1.5;
+      b.style.cssText = [
+        'position:fixed',
+        'left:' + x + 'vw',
+        'top:' + y + 'vh',
+        'width:' + size + 'px',
+        'height:' + size + 'px',
+        'border-radius:50%',
+        'background:' + color,
+        'pointer-events:none',
+        'z-index:99996',
+        '--nx:' + nx,
+        '--ny:' + ny,
+        'animation:ny-burst 2s ease-out ' + delay + 's forwards',
+      ].join(';');
+      document.body.appendChild(b);
+      _bursts.push(b);
+    }
+
+    setTimeout(() => _bursts.forEach(b => b.remove()), 4000);
+  }
+
+  // --- Speed Run Loader ---
+  if (new URLSearchParams(location.search).get('speedrun') === 'true') {
+    import('./speedrun.js').catch(() => {});
+  }
+
+} catch (e) {}
