@@ -1,0 +1,246 @@
+/* =============================================================
+   gimmicks.css — Light theme, selection, print, UI components
+   ============================================================= */
+
+/* ── Theme transition ─────────────────────────────────────── */
+body {
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+/* ── Light theme overrides ────────────────────────────────── */
+[data-theme="light"] {
+  --color-base:    oklch(97% 0.005 265);
+  --color-surface: oklch(92% 0.008 265);
+  --color-border:  oklch(80% 0.02 265);
+  --color-primary: oklch(45% 0.18 265);
+  --color-accent:  oklch(50% 0.14 295);
+  --color-text:    oklch(15% 0.01 265);
+  --color-muted:   oklch(45% 0.03 265);
+}
+
+[data-theme="light"] .page-header {
+  background: oklch(92% 0.008 265 / 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom-color: oklch(80% 0.02 265);
+}
+
+[data-theme="light"] .era-1991 {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* ── Custom selection ─────────────────────────────────────── */
+::selection {
+  background-color: var(--color-primary);
+  color: oklch(97% 0.005 265);
+}
+
+/* ── Reduced motion badge ─────────────────────────────────── */
+.reduced-motion-badge {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 2rem;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  box-shadow: 0 4px 16px oklch(0% 0 0 / 0.3);
+  animation: badge-in 300ms ease forwards;
+}
+
+@keyframes badge-in {
+  from { opacity: 0; transform: translateY(0.5rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reduced-motion-badge button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-muted);
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.reduced-motion-badge button:hover {
+  color: var(--color-text);
+}
+
+/* ── Shortcut help popover ────────────────────────────────── */
+.shortcut-help[popover] {
+  position: fixed;
+  inset: auto;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: min(480px, 90vw);
+  max-height: 80vh;
+  overflow-y: auto;
+  margin: 0;
+  padding: 1.75rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  color: var(--color-text);
+  box-shadow: 0 24px 64px oklch(0% 0 0 / 0.5);
+}
+
+.shortcut-help[popover]::backdrop {
+  background: oklch(0% 0 0 / 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.shortcut-help h2 {
+  margin: 0 0 1.25rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.shortcut-help .shortcut-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.shortcut-help kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75rem;
+  padding: 0.2rem 0.4rem;
+  background: var(--color-base);
+  border: 1px solid var(--color-border);
+  border-bottom-width: 2px;
+  border-radius: 0.375rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  justify-self: start;
+}
+
+.shortcut-help .shortcut-desc {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  align-self: center;
+}
+
+.shortcut-help .close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-muted);
+  font-size: 1.25rem;
+  line-height: 1;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.shortcut-help .close-btn:hover {
+  color: var(--color-text);
+  background: var(--color-border);
+}
+
+/* ── Custom context menu popover ──────────────────────────── */
+.custom-context-menu[popover] {
+  position: fixed;
+  margin: 0;
+  padding: 0.375rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.625rem;
+  box-shadow: 0 8px 32px oklch(0% 0 0 / 0.4);
+  min-width: 11rem;
+  z-index: 10000;
+}
+
+.custom-context-menu[popover]::backdrop {
+  background: transparent;
+}
+
+.custom-context-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.custom-context-menu li {
+  display: flex;
+}
+
+.custom-context-menu button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 0.75rem;
+  background: none;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  text-align: left;
+  transition: background 120ms ease;
+}
+
+.custom-context-menu button:hover {
+  background: var(--color-border);
+}
+
+.custom-context-menu .menu-icon {
+  font-size: 1rem;
+  width: 1.25rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.custom-context-menu hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 0.25rem 0;
+}
+
+/* ── Print stylesheet ─────────────────────────────────────── */
+@media print {
+  nav,
+  .page-header,
+  .scroll-progress,
+  .reduced-motion-badge,
+  .shortcut-help,
+  .custom-context-menu,
+  [aria-hidden="true"] {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75em;
+    color: #666;
+  }
+
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: "";
+  }
+}
