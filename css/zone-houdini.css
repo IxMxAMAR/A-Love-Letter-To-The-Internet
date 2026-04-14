@@ -27,6 +27,9 @@
 /* Zone accent token */
 :root {
   --houdini-accent: #60a5fa;
+  --houdini-accent-dim: rgb(96 165 250 / 0.15);
+  --houdini-accent-glow: rgb(96 165 250 / 0.35);
+  /* Upgrade with relative color syntax where supported */
   --houdini-accent-dim: oklch(from #60a5fa l c h / 0.15);
   --houdini-accent-glow: oklch(from #60a5fa l c h / 0.35);
 }
@@ -470,6 +473,10 @@
   }
 
   &:last-child > * { border-bottom: none; }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .support-row--header {
@@ -736,6 +743,12 @@
   &:focus::-moz-range-thumb {
     box-shadow: 0 0 0 6px oklch(from #60a5fa l c h / 0.25);
     transform: scale(1.1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--houdini-accent, var(--color-primary));
+    outline-offset: 4px;
+    border-radius: var(--radius-pill);
   }
 
   &:active::-webkit-slider-thumb { cursor: grabbing; }

@@ -638,4 +638,16 @@
     margin-left: auto;
     margin-top: 0;
   }
+
+  .glass-stack {
+    width: min(200px, 70vw);
+    height: 260px;
+  }
+
+  .glass-pane {
+    width: min(150px, 55vw);
+    height: 190px;
+    top:  calc(var(--pane-index) * 14px);
+    left: calc(var(--pane-index) * 12px);
+  }
 }

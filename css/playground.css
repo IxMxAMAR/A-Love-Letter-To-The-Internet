@@ -300,8 +300,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 44px;
+  height: 44px;
   color: var(--color-muted);
   border-radius: var(--radius-sm);
   transition:
@@ -370,6 +370,10 @@
   min-height: 100%;
   caret-color: var(--color-primary);
   tab-size: 2;
+}
+
+.editor-content:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--color-primary);
 }
 
 .editor-content:empty::before {

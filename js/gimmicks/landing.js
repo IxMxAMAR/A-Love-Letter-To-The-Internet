@@ -227,6 +227,9 @@ function initCardFlip() {
 
 // ─── 7. 2010 3D Tilt on Hover ─────────────────────────────────────────────────
 function initCardTilt() {
+  // Disable 3D tilt on touch devices — mousemove doesn't apply
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+
   const cards = document.querySelectorAll('.css3-card');
   cards.forEach(card => {
     card.addEventListener('mousemove', e => {
@@ -306,7 +309,7 @@ function initFlexPopover() {
 
     if (clickCount >= 3) {
       clickCount = 0;
-      popover.showPopover();
+      try { if (popover.showPopover) popover.showPopover(); } catch (_) {}
     }
   });
 }

@@ -240,6 +240,16 @@ h6 {
   border-radius: var(--radius-sm);
 }
 
+/* ── Mobile Touch Targets & Typography ─────────────────────── */
+@media (max-width: 768px) {
+  /* Prevent iOS auto-zoom on input focus — ensure 16px minimum */
+  input,
+  textarea,
+  select {
+    font-size: max(1rem, inherit);
+  }
+}
+
 /* ── Reduced Motion ─────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,

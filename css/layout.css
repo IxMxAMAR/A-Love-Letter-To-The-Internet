@@ -183,7 +183,7 @@
 /* ── Mobile Breakpoint ──────────────────────────────────────── */
 @media (max-width: 768px) {
   .page-header__nav {
-    gap: var(--space-lg);
+    gap: var(--space-md);
   }
 
   .section-full {
@@ -199,5 +199,25 @@
     left: var(--content-padding);
     right: var(--content-padding);
     transform: none;
+  }
+}
+
+@media (max-width: 375px) {
+  .page-header__nav {
+    gap: var(--space-sm);
+  }
+
+  .page-header__nav a {
+    font-size: var(--text-xs);
+  }
+
+  .zone-nav {
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-md);
+  }
+
+  .zone-nav a {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--text-xs);
   }
 }
