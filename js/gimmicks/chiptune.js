@@ -7,6 +7,7 @@
 let audioCtx = null;
 let isPlaying = false;
 let timeoutIds = [];
+let scheduledOscillators = [];
 
 // Simple melody — notes as [frequency, duration in beats]
 // A catchy, happy, nostalgic 8-bit loop
@@ -35,23 +36,34 @@ const bass = [
 function playNote(ctx, freq, startTime, duration, type = 'square', volume = 0.08) {
   if (freq === 0) return; // rest
 
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
+  try {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
 
-  osc.type = type;
-  osc.frequency.setValueAtTime(freq, startTime);
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, startTime);
 
-  // Envelope: quick attack, sustain, quick release
-  gain.gain.setValueAtTime(0, startTime);
-  gain.gain.linearRampToValueAtTime(volume, startTime + 0.01);
-  gain.gain.setValueAtTime(volume, startTime + duration * BEAT - 0.05);
-  gain.gain.linearRampToValueAtTime(0, startTime + duration * BEAT);
+    // Envelope: quick attack, sustain, quick release
+    gain.gain.setValueAtTime(0, startTime);
+    gain.gain.linearRampToValueAtTime(volume, startTime + 0.01);
+    gain.gain.setValueAtTime(volume, startTime + duration * BEAT - 0.05);
+    gain.gain.linearRampToValueAtTime(0, startTime + duration * BEAT);
 
-  osc.connect(gain);
-  gain.connect(ctx.destination);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
 
-  osc.start(startTime);
-  osc.stop(startTime + duration * BEAT);
+    osc.start(startTime);
+    osc.stop(startTime + duration * BEAT);
+
+    // Track oscillator for cleanup on stop
+    scheduledOscillators.push(osc);
+    osc.onended = () => {
+      const idx = scheduledOscillators.indexOf(osc);
+      if (idx !== -1) scheduledOscillators.splice(idx, 1);
+    };
+  } catch (err) {
+    console.warn('[chiptune] playNote failed:', err);
+  }
 }
 
 function playLoop() {
@@ -79,30 +91,40 @@ function playLoop() {
   timeoutIds.push(id);
 }
 
-export function startMusic() {
+export async function startMusic() {
   if (isPlaying) return;
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  try {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+      await audioCtx.resume();
+    }
+    isPlaying = true;
+    playLoop();
+  } catch (err) {
+    console.warn('[chiptune] startMusic failed:', err);
   }
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
-  isPlaying = true;
-  playLoop();
 }
 
 export function stopMusic() {
   isPlaying = false;
   timeoutIds.forEach(id => clearTimeout(id));
   timeoutIds = [];
+
+  // Stop all currently scheduled oscillators immediately
+  for (const osc of scheduledOscillators) {
+    try { osc.stop(); } catch { /* already stopped */ }
+  }
+  scheduledOscillators = [];
 }
 
-export function toggleMusic() {
+export async function toggleMusic() {
   if (isPlaying) {
     stopMusic();
     return false;
   } else {
-    startMusic();
+    await startMusic();
     return true;
   }
 }

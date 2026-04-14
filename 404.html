@@ -224,7 +224,7 @@
     }
 
     factBox.addEventListener('click', nextFact);
-    factBox.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') nextFact(); });
+    factBox.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); nextFact(); } });
   </script>
 
   <script type="module" src="js/gimmicks/global.js"></script>

@@ -332,12 +332,19 @@ document.addEventListener('DOMContentLoaded', () => {
 try {
   const chipBtn = document.getElementById('chiptune-toggle');
   if (chipBtn) {
+    let chipBusy = false; // guard against rapid clicks during import
     // Dynamic import so it does not block page load
     chipBtn.addEventListener('click', async () => {
-      const { toggleMusic } = await import('./chiptune.js');
-      const playing = toggleMusic();
-      chipBtn.textContent = playing ? '⏸ Pause Music' : '🎵 Play Music';
-      chipBtn.classList.toggle('playing', playing);
+      if (chipBusy) return;
+      chipBusy = true;
+      try {
+        const { toggleMusic } = await import('./chiptune.js');
+        const playing = await toggleMusic();
+        chipBtn.textContent = playing ? '⏸ Pause Music' : '🎵 Play Music';
+        chipBtn.classList.toggle('playing', playing);
+      } finally {
+        chipBusy = false;
+      }
     });
   }
 } catch {}
