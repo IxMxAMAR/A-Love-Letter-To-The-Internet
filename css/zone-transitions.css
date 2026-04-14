@@ -91,22 +91,15 @@ code {
 .vt-hero__content {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: var(--space-2xl);
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
   padding-block: var(--space-2xl);
-}
-
-@media (max-width: 900px) {
-  .vt-hero__content {
-    grid-template-columns: 1fr;
-    gap: var(--space-xl);
-  }
+  width: 100%;
 }
 
 .vt-hero__header {
-  position: sticky;
+  position: relative;
   top: 7rem;
 }
 
@@ -161,6 +154,12 @@ code {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+  width: 100%;
+}
+
+.vt-card {
+  min-width: 0;
+  word-break: break-word;
 }
 
 @media (max-width: 700px) {

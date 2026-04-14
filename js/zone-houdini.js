@@ -11,7 +11,8 @@
 import { initCopyButtons } from './utils.js';
 
 // ─── Feature Detection ──────────────────────────────────────────
-const hasPaintAPI = 'paintWorklet' in CSS;
+const hasPaintAPI = typeof CSS !== 'undefined' && 'paintWorklet' in CSS;
+console.log('[Houdini] Paint API supported:', hasPaintAPI, '| CSS object:', typeof CSS);
 
 const supportBadge   = document.getElementById('supportBadge');
 const supportText    = document.getElementById('supportText');
@@ -31,7 +32,10 @@ if (supportBadge && supportText) {
 // ─── Register Paint Worklet ─────────────────────────────────────
 if (hasPaintAPI) {
   try {
-    await CSS.paintWorklet.addModule('../js/worklets/pattern-worklet.js');
+    const workletUrl = new URL('../js/worklets/pattern-worklet.js', import.meta.url).href;
+    console.log('[Houdini] Loading worklet from:', workletUrl);
+    await CSS.paintWorklet.addModule(workletUrl);
+    console.log('[Houdini] Worklet loaded successfully');
   } catch (err) {
     console.warn('[Houdini] Could not register paint worklet:', err);
     if (supportBadge && supportText) {
