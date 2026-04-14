@@ -33,11 +33,11 @@
       <div class="era-content">
         <span class="label">1991</span>
         <h1>The Beginning</h1>
-        <hr>
-        <p>This is a page about the World Wide Web. The WorldWideWeb (W3) is a wide-area <a href="#">hypermedia</a> information retrieval initiative aiming to give universal access to a large universe of documents.</p>
-        <p>Everything there is online about W3 is linked directly or indirectly to this document, including an <a href="#">executive summary</a> of the project, <a href="#">Mailing lists</a>, <a href="#">Policy</a>, November's <a href="#">W3 news</a>, <a href="#">Frequently Asked Questions</a>.</p>
+        <hr title="The original horizontal rule. Since 1993.">
+        <p>This is a page about the World Wide Web. The WorldWideWeb (W3) is a wide-area <a href="https://www.w3.org/WhatIs.html" target="_blank" rel="noopener" id="link-hypermedia">hypermedia</a> information retrieval initiative aiming to give universal access to a large universe of documents.</p>
+        <p>Everything there is online about W3 is linked directly or indirectly to this document, including an <a href="http://info.cern.ch/hypertext/WWW/Summary.html" target="_blank" rel="noopener">executive summary</a> of the project, <a href="https://www.w3.org/Archives/" target="_blank" rel="noopener">Mailing lists</a>, <a href="https://www.w3.org/Consortium/Legal/" target="_blank" rel="noopener">Policy</a>, November's <a href="http://info.cern.ch/hypertext/WWW/News/9211.html" target="_blank" rel="noopener">W3 news</a>, <a href="https://www.w3.org/FAQ.html" target="_blank" rel="noopener">Frequently Asked Questions</a>.</p>
         <address>
-          <a href="#">Tim Berners-Lee</a><br>
+          <a href="https://www.w3.org/People/Berners-Lee/" target="_blank" rel="noopener">Tim Berners-Lee</a><br>
           CERN, Geneva, Switzerland
         </address>
       </div>
@@ -52,11 +52,11 @@
             <td class="sidebar-cell">
               <div class="sidebar-nav">
                 <div class="sidebar-title">Navigation</div>
-                <a href="#">Home</a>
-                <a href="#">About Me</a>
-                <a href="#">Guestbook</a>
-                <a href="#">Links</a>
-                <a href="#">WebRing</a>
+                <a href="#era-1991">Home</a>
+                <a href="https://github.com/IxMxAMAR" target="_blank" rel="noopener">About Me</a>
+                <a href="#" id="guestbook-link">Guestbook</a>
+                <a href="hub.html">Links</a>
+                <a href="https://webri.ng/" target="_blank" rel="noopener">WebRing</a>
               </div>
             </td>
             <td class="main-cell">
@@ -71,6 +71,7 @@
             </td>
           </tr>
         </table>
+        <div class="marquee-96" aria-hidden="true"><span>Welcome to my homepage! Best viewed in Netscape Navigator 3.0 at 800×600 ✦ You are visitor #<span class="visitor-count">004,271</span> ✦ </span></div>
       </div>
     </section>
 
@@ -136,16 +137,16 @@
         <h2>The Platform</h2>
         <p class="subtitle">The browser is the runtime. CSS is the framework. HTML is the API.</p>
         <div class="platform-features stagger-children">
-          <div class="platform-chip">scroll-driven animations</div>
-          <div class="platform-chip">container queries</div>
-          <div class="platform-chip">:has() selector</div>
-          <div class="platform-chip">view transitions</div>
-          <div class="platform-chip">popover API</div>
-          <div class="platform-chip">cascade layers</div>
+          <a href="zones/scroll-animations.html" class="platform-chip">scroll-driven animations</a>
+          <a href="zones/container-queries.html" class="platform-chip">container queries</a>
+          <a href="zones/has-selector.html" class="platform-chip">:has() selector</a>
+          <a href="zones/view-transitions.html" class="platform-chip">view transitions</a>
+          <a href="zones/popover-dialog.html" class="platform-chip">popover API</a>
+          <a href="zones/cascade-layers.html" class="platform-chip">cascade layers</a>
           <div class="platform-chip">CSS nesting</div>
           <div class="platform-chip">oklch colors</div>
           <div class="platform-chip">@property</div>
-          <div class="platform-chip">Houdini paint</div>
+          <a href="zones/houdini.html" class="platform-chip">Houdini paint</a>
           <div class="platform-chip">@scope</div>
           <div class="platform-chip">anchor positioning</div>
         </div>
@@ -158,9 +159,83 @@
       </div>
     </section>
 
+  <dialog id="guestbook-dialog" aria-label="Guestbook">
+    <div class="gb-inner">
+      <div class="gb-header">
+        <img src="assets/gifs/spinning-earth.gif" alt="" width="40" height="40" aria-hidden="true">
+        <h2 class="gb-title">&#x2728; My Guestbook &#x2728;</h2>
+        <img src="assets/gifs/spinning-earth.gif" alt="" width="40" height="40" aria-hidden="true">
+      </div>
+      <button class="gb-close" aria-label="Close guestbook">[X] Close</button>
+      <img src="assets/gifs/divider-rainbow.gif" alt="" class="gb-divider" aria-hidden="true">
+
+      <div class="gb-entries">
+        <div class="gb-entry">
+          <img src="assets/gifs/dragon-purple.gif" alt="" class="gb-avatar" aria-hidden="true">
+          <div class="gb-entry-text">
+            <strong>xX_DragonMaster_Xx</strong><br>
+            <span class="gb-date">Nov 12, 1997</span><br>
+            cool site!!! bookmarked!! do mine next: dragonmaster.geocities.com
+          </div>
+        </div>
+        <img src="assets/gifs/divider-rainbow.gif" alt="" class="gb-divider" aria-hidden="true">
+        <div class="gb-entry">
+          <img src="assets/gifs/wolf-purple.gif" alt="" class="gb-avatar" aria-hidden="true">
+          <div class="gb-entry-text">
+            <strong>MidnightWolf99</strong><br>
+            <span class="gb-date">Feb 3, 1998</span><br>
+            ur page roxors my soxors!! the background is SO awesome
+          </div>
+        </div>
+        <img src="assets/gifs/divider-rainbow.gif" alt="" class="gb-divider" aria-hidden="true">
+        <div class="gb-entry">
+          <img src="assets/gifs/star-gold.gif" alt="" class="gb-avatar" aria-hidden="true">
+          <div class="gb-entry-text">
+            <strong>StarGirl2000</strong><br>
+            <span class="gb-date">Jun 22, 1998</span><br>
+            OMG I love your page!! Please sign mine too!! *~*~*~*
+          </div>
+        </div>
+        <img src="assets/gifs/divider-rainbow.gif" alt="" class="gb-divider" aria-hidden="true">
+        <div class="gb-entry">
+          <img src="assets/gifs/angel.gif" alt="" class="gb-avatar" aria-hidden="true">
+          <div class="gb-entry-text">
+            <strong>AngelDust_Webmaster</strong><br>
+            <span class="gb-date">Sep 9, 1999</span><br>
+            visiting from the WebRing! great content keep it up!!!
+          </div>
+        </div>
+      </div>
+
+      <img src="assets/gifs/divider-rainbow.gif" alt="" class="gb-divider" aria-hidden="true">
+
+      <form class="gb-form" id="gb-form">
+        <h3 class="gb-form-title">&#x270F; Sign My Guestbook!</h3>
+        <div class="gb-field">
+          <label for="gb-name">Your Name:</label>
+          <input type="text" id="gb-name" name="name" placeholder="Your handle..." maxlength="40">
+        </div>
+        <div class="gb-field">
+          <label for="gb-msg">Message:</label>
+          <textarea id="gb-msg" name="message" rows="3" placeholder="Leave a message..." maxlength="200"></textarea>
+        </div>
+        <button type="submit" class="gb-submit">[ Sign Guestbook! ]</button>
+      </form>
+
+      <div class="gb-thanks" id="gb-thanks" hidden>
+        <img src="assets/gifs/handshake.gif" alt="" aria-hidden="true"><br>
+        Thanks for signing! Your entry will appear in 3-5 business days.
+      </div>
+
+      <img src="assets/gifs/rose-sparkle.gif" alt="" class="gb-footer-rose" aria-hidden="true">
+    </div>
+  </dialog>
+
   </main>
 
   <script type="module" src="js/transitions.js"></script>
   <script type="module" src="js/gimmicks/global.js"></script>
+<!-- Letter 1/12: Y — "The web is for everyone." — Tim Berners-Lee -->
+  <script type="module" src="js/gimmicks/landing.js"></script>
 </body>
 </html>
