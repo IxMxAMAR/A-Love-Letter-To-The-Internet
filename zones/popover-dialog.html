@@ -72,10 +72,10 @@
         <h1 class="hero-title">Popover &amp; Dialog</h1>
         <p class="subtitle hero-subtitle">Native overlays. No library required.</p>
         <div class="hero-actions">
-          <button class="btn-primary" popovertarget="demo-popover-1">
+          <button class="btn-primary" popovertarget="demo-popover-1" aria-haspopup="true" aria-expanded="false">
             Show a Popover
           </button>
-          <button class="btn-secondary" id="open-dialog-btn">
+          <button class="btn-secondary" id="open-dialog-btn" aria-haspopup="dialog">
             Open a Dialog
           </button>
         </div>
@@ -95,11 +95,11 @@
       </div>
 
       <!-- Demo dialog -->
-      <dialog id="demo-dialog" class="demo-dialog" closedby="any">
+      <dialog id="demo-dialog" class="demo-dialog" closedby="any" aria-labelledby="demo-dialog-title">
         <div class="demo-dialog__inner">
           <div class="demo-dialog__header">
             <span class="demo-dialog__icon">◇</span>
-            <strong>A native &lt;dialog&gt;</strong>
+            <strong id="demo-dialog-title">A native &lt;dialog&gt;</strong>
           </div>
           <p>This is a genuine <code>&lt;dialog&gt;</code> element. It traps focus, blocks background interaction, and has a <code>::backdrop</code> pseudo-element. Powered by the HTML spec — zero dependencies.</p>
           <p>The <code>closedby="any"</code> attribute lets you close it by clicking the backdrop.</p>
@@ -417,17 +417,26 @@
     openBtn?.addEventListener('click', () => dialog.showModal());
     closeBtn?.addEventListener('click', () => dialog.close());
 
+    // Sync aria-expanded on the hero popover trigger
+    const heroPopover = document.getElementById('demo-popover-1');
+    const heroPopoverTrigger = document.querySelector('[popovertarget="demo-popover-1"]');
+    if (heroPopover && heroPopoverTrigger) {
+      heroPopover.addEventListener('toggle', (e) => {
+        heroPopoverTrigger.setAttribute('aria-expanded', e.newState === 'open' ? 'true' : 'false');
+      });
+    }
+
     // Copy buttons (generic)
     document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
       btn.addEventListener('click', () => {
         const target = document.getElementById(btn.dataset.copy);
-        if (!target) return;
+        if (!target || !navigator.clipboard?.writeText) return;
         navigator.clipboard.writeText(target.textContent.trim()).then(() => {
           const label = btn.querySelector('.copy-btn__text');
           const prev = label.textContent;
           label.textContent = 'Copied!';
           setTimeout(() => { label.textContent = prev; }, 1600);
-        });
+        }).catch(() => {});
       });
     });
 
@@ -511,15 +520,18 @@
 
     // Show the preview popover
     showBtn.addEventListener('click', () => {
+      if (!previewPopover.showPopover) return; // Popover API not supported
       update();
       // Small delay lets DOM settle the new attributes
       requestAnimationFrame(() => {
-        if (previewPopover.matches(':popover-open')) {
-          previewPopover.hidePopover();
-          requestAnimationFrame(() => previewPopover.showPopover());
-        } else {
-          previewPopover.showPopover();
-        }
+        try {
+          if (previewPopover.matches(':popover-open')) {
+            previewPopover.hidePopover();
+            requestAnimationFrame(() => previewPopover.showPopover());
+          } else {
+            previewPopover.showPopover();
+          }
+        } catch (_) {}
       });
     });
 
@@ -530,11 +542,12 @@
 
     // Copy generated code
     copyGenBtn.addEventListener('click', () => {
+      if (!navigator.clipboard?.writeText) return;
       navigator.clipboard.writeText(generatedCode.textContent.trim()).then(() => {
         const label = copyGenBtn.querySelector('.copy-btn__text');
         label.textContent = 'Copied!';
         setTimeout(() => { label.textContent = 'Copy'; }, 1600);
-      });
+      }).catch(() => {});
     });
 
     // Initialize

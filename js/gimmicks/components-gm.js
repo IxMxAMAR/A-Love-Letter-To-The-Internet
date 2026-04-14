@@ -81,7 +81,32 @@ try {
   console.warn('[components-gm] toast rotation:', e);
 }
 
-// 3. Modal Dialog Escape Message
+// 3. Tab group aria-selected sync
+try {
+  function syncTabSelection(tabGroup) {
+    const radios = tabGroup.querySelectorAll('input[type="radio"]');
+    const labels = tabGroup.querySelectorAll('[role="tab"]');
+    const panels = tabGroup.querySelectorAll('[role="tabpanel"]');
+
+    function update() {
+      labels.forEach(label => {
+        const forId = label.getAttribute('for');
+        const radio = forId ? document.getElementById(forId) : null;
+        const isSelected = radio ? radio.checked : false;
+        label.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+      });
+    }
+
+    radios.forEach(radio => radio.addEventListener('change', update));
+    update();
+  }
+
+  document.querySelectorAll('.tab-group, .tab-bar-demo').forEach(syncTabSelection);
+} catch (e) {
+  console.warn('[components-gm] tab aria-selected:', e);
+}
+
+// 4. Modal Dialog Escape Message
 try {
   const escMsg = document.createElement('div');
   escMsg.style.cssText = [

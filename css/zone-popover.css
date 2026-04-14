@@ -267,9 +267,11 @@
 
 /* ── Demo Popover (Hero) ────────────────────────────────────── */
 .demo-popover {
-  /* Position near top-center */
+  /* Fallback centering for browsers without position-area */
+  inset: 0;
+  margin: auto;
+  /* Position near top-center (Chromium 125+) */
   position-area: center;
-  margin: 0;
   max-width: min(400px, 90vw);
   padding: 0;
   border: 1.5px solid var(--zone-popover);

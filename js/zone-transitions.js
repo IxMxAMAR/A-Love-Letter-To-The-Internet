@@ -155,6 +155,7 @@ const TRANSITION_PRESETS = {
 
 // ── State ─────────────────────────────────────────────────────
 let currentCardId = null;
+let triggerElement = null;  // element that opened the card detail
 let playgroundState = 'a'; // 'a' | 'b'
 let transitionCount = 0;
 
@@ -196,6 +197,12 @@ function openCard(cardId) {
     overlay.hidden = false;
     document.body.style.overflow = 'hidden';
   });
+
+  // Focus the close button for keyboard accessibility
+  requestAnimationFrame(() => {
+    const closeBtn = document.getElementById('vt-detail-close');
+    if (closeBtn) closeBtn.focus();
+  });
 }
 
 function closeCard() {
@@ -206,6 +213,12 @@ function closeCard() {
     document.body.style.overflow = '';
     currentCardId = null;
   });
+
+  // Return focus to the trigger element
+  if (triggerElement) {
+    triggerElement.focus();
+    triggerElement = null;
+  }
 }
 
 // ── Playground ────────────────────────────────────────────────
@@ -319,7 +332,10 @@ function init() {
   cards.forEach((card) => {
     card.addEventListener('click', () => {
       const cardId = card.dataset.cardId;
-      if (cardId) openCard(cardId);
+      if (cardId) {
+        triggerElement = card;
+        openCard(cardId);
+      }
     });
   });
 
@@ -337,10 +353,30 @@ function init() {
     });
   }
 
-  // ── Keyboard: Escape to close
+  // ── Keyboard: Escape to close + focus trap
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && currentCardId !== null) {
       closeCard();
+      return;
+    }
+
+    // Focus trap when card detail overlay is open
+    if (e.key === 'Tab' && currentCardId !== null && overlay) {
+      const focusable = overlay.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     }
   });
 

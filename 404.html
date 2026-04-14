@@ -177,12 +177,22 @@
       opacity: 0.4;
       z-index: 1;
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      .chain-link--left,
+      .chain-link--right,
+      .lost-pixel {
+        animation: none;
+      }
+    }
   </style>
 </head>
 <body>
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
 
-  <div class="lost-pixel"></div>
+  <div class="lost-pixel" aria-hidden="true"></div>
 
+  <main id="main-content">
   <div class="page-center">
     <div class="chain-art" aria-hidden="true">
       <div class="chain-link chain-link--left"></div>
@@ -201,6 +211,8 @@
       <div class="fact-hint">Click to cycle facts</div>
     </div>
   </div>
+
+  </main>
 
   <p class="pixel-credit">Even this pixel is hand-crafted CSS.</p>
 

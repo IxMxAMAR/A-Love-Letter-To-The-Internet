@@ -219,8 +219,19 @@ function initCardFlip() {
     card.appendChild(inner);
     card.classList.add('card-flip-root');
 
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', (front.querySelector('h3')?.textContent || 'Card') + ' — click to flip');
+
     card.addEventListener('click', () => {
       card.classList.toggle('flipped');
+    });
+
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.classList.toggle('flipped');
+      }
     });
   });
 }
@@ -253,6 +264,16 @@ function initDarkModeCard() {
 
   darkCard.style.cursor = 'pointer';
   darkCard.title = 'Click to toggle dark mode';
+  darkCard.setAttribute('tabindex', '0');
+  darkCard.setAttribute('role', 'button');
+  darkCard.setAttribute('aria-label', 'Toggle dark mode');
+
+  darkCard.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      darkCard.click();
+    }
+  });
 
   darkCard.addEventListener('click', () => {
     // Reuse global toggleTheme if available, otherwise inline equivalent logic
