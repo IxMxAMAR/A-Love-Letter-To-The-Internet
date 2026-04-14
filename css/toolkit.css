@@ -1,0 +1,1033 @@
+/* =============================================================
+   toolkit.css — Component Toolkit page styles
+   A Love Letter to the Web
+   ============================================================= */
+
+/* ── Page Layout ─────────────────────────────────────────────── */
+.toolkit-page {
+  min-height: 100dvh;
+}
+
+.toolkit-header {
+  padding-block: var(--space-xl) var(--space-lg);
+}
+
+.toolkit-header .label {
+  margin-bottom: var(--space-sm);
+}
+
+.toolkit-header h1 {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-sm);
+}
+
+.toolkit-header .subtitle {
+  font-size: var(--text-md);
+  color: var(--color-muted);
+}
+
+/* ── Filter Bar ──────────────────────────────────────────────── */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  padding-block: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-xl);
+}
+
+.filter-bar__label-text {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-right: var(--space-xs);
+  flex-shrink: 0;
+}
+
+/* Hide the radio inputs visually */
+.filter-bar input[type="radio"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Pill labels */
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-muted);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  user-select: none;
+}
+
+.filter-pill:hover {
+  color: var(--color-text);
+  border-color: oklch(40% 0.03 265);
+}
+
+/* Active pill — using :has() to detect checked sibling radio */
+.filter-bar:has(#filter-all:checked)         .filter-pill[for="filter-all"],
+.filter-bar:has(#filter-nav:checked)         .filter-pill[for="filter-nav"],
+.filter-bar:has(#filter-feedback:checked)    .filter-pill[for="filter-feedback"],
+.filter-bar:has(#filter-forms:checked)       .filter-pill[for="filter-forms"],
+.filter-bar:has(#filter-layout:checked)      .filter-pill[for="filter-layout"] {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+/* ── Components Grid ─────────────────────────────────────────── */
+.components-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+/* ── Category Filtering (CSS-only via :has()) ────────────────── */
+/*
+  Radio inputs #filter-* live inside .filter-bar, which is a sibling
+  of .components-grid inside .page-content. We target from the common
+  ancestor so :has() can reach both the radios and the grid cards.
+*/
+.page-content:has(#filter-nav:checked)
+  .component-card:not([data-category="navigation"]) {
+  display: none;
+}
+
+.page-content:has(#filter-feedback:checked)
+  .component-card:not([data-category="feedback"]) {
+  display: none;
+}
+
+.page-content:has(#filter-forms:checked)
+  .component-card:not([data-category="forms"]) {
+  display: none;
+}
+
+.page-content:has(#filter-layout:checked)
+  .component-card:not([data-category="layout"]) {
+  display: none;
+}
+
+/* ── Component Card ──────────────────────────────────────────── */
+.component-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.component-card:hover {
+  border-color: oklch(35% 0.04 265);
+  box-shadow: 0 8px 32px oklch(0% 0 0 / 0.4);
+}
+
+/* Demo area */
+.component-demo {
+  padding: var(--space-xl) var(--space-lg);
+  background: oklch(10% 0.012 265);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 10rem;
+  position: relative;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Card info */
+.component-info {
+  padding: var(--space-md) var(--space-lg) var(--space-sm);
+}
+
+.component-info h3 {
+  font-size: var(--text-md);
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  color: var(--color-text);
+}
+
+.component-info p {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  line-height: 1.55;
+}
+
+.component-category-badge {
+  display: inline-block;
+  margin-bottom: var(--space-sm);
+  padding: 2px var(--space-sm);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: oklch(60% 0.18 265 / 0.12);
+  color: var(--color-primary);
+  border: 1px solid oklch(60% 0.18 265 / 0.25);
+}
+
+/* Code snippet area inside card */
+.component-code {
+  padding: var(--space-sm) var(--space-lg) var(--space-md);
+}
+
+/* Per-card tab groups — scoped IDs via card index suffix */
+.component-card .tab-group {
+  width: 100%;
+}
+
+.component-card .tab-group__nav {
+  background: var(--color-border);
+}
+
+.component-card .tab-group__label {
+  font-size: 0.65rem;
+  padding: 0.35rem var(--space-sm);
+}
+
+.component-card pre {
+  font-size: 0.7rem;
+  line-height: 1.65;
+  padding: var(--space-md);
+  overflow-x: auto;
+  margin: 0;
+  background: var(--color-surface);
+  font-family: var(--font-mono);
+  color: oklch(70% 0.06 265);
+  max-height: 14rem;
+}
+
+.component-card code { font-family: var(--font-mono); }
+
+/* Syntax colouring hints */
+.tok-tag    { color: oklch(65% 0.15 295); }   /* purple — HTML tags */
+.tok-attr   { color: oklch(72% 0.12 200); }   /* cyan — attributes */
+.tok-str    { color: oklch(70% 0.14 150); }   /* green — strings */
+.tok-prop   { color: oklch(68% 0.15 240); }   /* blue — CSS props */
+.tok-val    { color: oklch(70% 0.12 60);  }   /* amber — values */
+.tok-sel    { color: oklch(65% 0.14 330); }   /* pink — selectors */
+.tok-comment{ color: oklch(50% 0.03 265); font-style: italic; }
+
+/* ── Copy button inside code panels ──────────────────────────── */
+.component-card .tab-group__panel {
+  position: relative;
+}
+
+.component-card .copy-btn {
+  top: var(--space-xs);
+  right: var(--space-xs);
+  font-size: 0.6rem;
+  padding: 2px var(--space-xs);
+}
+
+/* =========================================================== */
+/* ── Individual Component Demos ─────────────────────────────── */
+/* =========================================================== */
+
+/* ── 1. Popover Menu ─────────────────────────────────────────── */
+.demo-popover-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out),
+              transform var(--duration-fast) var(--ease-out);
+}
+
+.demo-popover-trigger:hover {
+  background: oklch(65% 0.2 265);
+  transform: translateY(-1px);
+}
+
+.demo-popover-trigger svg {
+  width: 14px;
+  height: 14px;
+  transition: rotate var(--duration-fast) var(--ease-out);
+}
+
+[popover].popover-menu {
+  position: absolute;
+  margin: 0;
+  padding: var(--space-xs);
+  background: oklch(14% 0.02 265);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 16px 40px oklch(0% 0 0 / 0.6),
+              0 0 0 1px oklch(100% 0 0 / 0.04);
+  min-width: 10rem;
+  z-index: var(--z-overlay);
+
+  /* Entry animation */
+  opacity: 0;
+  translate: 0 -0.5rem;
+  transition: opacity var(--duration-base) var(--ease-out),
+              translate var(--duration-base) var(--ease-out),
+              display var(--duration-base) var(--ease-out) allow-discrete;
+
+  @starting-style {
+    opacity: 0;
+    translate: 0 -0.5rem;
+  }
+}
+
+[popover].popover-menu:popover-open {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.popover-menu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.popover-menu__item:hover {
+  background: oklch(20% 0.025 265);
+  color: var(--color-primary);
+}
+
+.popover-menu__item svg {
+  width: 14px;
+  height: 14px;
+  color: var(--color-muted);
+  flex-shrink: 0;
+}
+
+.popover-menu__separator {
+  height: 1px;
+  background: var(--color-border);
+  margin: var(--space-xs) 0;
+}
+
+/* ── 2. Toast Notification ───────────────────────────────────── */
+.demo-toast-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: oklch(55% 0.15 150);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.demo-toast-trigger:hover {
+  background: oklch(60% 0.17 150);
+}
+
+[popover].toast-notification {
+  position: fixed;
+  bottom: var(--space-lg);
+  right: var(--space-lg);
+  margin: 0;
+  padding: var(--space-md) var(--space-lg);
+  background: oklch(16% 0.02 265);
+  border: 1px solid oklch(55% 0.15 150 / 0.3);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px oklch(0% 0 0 / 0.5);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  z-index: var(--z-toast);
+  max-width: 24rem;
+  width: max-content;
+
+  opacity: 0;
+  translate: 0 1rem;
+  transition: opacity var(--duration-base) var(--ease-out),
+              translate var(--duration-base) var(--ease-out),
+              display var(--duration-base) var(--ease-out) allow-discrete;
+
+  @starting-style {
+    opacity: 0;
+    translate: 0 1rem;
+  }
+}
+
+[popover].toast-notification:popover-open {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.toast-icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: oklch(55% 0.15 150 / 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: oklch(65% 0.18 150);
+  font-size: 1rem;
+}
+
+.toast-body strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.toast-body span {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+/* ── 3. Modal Dialog ─────────────────────────────────────────── */
+.demo-dialog-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: oklch(55% 0.15 330);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.demo-dialog-trigger:hover {
+  background: oklch(60% 0.17 330);
+}
+
+dialog.modal-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  padding: var(--space-xl);
+  background: oklch(14% 0.02 265);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 24px 80px oklch(0% 0 0 / 0.7),
+              0 0 0 1px oklch(100% 0 0 / 0.04);
+  color: var(--color-text);
+  max-width: min(90vw, 28rem);
+  width: 100%;
+  z-index: var(--z-modal);
+
+  /* Entry animation */
+  opacity: 0;
+  scale: 0.96;
+  translate: 0 1rem;
+  transition: opacity var(--duration-base) var(--ease-out),
+              scale var(--duration-base) var(--ease-out),
+              translate var(--duration-base) var(--ease-out),
+              display var(--duration-base) var(--ease-out) allow-discrete,
+              overlay var(--duration-base) var(--ease-out) allow-discrete;
+
+  @starting-style {
+    opacity: 0;
+    scale: 0.96;
+    translate: 0 1rem;
+  }
+}
+
+dialog.modal-dialog[open] {
+  opacity: 1;
+  scale: 1;
+  translate: 0 0;
+}
+
+dialog.modal-dialog::backdrop {
+  background: oklch(5% 0.01 265 / 0.8);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out),
+              display var(--duration-base) var(--ease-out) allow-discrete,
+              overlay var(--duration-base) var(--ease-out) allow-discrete;
+
+  @starting-style {
+    opacity: 0;
+  }
+}
+
+dialog.modal-dialog[open]::backdrop {
+  opacity: 1;
+}
+
+.modal-dialog__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.modal-dialog__title {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.modal-dialog__close {
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  cursor: pointer;
+  padding: var(--space-xs);
+  border-radius: var(--radius-sm);
+  line-height: 1;
+  font-size: 1.25rem;
+  transition: color var(--duration-fast) var(--ease-out);
+  margin-left: var(--space-md);
+}
+
+.modal-dialog__close:hover {
+  color: var(--color-text);
+}
+
+.modal-dialog__body {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  margin-bottom: var(--space-lg);
+}
+
+.modal-dialog__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+}
+
+/* ── 4. Responsive Card (Container Query) ────────────────────── */
+.container-demo-wrapper {
+  container-type: inline-size;
+  container-name: card-container;
+  width: 100%;
+  resize: horizontal;
+  overflow: hidden;
+  min-width: 10rem;
+  max-width: 100%;
+  padding-right: 0.5rem; /* room for resize handle */
+}
+
+.responsive-card {
+  background: oklch(16% 0.02 265);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.responsive-card__image {
+  background: linear-gradient(135deg,
+    oklch(50% 0.2 265),
+    oklch(60% 0.18 295));
+  height: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.responsive-card__body {
+  padding: var(--space-md);
+}
+
+.responsive-card__title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+
+.responsive-card__desc {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.responsive-card__tag {
+  display: inline-block;
+  margin-top: var(--space-sm);
+  padding: 2px var(--space-sm);
+  background: oklch(60% 0.18 265 / 0.15);
+  color: var(--color-primary);
+  border-radius: var(--radius-pill);
+  font-size: 0.65rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+/* Wide layout when container >= 24rem */
+@container card-container (min-width: 24rem) {
+  .responsive-card {
+    grid-template-rows: none;
+    grid-template-columns: 8rem 1fr;
+  }
+
+  .responsive-card__image {
+    height: 100%;
+    min-height: 6rem;
+  }
+}
+
+/* Resize hint */
+.container-demo-wrapper::after {
+  content: '↔ resize me';
+  display: block;
+  text-align: right;
+  font-size: 0.65rem;
+  color: var(--color-muted);
+  margin-top: var(--space-xs);
+  font-family: var(--font-mono);
+}
+
+/* ── 5. Animated Accordion ───────────────────────────────────── */
+.accordion {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.accordion-item {
+  background: oklch(12% 0.015 265);
+}
+
+.accordion-item > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  cursor: pointer;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  list-style: none;
+  user-select: none;
+  transition: background var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
+  gap: var(--space-md);
+}
+
+.accordion-item > summary::-webkit-details-marker { display: none; }
+
+.accordion-item > summary:hover {
+  background: oklch(15% 0.02 265);
+  color: var(--color-primary);
+}
+
+.accordion-item[open] > summary {
+  color: var(--color-primary);
+}
+
+.accordion-chevron {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--color-muted);
+  transition: rotate var(--duration-base) var(--ease-out);
+}
+
+.accordion-item[open] .accordion-chevron {
+  rotate: 180deg;
+}
+
+.accordion-body {
+  padding: 0 var(--space-lg) var(--space-md);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  line-height: 1.6;
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-md);
+
+  /* @starting-style entrance animation */
+  animation: accordion-open var(--duration-base) var(--ease-out) both;
+
+  @starting-style {
+    opacity: 0;
+    translate: 0 -0.5rem;
+  }
+}
+
+@keyframes accordion-open {
+  from {
+    opacity: 0;
+    translate: 0 -0.5rem;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* ── 6. Toggle Switch ────────────────────────────────────────── */
+.toggle-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-label input[type="checkbox"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.toggle-track {
+  position: relative;
+  width: 2.75rem;
+  height: 1.5rem;
+  border-radius: var(--radius-pill);
+  background: oklch(25% 0.03 265);
+  border: 1.5px solid oklch(30% 0.03 265);
+  transition: background var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out);
+  flex-shrink: 0;
+}
+
+.toggle-track::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(1.5rem - 6px);
+  height: calc(1.5rem - 6px);
+  border-radius: 50%;
+  background: oklch(55% 0.04 265);
+  transition: translate var(--duration-base) var(--ease-out),
+              background var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out);
+}
+
+/* Checked state via :has() */
+.toggle-label:has(input:checked) .toggle-track {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.toggle-label:has(input:checked) .toggle-track::after {
+  translate: 1.25rem 0;
+  background: #fff;
+  box-shadow: 0 2px 6px oklch(0% 0 0 / 0.3);
+}
+
+.toggle-text {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.toggle-text small {
+  display: block;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  margin-top: 2px;
+}
+
+/* ── 7. Tab Bar ──────────────────────────────────────────────── */
+.tab-bar-demo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tab-bar-demo input[type="radio"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.tab-bar__nav {
+  display: flex;
+  border-bottom: 1px solid var(--color-border);
+  gap: 0;
+}
+
+.tab-bar__tab {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+  user-select: none;
+}
+
+.tab-bar__tab:hover {
+  color: var(--color-text);
+}
+
+/* Active tab via :has() on the wrapper */
+.tab-bar-demo:has(#demo-tab-preview:checked) .tab-bar__tab[for="demo-tab-preview"],
+.tab-bar-demo:has(#demo-tab-code:checked)    .tab-bar__tab[for="demo-tab-code"],
+.tab-bar-demo:has(#demo-tab-docs:checked)    .tab-bar__tab[for="demo-tab-docs"] {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.tab-bar__panels {
+  padding: var(--space-lg) var(--space-md);
+}
+
+.tab-bar__panel {
+  display: none;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.tab-bar-demo:has(#demo-tab-preview:checked) .tab-bar__panel[data-panel="preview"],
+.tab-bar-demo:has(#demo-tab-code:checked)    .tab-bar__panel[data-panel="code"],
+.tab-bar-demo:has(#demo-tab-docs:checked)    .tab-bar__panel[data-panel="docs"] {
+  display: block;
+  animation: fade-in var(--duration-base) var(--ease-out) both;
+}
+
+.tab-bar__panel code {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  background: oklch(60% 0.18 265 / 0.1);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.tab-preview-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+  background: oklch(14% 0.015 265);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--color-border);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+/* ── 8. Tooltip ──────────────────────────────────────────────── */
+.tooltip-demo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-trigger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  cursor: default;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.tooltip-trigger-btn:hover,
+.tooltip-trigger-btn:focus-within {
+  border-color: var(--color-primary);
+}
+
+.tooltip-trigger-btn .info-icon {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-style: italic;
+  font-family: Georgia, serif;
+}
+
+/* Popover-based tooltip */
+[popover].tooltip-pop {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  left: 50%;
+  translate: -50% 0;
+  margin: 0;
+  padding: var(--space-sm) var(--space-md);
+  background: oklch(22% 0.025 265);
+  border: 1px solid oklch(35% 0.04 265);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 16px oklch(0% 0 0 / 0.5);
+  font-size: var(--text-xs);
+  color: var(--color-text);
+  white-space: nowrap;
+  z-index: var(--z-overlay);
+  pointer-events: none;
+
+  opacity: 0;
+  translate: -50% 0.25rem;
+  transition: opacity var(--duration-fast) var(--ease-out),
+              translate var(--duration-fast) var(--ease-out),
+              display var(--duration-fast) var(--ease-out) allow-discrete;
+
+  @starting-style {
+    opacity: 0;
+    translate: -50% 0.25rem;
+  }
+}
+
+[popover].tooltip-pop:popover-open {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+/* Arrow */
+[popover].tooltip-pop::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  translate: -50% 0;
+  border: 5px solid transparent;
+  border-top-color: oklch(35% 0.04 265);
+}
+
+/* CSS-only tooltip (hover fallback using :has approach) */
+.tooltip-hover-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-hover-text {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  cursor: default;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.tooltip-hover-wrapper:hover .tooltip-hover-text {
+  border-color: oklch(65% 0.14 295);
+}
+
+.tooltip-bubble {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  left: 50%;
+  translate: -50% 0;
+  padding: var(--space-sm) var(--space-md);
+  background: oklch(22% 0.025 265);
+  border: 1px solid oklch(35% 0.04 265);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 16px oklch(0% 0 0 / 0.5);
+  font-size: var(--text-xs);
+  color: var(--color-text);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: var(--z-overlay);
+
+  /* Hidden by default */
+  opacity: 0;
+  translate: -50% 0.5rem;
+  transition: opacity var(--duration-fast) var(--ease-out),
+              translate var(--duration-fast) var(--ease-out);
+}
+
+.tooltip-hover-wrapper:hover .tooltip-bubble,
+.tooltip-hover-wrapper:focus-within .tooltip-bubble {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+.tooltip-bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  translate: -50% 0;
+  border: 5px solid transparent;
+  border-top-color: oklch(35% 0.04 265);
+}
+
+/* ── Floating filter (radio inputs live outside the grid) ────── */
+/* The radio inputs are placed directly before .components-grid in the DOM */
+#filter-all,
+#filter-nav,
+#filter-feedback,
+#filter-forms,
+#filter-layout {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}

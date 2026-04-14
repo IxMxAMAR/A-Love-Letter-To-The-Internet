@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Component Toolkit — A Love Letter to the Web</title>
+  <meta name="description" content="Production-ready UI components built with modern HTML and CSS. Popover, Dialog, Container Queries, :has(), and more — zero JavaScript for interactions.">
+
+  <meta property="og:title" content="Component Toolkit — A Love Letter to the Web">
+  <meta property="og:description" content="8 production-ready modern HTML/CSS components. Copy-paste ready.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/transitions.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/toolkit.css">
+</head>
+<body class="toolkit-page">
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ── Site Nav ─────────────────────────────────────────────── -->
+  <nav class="site-nav" aria-label="Site navigation">
+    <div class="site-nav__inner">
+      <a href="index.html" class="site-nav__logo">A Love Letter to the Web</a>
+      <div class="site-nav__links">
+        <a href="index.html"       class="site-nav__link">Timeline</a>
+        <a href="hub.html"         class="site-nav__link">Observatory</a>
+        <a href="playground.html"  class="site-nav__link">Playground</a>
+        <a href="components.html"  class="site-nav__link" aria-current="page">Components</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <div class="page-content">
+
+      <!-- ── Page Header ────────────────────────────────────────── -->
+      <header class="toolkit-header">
+        <span class="label">Component Toolkit</span>
+        <h1>Production-Ready Components</h1>
+        <p class="subtitle">
+          Eight modern UI components — built with the platform, no framework required.
+          Every interaction uses HTML and CSS. Copy the code, adapt the styles.
+        </p>
+      </header>
+
+      <!-- ── Filter Bar ──────────────────────────────────────────── -->
+      <!--
+        Radio inputs are placed BEFORE the grid in the DOM so CSS sibling
+        combinators can reach .components-grid. The filter-bar wraps both
+        the radios and their visible labels.
+      -->
+      <div class="filter-bar" role="group" aria-label="Filter components by category">
+        <span class="filter-bar__label-text" aria-hidden="true">Filter</span>
+
+        <input type="radio" name="component-filter" id="filter-all"      checked>
+        <label class="filter-pill" for="filter-all">All</label>
+
+        <input type="radio" name="component-filter" id="filter-nav">
+        <label class="filter-pill" for="filter-nav">Navigation</label>
+
+        <input type="radio" name="component-filter" id="filter-feedback">
+        <label class="filter-pill" for="filter-feedback">Feedback</label>
+
+        <input type="radio" name="component-filter" id="filter-forms">
+        <label class="filter-pill" for="filter-forms">Forms</label>
+
+        <input type="radio" name="component-filter" id="filter-layout">
+        <label class="filter-pill" for="filter-layout">Layout</label>
+      </div>
+
+      <!-- ── Components Grid ─────────────────────────────────────── -->
+      <!--
+        The grid MUST follow the radio inputs as a sibling so the
+        :has() selectors in toolkit.css can control visibility.
+      -->
+      <div class="components-grid" role="list">
+
+        <!-- ════════════════════════════════════════════════════════
+             1. POPOVER MENU (Navigation)
+             ════════════════════════════════════════════════════════ -->
+        <article class="component-card" data-category="navigation" role="listitem">
+          <div class="component-demo">
+            <button
+              class="demo-popover-trigger"
+              popovertarget="popover-menu-demo"
+              aria-haspopup="true"
+            >
+              Options
+              <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 6l4 4 4-4"/>
+              </svg>
+            </button>
+
+            <div
+              id="popover-menu-demo"
+              class="popover-menu"
+              popover
+              role="menu"
+            >
+              <button class="popover-menu__item" role="menuitem">
+                <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M2 8h12M8 2l6 6-6 6"/></svg>
+                Open
+              </button>
+              <button class="popover-menu__item" role="menuitem">
+                <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M8 1v10M4 8l4 4 4-4"/><path d="M2 13h12"/></svg>
+                Download
+              </button>
+              <button class="popover-menu__item" role="menuitem">
+                <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M10 2L14 6M10 2H6a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6l-4-4z"/></svg>
+                Rename
+              </button>
+              <div class="popover-menu__separator" role="separator"></div>
+              <button class="popover-menu__item" role="menuitem" style="color: oklch(65% 0.2 25);">
+                <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M3 4h10M6 4V2h4v2M5 4v8a1 1 0 001 1h4a1 1 0 001-1V4"/></svg>
+                Delete
+              </button>
+            </div>
+          </div>
+
+          <div class="component-info">
+            <span class="component-category-badge">Navigation</span>
+            <h3>Popover Menu</h3>
+            <p>Native popover API — no JavaScript positioning needed. Auto-dismisses on outside click, supports keyboard navigation, and uses <code>@starting-style</code> for smooth entry.</p>
+          </div>
+
+          <div class="component-code">
+            <div class="tab-group">
+              <div class="tab-group__nav" role="tablist">
+                <input type="radio" name="tabs-1" id="tabs-1-html" checked>
+                <label class="tab-group__label" for="tabs-1-html" role="tab">HTML</label>
+                <input type="radio" name="tabs-1" id="tabs-1-css">
+                <label class="tab-group__label" for="tabs-1-css" role="tab">CSS</label>
+              </div>
+
+              <div class="tab-group__panel tab-group__panel--html" role="tabpanel">
+                <div class="code-block">
+                  <button class="copy-btn" aria-label="Copy HTML code">Copy</button>
+                  <pre id="popover-html"><code><span class="tok-tag">&lt;button</span> <span class="tok-attr">popovertarget</span>=<span class="tok-str">"menu"</span><span class="tok-tag">&gt;</span>
+  Options
+<span class="tok-tag">&lt;/button&gt;</span>
+
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">id</span>=<span class="tok-str">"menu"</span>
+     <span class="tok-attr">popover</span>
+     <span class="tok-attr">role</span>=<span class="tok-str">"menu"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"menu-item"</span>
+           <span class="tok-attr">role</span>=<span class="tok-str">"menuitem"</span><span class="tok-tag">&gt;</span>
+    Open
+  <span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"menu-item"</span>
+           <span class="tok-attr">role</span>=<span class="tok-str">"menuitem"</span><span class="tok-tag">&gt;</span>
+    Download
+  <span class="tok-tag">&lt;/button&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+                </div>
+              </div>
+
+              <div class="tab-group__panel tab-group__panel--css" role="tabpanel">
+                <div class="code-block">
+                  <button class="copy-btn" aria-label="Copy CSS code">Copy</button>
+                  <pre><code><span class="tok-sel">[popover].menu</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">padding</span>: <span class="tok-val">0.25rem</span>;
+  <span class="tok-prop">background</span>: <span class="tok-val">oklch(14% 0.02 265)</span>;
+  <span class="tok-prop">border-radius</span>: <span class="tok-val">0.75rem</span>;
+  <span class="tok-prop">opacity</span>: <span class="tok-val">0</span>;
+  <span class="tok-prop">translate</span>: <span class="tok-val">0 -0.5rem</span>;
+  <span class="tok-prop">transition</span>: <span class="tok-val">opacity 250ms, translate 250ms,
+    display 250ms allow-discrete</span>;
+
+  <span class="tok-sel">@starting-style</span> <span class="tok-tag">{</span>
+    <span class="tok-prop">opacity</span>: <span class="tok-val">0</span>;
+    <span class="tok-prop">translate</span>: <span class="tok-val">0 -0.5rem</span>;
+  <span class="tok-tag">}</span>
+<span class="tok-tag">}</span>
+
+<span class="tok-sel">[popover].menu:popover-open</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">opacity</span>: <span class="tok-val">1</span>;
+  <span class="tok-prop">translate</span>: <span class="tok-val">0 0</span>;
+<span class="tok-tag">}</span></code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ════════════════════════════════════════════════════════
+             2. TOAST NOTIFICATION (Feedback)
+             ════════════════════════════════════════════════════════ -->
+        <article class="component-card" data-category="feedback" role="listitem">
+          <div class="component-demo">
+            <button
+              class="demo-toast-trigger"
+              popovertarget="toast-demo"
+              popovertargetaction="show"
+            >
+              Show Toast
+            </button>
+
+            <div id="toast-demo" class="toast-notification" popover>
+              <div class="toast-icon" aria-hidden="true">✓</div>
+              <div class="toast-body">
+                <strong>Changes saved</strong>
+                <span>Your work has been saved successfully.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="component-info">
+            <span class="component-category-badge">Feedback</span>
+            <h3>Toast Notification</h3>
+            <p>Dismissible notification using the Popover API. Enters with <code>@starting-style</code>, exits with a CSS transition. Fixed positioning keeps it anchored to the viewport corner.</p>
+          </div>
+
+          <div class="component-code">
+            <div class="tab-group">
+              <div class="tab-group__nav" role="tablist">
+                <input type="radio" name="tabs-2" id="tabs-2-html" checked>
+                <label class="tab-group__label" for="tabs-2-html" role="tab">HTML</label>
+                <input type="radio" name="tabs-2" id="tabs-2-css">
+                <label class="tab-group__label" for="tabs-2-css" role="tab">CSS</label>
+              </div>
+
+              <div class="tab-group__panel tab-group__panel--html" role="tabpanel">
+                <div class="code-block">
+                  <button class="copy-btn" aria-label="Copy HTML code">Copy</button>
+                  <pre><code><span class="tok-tag">&lt;button</span>
+  <span class="tok-attr">popovertarget</span>=<span class="tok-str">"toast"</span>
+  <span class="tok-attr">popovertargetaction</span>=<span class="tok-str">"show"</span><span class="tok-tag">&gt;</span>
+  Show Toast
+<span class="tok-tag">&lt;/button&gt;</span>
+
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">id</span>=<span class="tok-str">"toast"</span>
+     <span class="tok-attr">class</span>=<span class="tok-str">"toast"</span>
+     <span class="tok-attr">popover</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;strong&gt;</span>Changes saved<span class="tok-tag">&lt;/strong&gt;</span>
+  <span class="tok-tag">&lt;span&gt;</span>Your work is saved.<span class="tok-tag">&lt;/span&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+                </div>
+              </div>
+
+              <div class="tab-group__panel tab-group__panel--css" role="tabpanel">
+                <div class="code-block">
+                  <button class="copy-btn" aria-label="Copy CSS code">Copy</button>
+                  <pre><code><span class="tok-sel">.toast</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">position</span>: <span class="tok-val">fixed</span>;
+  <span class="tok-prop">bottom</span>: <span class="tok-val">1.5rem</span>;
+  <span class="tok-prop">right</span>: <span class="tok-val">1.5rem</span>;
+  <span class="tok-prop">margin</span>: <span class="tok-val">0</span>;
+  <span class="tok-prop">opacity</span>: <span class="tok-val">0</span>;
+  <span class="tok-prop">translate</span>: <span class="tok-val">0 1rem</span>;
+  <span class="tok-prop">transition</span>:
+    <span class="tok-val">opacity 250ms,
+    translate 250ms,
+    display 250ms allow-discrete</span>;
+
+  <span class="tok-sel">@starting-style</span> <span class="tok-tag">{</span>
+    <span class="tok-prop">opacity</span>: <span class="tok-val">0</span>;
+    <span class="tok-prop">translate</span>: <span class="tok-val">0 1rem</span>;
+  <span class="tok-tag">}</span>
+<span class="tok-tag">}</span>
+
+<span class="tok-sel">.toast:popover-open</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">opacity</span>: <span class="tok-val">1</span>;
+  <span class="tok-prop">translate</span>: <span class="tok-val">0 0</span>;
+<span class="tok-tag">}</span></code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ════════════════════════════════════════════════════════
+             3. MODAL DIALOG (Feedback)
+             ════════════════════════════════════════════════════════ -->
+        <article class="component-card" data-category="feedback" role="listitem">
+          <div class="component-demo">
+            <button
+              class="demo-dialog-trigger"
+              onclick="document.getElementById('modal-demo').showModal()"
+            >
+              Open Modal
+            </button>
+
+            <dialog
+              id="modal-demo"
+              class="modal-dialog"
+              closedby="any"
+            >
+              <div class="modal-dialog__header">
+                <h2 class="modal-dialog__title">Confirm action</h2>
+                <button
+                  class="modal-dialog__close"
+                  onclick="this.closest('dialog').close()"
+                  aria-label="Close modal"
+                >×</button>
+              </div>
+              <p class="modal-dialog__body">
+                Are you sure you want to continue? This will apply the selected
+                changes to your configuration. You can undo this from settings.
+              </p>
+              <div class="modal-dialog__footer">
+                <button
+                  class="btn btn-secondary"
+                  onclick="this.closest('dialog').close()"
+                >Cancel</button>
+                <button
+                  class="btn btn-primary"
+                  onclick="this.closest('dialog').close()"
+                  style="background: oklch(55% 0.15 330);"
+                >Confirm</button>
+              </div>
+            </dialog>
+          </div>
+
+          <div class="component-info">
+            <span class="component-category-badge">Feedback</span>
+            <h3>Modal Dialog</h3>
+            <p>Native <code>&lt;dialog&gt;</code> element with <code>closedby="any"</code> for click-outside dismissal. Animated backdrop uses <code>@starting-style</code>. Fully accessible with focus trap built in.</p>
+          </div>
+
+          <div class="component-code">
+            <div class="tab-group">
+              <div class="tab-group__nav" role="tablist">
+                <input type="radio" name="tabs-3" id="tabs-3-html" checked>
+                <label class="tab-group__label" for="tabs-3-html" role="tab">HTML</label>
+                <input type="radio" name="tabs-3" id="tabs-3-css">
+                <label class="tab-group__label" for="tabs-3-css" role="tab">CSS</label>
+              </div>
+
+              <div class="tab-group__panel tab-group__panel--html" role="tabpanel">
+                <div class="code-block">
+                  <button class="copy-btn" aria-label="Copy HTML code">Copy</button>
+                  <pre><code><span class="tok-tag">&lt;button</span>
+  <span class="tok-attr">onclick</span>=<span class="tok-str">"dialog.showModal()"</span><span class="tok-tag">&gt;</span>
+  Open Modal
+<span class="tok-tag">&lt;/button&gt;</span>
+
+<span class="tok-tag">&lt;dialog</span>
+  <span class="tok-attr">id</span>=<span class="tok-str">"dialog"</span>
+  <span class="tok-attr">closedby</span>=<span class="tok-str">"any"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;h2&gt;</span>Title<span class="tok-tag">&lt;/h2&gt;</span>
+  <span class="tok-tag">&lt;p&gt;</span>Dialog content.<span class="tok-tag">&lt;/p&gt;</span>
+  <span class="tok-tag">&lt;button</span>
+    <span class="tok-attr">onclick</span>=<span class="tok-str">"dialog.close()"</span><span class="tok-tag">&gt;</span>
+    Close
+  <span class="tok-tag">&lt;/button&gt;</span>
+<span class="tok-tag">&lt;/dialog&gt;</span></code></pre>
+                </div>
+              </div>
+
+              <div class="tab-group__panel tab-group__panel--css" role="tabpanel">
+                <div class="code-block">
+                  <button class="copy-btn" aria-label="Copy CSS code">Copy</button>
+                  <pre><code><span class="tok-sel">dialog</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">opacity</span>: <span class="tok-val">0</span>;
+  <span class="tok-prop">scale</span>: <span class="tok-val">0.96</span>;
+  <span class="tok-prop">transition</span>:
+    <span class="tok-val">opacity 250ms,
+    scale 250ms,
+    display 250ms allow-discrete,
+    overlay 250ms allow-discrete</span>;
+
+  <span class="tok-sel">@starting-style</span> <span class="tok-tag">{</span>
+    <span class="tok-prop">opacity</span>: <span class="tok-val">0</span>;
+    <span class="tok-prop">scale</span>: <span class="tok-val">0.96</span>;
+  <span class="tok-tag">}</span>
+<span class="tok-tag">}</span>
+
+<span class="tok-sel">dialog[open]</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">opacity</span>: <span class="tok-val">1</span>;
+  <span class="tok-prop">scale</span>: <span class="tok-val">1</span>;
+<span class="tok-tag">}</span>
+
+<span class="tok-sel">dialog::backdrop</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">background</span>: <span class="tok-val">oklch(5% 0 0 / 0.8)</span>;
+  <span class="tok-prop">backdrop-filter</span>: <span class="tok-val">blur(4px)</span>;
+<span class="tok-tag">}</span></code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ════════════════════════════════════════════════════════
+             4. RESPONSIVE CARD — Container Query (Layout)
+             ════════════════════════════════════════════════════════ -->
+        <article class="component-card" data-category="layout" role="listitem">
+          <div class="component-demo" style="flex-direction: column; align-items: stretch; padding: var(--space-lg);">
+            <div class="container-demo-wrapper">
+              <div class="responsive-card">
+                <div class="responsive-card__image" aria-hidden="true">🌊</div>
+                <div class="responsive-card__body">
+                  <div class="responsive-card__title">Container Query Card</div>
+                  <p class="responsive-card__desc">Reshapes automatically as its container width changes — no media queries needed.</p>
+                  <span class="responsive-card__tag">@container</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="component-info">
+            <span class="component-category-badge">Layout</span>
+            <h3>Responsive Card</h3>
+            <p>Uses <code>@container</code> to switch between stacked and side-by-side layouts at 24rem. Resize the demo above to see it respond to its own container, not the viewport.</p>
+          </div>
+
+          <div class="component-code">
+            <div class="tab-group">
+              <div class="tab-group__nav" role="tablist">
+                <input type="radio" name="tabs-4" id="tabs-4-html" checked>
+                <label class="tab-group__label" for="tabs-4-html" role="tab">HTML</label>
+                <input type="radio" name="tabs-4" id="tabs-4-css">
+                <label class="tab-group__label" for="tabs-4-css" role="tab">CSS</label>
+              </div>
+
+              <div class="tab-group__panel tab-group__panel--html" role="tabpanel">
+                <div class="code-block">
+                  <button class="copy-btn" aria-label="Copy HTML code">Copy</button>
+                  <pre><code><span class="tok-comment">/* Wrap in a container */</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card-container"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card"</span><span class="tok-tag">&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card__image"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-comment">&lt;!-- image --&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"card__body"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;h3&gt;</span>Title<span class="tok-tag">&lt;/h3&gt;</span>
+      <span class="tok-tag">&lt;p&gt;</span>Description<span class="tok-tag">&lt;/p&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+                </div>
+              </div>
+
+              <div class="tab-group__panel tab-group__panel--css" role="tabpanel">
+                <div class="code-block">
+                  <button class="copy-btn" aria-label="Copy CSS code">Copy</button>
+                  <pre><code><span class="tok-sel">.card-container</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">container-type</span>: <span class="tok-val">inline-size</span>;
+  <span class="tok-prop">container-name</span>: <span class="tok-val">card</span>;
+<span class="tok-tag">}</span>
+
+<span class="tok-sel">.card</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">display</span>: <span class="tok-val">grid</span>;
+  <span class="tok-prop">grid-template-rows</span>: <span class="tok-val">auto 1fr</span>;
+<span class="tok-tag">}</span>
+
+<span class="tok-sel">@container card (min-width: 24rem)</span> <span class="tok-tag">{</span>
+  <span class="tok-sel">.card</span> <span class="tok-tag">{</span>
+    <span class="tok-prop">grid-template-rows</span>: <span class="tok-val">none</span>;
+    <span class="tok-prop">grid-template-columns</span>: <span class="tok-val">8rem 1fr</span>;
+  <span class="tok-tag">}</span>
+<span class="tok-tag">}</span></code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ════════════════════════════════════════════════════════
+             5. ANIMATED ACCORDION (Navigation)
+             ════════════════════════════════════════════════════════ -->
+        <article class="component-card" data-category="navigation" role="listitem">
+          <div class="component-demo" style="align-items: stretch; padding: var(--space-lg);">
+            <div class="accordion" style="width: 100%;">
+              <details class="accordion-item">
+                <summary>
+                  What is the Popover API?
+                  <svg class="accordion-chevron" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                </summary>
+                <div class="accordion-body">
+                  A native HTML API for creating dismissible overlay UI — menus, tooltips, and dialogs — without JavaScript. Uses the <code>popover</code> attribute and <code>popovertarget</code> to wire things up declaratively.
+                </div>
+              </details>
+
+              <details class="accordion-item">
+                <summary>
+                  How does <code>@starting-style</code> work?
+                  <svg class="accordion-chevron" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                </summary>
+                <div class="accordion-body">
+                  It defines the initial style of an element before its first paint, enabling CSS transitions from <code>display: none</code>. The browser captures the start values and transitions into the final state.
+                </div>
+              </details>
+
+              <details class="accordion-item">
+                <summary>
+                  Do these need JavaScript?
+                  <svg class="accordion-chevron" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+                </summary>
+                <div class="accordion-body">
+                  Nope. <code>&lt;details&gt;</code> is a native HTML element with built-in toggle behaviour. The chevron rotation and body animation are all CSS, triggered by the <code>[open]</code> attribute.
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <div class="component-info">
+            <span class="component-category-badge">Navigation</span>
+            <h3>Animated Accordion</h3>
+            <p>Built on the native <code>&lt;details&gt;</code> + <code>&lt;summary&gt;</code> elements. Content animates in via <code>@starting-style</code>. Chevron rotates via CSS on the <code>[open]</code> attribute — zero JavaScript.</p>
+          </div>
+
+          <div class="component-code">
+            <div class="tab-group">
+              <div class="tab-group__nav" role="tablist">
+                <input type="radio" name="tabs-5" id="tabs-5-html" checked>
+                <label class="tab-group__label" for="tabs-5-html" role="tab">HTML</label>
+                <input type="radio" name="tabs-5" id="tabs-5-css">
+                <label class="tab-group__label" for="tabs-5-css" role="tab">CSS</label>
+              </div>
+
+              <div class="tab-group__panel tab-group__panel--html" role="tabpanel">
+                <div class="code-block">
+                  <button class="copy-btn" aria-label="Copy HTML code">Copy</button>
+                  <pre><code><span class="tok-tag">&lt;details</span> <span class="tok-attr">class</span>=<span class="tok-str">"accordion-item"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;summary&gt;</span>
+    Question?
+    <span class="tok-tag">&lt;svg</span> <span class="tok-attr">class</span>=<span class="tok-str">"chevron"</span><span class="tok-tag">&gt;</span>
+      <span class="tok-comment">&lt;!-- chevron path --&gt;</span>
+    <span class="tok-tag">&lt;/svg&gt;</span>
+  <span class="tok-tag">&lt;/summary&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"accordion-body"</span><span class="tok-tag">&gt;</span>
+    Answer text here.
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/details&gt;</span></code></pre>
+                </div>
+              </div>
+
+              <div class="tab-group__panel tab-group__panel--css" role="tabpanel">
+                <div class="code-block">
+                  <button class="copy-btn" aria-label="Copy CSS code">Copy</button>
+                  <pre><code><span class="tok-sel">.chevron</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">transition</span>: <span class="tok-val">rotate 250ms ease</span>;
+<span class="tok-tag">}</span>
+
+<span class="tok-sel">[open] .chevron</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">rotate</span>: <span class="tok-val">180deg</span>;
+<span class="tok-tag">}</span>
+
+<span class="tok-sel">.accordion-body</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">animation</span>: <span class="tok-val">slide-in 250ms ease both</span>;
+
+  <span class="tok-sel">@starting-style</span> <span class="tok-tag">{</span>
+    <span class="tok-prop">opacity</span>: <span class="tok-val">0</span>;
+    <span class="tok-prop">translate</span>: <span class="tok-val">0 -0.5rem</span>;
+  <span class="tok-tag">}</span>
+<span class="tok-tag">}</span></code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ════════════════════════════════════════════════════════
+             6. TOGGLE SWITCH (Forms)
+             ════════════════════════════════════════════════════════ -->
+        <article class="component-card" data-category="forms" role="listitem">
+          <div class="component-demo">
+            <div class="toggle-group">
+              <label class="toggle-label">
+                <input type="checkbox" checked>
+                <span class="toggle-track" aria-hidden="true"></span>
+                <span class="toggle-text">
+                  Notifications
+                  <small>Receive push notifications</small>
+                </span>
+              </label>
+
+              <label class="toggle-label">
+                <input type="checkbox">
+                <span class="toggle-track" aria-hidden="true"></span>
+                <span class="toggle-text">
+                  Dark mode
+                  <small>Currently using system default</small>
+                </span>
+              </label>
+
+              <label class="toggle-label">
+                <input type="checkbox" checked>
+                <span class="toggle-track" aria-hidden="true"></span>
+                <span class="toggle-text">
+                  Analytics
+                  <small>Share anonymous usage data</small>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="component-info">
+            <span class="component-category-badge">Forms</span>
+            <h3>Toggle Switch</h3>
+            <p>An iOS-style toggle built from a visually-hidden checkbox. The track and thumb are styled entirely with CSS using <code>:has(input:checked)</code> — no JavaScript, fully keyboard accessible.</p>
+          </div>
+
+          <div class="component-code">
+            <div class="tab-group">
+              <div class="tab-group__nav" role="tablist">
+                <input type="radio" name="tabs-6" id="tabs-6-html" checked>
+                <label class="tab-group__label" for="tabs-6-html" role="tab">HTML</label>
+                <input type="radio" name="tabs-6" id="tabs-6-css">
+                <label class="tab-group__label" for="tabs-6-css" role="tab">CSS</label>
+              </div>
+
+              <div class="tab-group__panel tab-group__panel--html" role="tabpanel">
+                <div class="code-block">
+                  <button class="copy-btn" aria-label="Copy HTML code">Copy</button>
+                  <pre><code><span class="tok-tag">&lt;label</span> <span class="tok-attr">class</span>=<span class="tok-str">"toggle"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;input</span>
+    <span class="tok-attr">type</span>=<span class="tok-str">"checkbox"</span>
+    <span class="tok-attr">class</span>=<span class="tok-str">"visually-hidden"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;span</span> <span class="tok-attr">class</span>=<span class="tok-str">"track"</span>
+        <span class="tok-attr">aria-hidden</span>=<span class="tok-str">"true"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;/span&gt;</span>
+  Notifications
+<span class="tok-tag">&lt;/label&gt;</span></code></pre>
+                </div>
+              </div>
+
+              <div class="tab-group__panel tab-group__panel--css" role="tabpanel">
+                <div class="code-block">
+                  <button class="copy-btn" aria-label="Copy CSS code">Copy</button>
+                  <pre><code><span class="tok-sel">.track</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">width</span>: <span class="tok-val">2.75rem</span>;
+  <span class="tok-prop">height</span>: <span class="tok-val">1.5rem</span>;
+  <span class="tok-prop">border-radius</span>: <span class="tok-val">9999px</span>;
+  <span class="tok-prop">background</span>: <span class="tok-val">oklch(25% 0.03 265)</span>;
+  <span class="tok-prop">transition</span>: <span class="tok-val">background 250ms</span>;
+<span class="tok-tag">}</span>
+
+<span class="tok-sel">.track::after</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">content</span>: <span class="tok-val">""</span>;
+  <span class="tok-prop">/* ...thumb styles */</span>
+  <span class="tok-prop">transition</span>: <span class="tok-val">translate 250ms</span>;
+<span class="tok-tag">}</span>
+
+<span class="tok-sel">.toggle:has(input:checked) .track</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">background</span>: <span class="tok-val">var(--color-primary)</span>;
+<span class="tok-tag">}</span>
+
+<span class="tok-sel">.toggle:has(input:checked) .track::after</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">translate</span>: <span class="tok-val">1.25rem 0</span>;
+<span class="tok-tag">}</span></code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ════════════════════════════════════════════════════════
+             7. TAB BAR (Navigation)
+             ════════════════════════════════════════════════════════ -->
+        <article class="component-card" data-category="navigation" role="listitem">
+          <div class="component-demo" style="align-items: stretch; padding: 0;">
+            <div class="tab-bar-demo" style="width: 100%;">
+              <input type="radio" name="demo-tabs" id="demo-tab-preview" checked>
+              <input type="radio" name="demo-tabs" id="demo-tab-code">
+              <input type="radio" name="demo-tabs" id="demo-tab-docs">
+
+              <div class="tab-bar__nav" role="tablist">
+                <label class="tab-bar__tab" for="demo-tab-preview" role="tab">Preview</label>
+                <label class="tab-bar__tab" for="demo-tab-code"    role="tab">Code</label>
+                <label class="tab-bar__tab" for="demo-tab-docs"    role="tab">Docs</label>
+              </div>
+
+              <div class="tab-bar__panels">
+                <div class="tab-bar__panel" data-panel="preview" role="tabpanel">
+                  <div class="tab-preview-placeholder">Live preview area</div>
+                </div>
+                <div class="tab-bar__panel" data-panel="code" role="tabpanel">
+                  The code for this component. Use <code>:has()</code> on the
+                  wrapper to detect which radio is checked, then show/hide panels
+                  with CSS — no JavaScript needed.
+                </div>
+                <div class="tab-bar__panel" data-panel="docs" role="tabpanel">
+                  Full documentation, API reference, and accessibility notes.
+                  Each panel is a regular <code>div</code> hidden with <code>display: none</code>
+                  until its corresponding radio is checked.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="component-info">
+            <span class="component-category-badge">Navigation</span>
+            <h3>Tab Bar</h3>
+            <p>Tabs driven entirely by CSS. Radio inputs paired with <code>:has()</code> on the wrapper control which panel is visible. Active underline is a bottom border that transitions on the label.</p>
+          </div>
+
+          <div class="component-code">
+            <div class="tab-group">
+              <div class="tab-group__nav" role="tablist">
+                <input type="radio" name="tabs-7" id="tabs-7-html" checked>
+                <label class="tab-group__label" for="tabs-7-html" role="tab">HTML</label>
+                <input type="radio" name="tabs-7" id="tabs-7-css">
+                <label class="tab-group__label" for="tabs-7-css" role="tab">CSS</label>
+              </div>
+
+              <div class="tab-group__panel tab-group__panel--html" role="tabpanel">
+                <div class="code-block">
+                  <button class="copy-btn" aria-label="Copy HTML code">Copy</button>
+                  <pre><code><span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tabs"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;input</span> <span class="tok-attr">type</span>=<span class="tok-str">"radio"</span>
+         <span class="tok-attr">name</span>=<span class="tok-str">"t"</span>
+         <span class="tok-attr">id</span>=<span class="tok-str">"tab-a"</span>
+         <span class="tok-attr">checked</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;input</span> <span class="tok-attr">type</span>=<span class="tok-str">"radio"</span>
+         <span class="tok-attr">name</span>=<span class="tok-str">"t"</span>
+         <span class="tok-attr">id</span>=<span class="tok-str">"tab-b"</span><span class="tok-tag">&gt;</span>
+
+  <span class="tok-tag">&lt;label</span> <span class="tok-attr">for</span>=<span class="tok-str">"tab-a"</span><span class="tok-tag">&gt;</span>Alpha<span class="tok-tag">&lt;/label&gt;</span>
+  <span class="tok-tag">&lt;label</span> <span class="tok-attr">for</span>=<span class="tok-str">"tab-b"</span><span class="tok-tag">&gt;</span>Beta<span class="tok-tag">&lt;/label&gt;</span>
+
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"panel a"</span><span class="tok-tag">&gt;</span>...<span class="tok-tag">&lt;/div&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"panel b"</span><span class="tok-tag">&gt;</span>...<span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+                </div>
+              </div>
+
+              <div class="tab-group__panel tab-group__panel--css" role="tabpanel">
+                <div class="code-block">
+                  <button class="copy-btn" aria-label="Copy CSS code">Copy</button>
+                  <pre><code><span class="tok-sel">.panel</span> <span class="tok-tag">{</span> <span class="tok-prop">display</span>: <span class="tok-val">none</span>; <span class="tok-tag">}</span>
+
+<span class="tok-sel">.tabs:has(#tab-a:checked)
+  .panel.a</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">display</span>: <span class="tok-val">block</span>;
+<span class="tok-tag">}</span>
+
+<span class="tok-sel">.tabs:has(#tab-b:checked)
+  .panel.b</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">display</span>: <span class="tok-val">block</span>;
+<span class="tok-tag">}</span>
+
+<span class="tok-sel">.tabs:has(#tab-a:checked)
+  label[for="tab-a"]</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">border-bottom-color</span>:
+    <span class="tok-val">var(--color-primary)</span>;
+<span class="tok-tag">}</span></code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ════════════════════════════════════════════════════════
+             8. TOOLTIP (Feedback)
+             ════════════════════════════════════════════════════════ -->
+        <article class="component-card" data-category="feedback" role="listitem">
+          <div class="component-demo">
+            <div class="tooltip-demo">
+              <!-- Popover-based tooltip -->
+              <div class="tooltip-wrapper">
+                <button
+                  class="tooltip-trigger-btn"
+                  popovertarget="tooltip-demo-pop"
+                >
+                  Popover Tip
+                  <span class="info-icon" aria-label="More information">i</span>
+                </button>
+                <div id="tooltip-demo-pop" class="tooltip-pop" popover role="tooltip">
+                  Rendered above the top layer ✦
+                </div>
+              </div>
+
+              <!-- Pure CSS hover tooltip -->
+              <div class="tooltip-hover-wrapper">
+                <span class="tooltip-hover-text">
+                  Hover me
+                  <span class="info-icon" aria-hidden="true">i</span>
+                </span>
+                <div class="tooltip-bubble" role="tooltip">
+                  Pure CSS — no JavaScript at all
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="component-info">
+            <span class="component-category-badge">Feedback</span>
+            <h3>Tooltip</h3>
+            <p>Two approaches: a Popover-based tooltip that renders in the top layer (always above other content), and a CSS-only hover tooltip using <code>opacity</code> + <code>translate</code> transitions.</p>
+          </div>
+
+          <div class="component-code">
+            <div class="tab-group">
+              <div class="tab-group__nav" role="tablist">
+                <input type="radio" name="tabs-8" id="tabs-8-html" checked>
+                <label class="tab-group__label" for="tabs-8-html" role="tab">HTML</label>
+                <input type="radio" name="tabs-8" id="tabs-8-css">
+                <label class="tab-group__label" for="tabs-8-css" role="tab">CSS</label>
+              </div>
+
+              <div class="tab-group__panel tab-group__panel--html" role="tabpanel">
+                <div class="code-block">
+                  <button class="copy-btn" aria-label="Copy HTML code">Copy</button>
+                  <pre><code><span class="tok-comment">&lt;!-- CSS-only hover approach --&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tip-wrapper"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;button&gt;</span>Hover me<span class="tok-tag">&lt;/button&gt;</span>
+  <span class="tok-tag">&lt;div</span> <span class="tok-attr">class</span>=<span class="tok-str">"tip"</span>
+       <span class="tok-attr">role</span>=<span class="tok-str">"tooltip"</span><span class="tok-tag">&gt;</span>
+    Tooltip text
+  <span class="tok-tag">&lt;/div&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span>
+
+<span class="tok-comment">&lt;!-- Popover approach --&gt;</span>
+<span class="tok-tag">&lt;button</span>
+  <span class="tok-attr">popovertarget</span>=<span class="tok-str">"tip"</span><span class="tok-tag">&gt;</span>
+  Click me
+<span class="tok-tag">&lt;/button&gt;</span>
+<span class="tok-tag">&lt;div</span> <span class="tok-attr">id</span>=<span class="tok-str">"tip"</span>
+     <span class="tok-attr">popover</span>
+     <span class="tok-attr">role</span>=<span class="tok-str">"tooltip"</span><span class="tok-tag">&gt;</span>
+  Tooltip text
+<span class="tok-tag">&lt;/div&gt;</span></code></pre>
+                </div>
+              </div>
+
+              <div class="tab-group__panel tab-group__panel--css" role="tabpanel">
+                <div class="code-block">
+                  <button class="copy-btn" aria-label="Copy CSS code">Copy</button>
+                  <pre><code><span class="tok-sel">.tip</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">opacity</span>: <span class="tok-val">0</span>;
+  <span class="tok-prop">translate</span>: <span class="tok-val">-50% 0.5rem</span>;
+  <span class="tok-prop">transition</span>:
+    <span class="tok-val">opacity 150ms,
+    translate 150ms</span>;
+<span class="tok-tag">}</span>
+
+<span class="tok-sel">.tip-wrapper:hover .tip,
+.tip-wrapper:focus-within .tip</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">opacity</span>: <span class="tok-val">1</span>;
+  <span class="tok-prop">translate</span>: <span class="tok-val">-50% 0</span>;
+<span class="tok-tag">}</span>
+
+<span class="tok-comment">/* Arrow via pseudo-element */</span>
+<span class="tok-sel">.tip::after</span> <span class="tok-tag">{</span>
+  <span class="tok-prop">content</span>: <span class="tok-val">""</span>;
+  <span class="tok-prop">border</span>: <span class="tok-val">5px solid transparent</span>;
+  <span class="tok-prop">border-top-color</span>: <span class="tok-val">currentColor</span>;
+<span class="tok-tag">}</span></code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- /.components-grid -->
+    </div><!-- /.page-content -->
+  </main>
+
+  <script type="module" src="js/transitions.js"></script>
+  <script type="module">
+    import { initCopyButtons } from './js/utils.js';
+    document.addEventListener('DOMContentLoaded', initCopyButtons);
+  </script>
+</body>
+</html>

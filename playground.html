@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playground Lab — A Love Letter to the Web</title>
+  <meta name="description" content="A freeform CSS sandbox. Write CSS and watch it render live.">
+
+  <meta property="og:title" content="Playground Lab — A Love Letter to the Web">
+  <meta property="og:description" content="A freeform CSS sandbox. Write CSS and watch it render live.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/transitions.css">
+  <link rel="stylesheet" href="css/playground.css">
+</head>
+<body class="page">
+
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
+  <!-- ── Page Header ──────────────────────────────────────────── -->
+  <header class="page-header" role="banner">
+    <a href="index.html" class="page-header__logo" data-transition="zone-content">
+      ✦ Web Letter
+    </a>
+    <nav class="page-header__nav" aria-label="Site navigation">
+      <a href="index.html" data-transition="zone-content">Timeline</a>
+      <a href="hub.html" data-transition="hub-node">Observatory</a>
+      <a href="playground.html" aria-current="page">Playground</a>
+      <a href="#components" data-transition="zone-content">Components</a>
+    </nav>
+  </header>
+
+  <!-- ── Main Content ─────────────────────────────────────────── -->
+  <main id="main-content" class="playground-page">
+
+    <!-- ── Lab Header ─────────────────────────────────────────── -->
+    <div class="lab-header animate-fade-in-up">
+      <div class="lab-header__left">
+        <span class="lab-badge" aria-hidden="true">◈</span>
+        <div>
+          <h1 class="lab-title">Playground Lab</h1>
+          <p class="lab-subtitle">Write CSS. See it live. Share your experiments.</p>
+        </div>
+      </div>
+      <div class="lab-header__right">
+        <div class="lab-status" aria-live="polite" aria-atomic="true">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="status-text" id="status-text">Ready</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Toolbar ────────────────────────────────────────────── -->
+    <div class="toolbar" role="toolbar" aria-label="Editor tools">
+      <div class="toolbar__presets" role="group" aria-label="CSS presets">
+        <span class="toolbar__label">Presets</span>
+        <button
+          class="preset-pill"
+          data-preset="scroll-animations"
+          aria-pressed="false"
+          title="Load scroll-driven animation example"
+        >
+          Scroll Animations
+        </button>
+        <button
+          class="preset-pill"
+          data-preset="container-queries"
+          aria-pressed="false"
+          title="Load container queries example"
+        >
+          Container Queries
+        </button>
+        <button
+          class="preset-pill"
+          data-preset="has-selector"
+          aria-pressed="false"
+          title="Load :has() selector example"
+        >
+          :has()
+        </button>
+        <button
+          class="preset-pill"
+          data-preset="gradients"
+          aria-pressed="false"
+          title="Load modern gradients example"
+        >
+          Gradients
+        </button>
+        <button
+          class="preset-pill"
+          data-preset="grid"
+          aria-pressed="false"
+          title="Load CSS Grid example"
+        >
+          Grid
+        </button>
+      </div>
+
+      <div class="toolbar__actions" role="group" aria-label="Editor actions">
+        <button class="action-btn action-btn--share" id="btn-share" title="Share — encode to URL hash">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <circle cx="11" cy="3" r="2" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="3" cy="7" r="2" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="11" cy="11" r="2" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="4.8" y1="6" x2="9.2" y2="4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="4.8" y1="8" x2="9.2" y2="10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span>Share</span>
+        </button>
+        <button class="action-btn action-btn--clear" id="btn-clear" title="Clear editor">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span>Clear</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Split Pane ──────────────────────────────────────────── -->
+    <div class="editor-split" role="region" aria-label="CSS editor and preview">
+
+      <!-- ── Editor Pane ──────────────────────────────────────── -->
+      <div class="editor-pane">
+        <div class="pane-header">
+          <div class="pane-header__left">
+            <div class="traffic-light" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="pane-header__title">styles.css</span>
+          </div>
+          <div class="pane-header__right">
+            <span class="pane-header__lang">CSS</span>
+          </div>
+        </div>
+
+        <div class="editor-wrapper" aria-label="Code editor area">
+          <div class="line-numbers" aria-hidden="true" id="line-numbers"></div>
+          <div
+            class="editor-content"
+            id="editor"
+            contenteditable="true"
+            role="textbox"
+            aria-multiline="true"
+            aria-label="CSS code editor"
+            spellcheck="false"
+            autocorrect="off"
+            autocapitalize="off"
+            data-gramm="false"
+          ></div>
+        </div>
+      </div>
+
+      <!-- ── Preview Pane ─────────────────────────────────────── -->
+      <div class="preview-pane">
+        <div class="pane-header">
+          <div class="pane-header__left">
+            <div class="traffic-light" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="pane-header__title">Preview</span>
+          </div>
+          <div class="pane-header__right">
+            <button class="pane-icon-btn" id="btn-refresh" title="Refresh preview" aria-label="Refresh preview">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M10.5 6a4.5 4.5 0 11-1.32-3.18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <polyline points="10.5,1.5 10.5,4.5 7.5,4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="preview-wrapper">
+          <iframe
+            id="preview-frame"
+            title="Live CSS preview"
+            sandbox="allow-scripts"
+            aria-label="Live preview of your CSS"
+          ></iframe>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ── Toast ──────────────────────────────────────────────────── -->
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">
+    <span class="toast__icon" aria-hidden="true">✓</span>
+    <span class="toast__message" id="toast-message">Copied to clipboard!</span>
+  </div>
+
+  <script type="module" src="js/transitions.js"></script>
+  <script type="module" src="js/playground.js"></script>
+</body>
+</html>
