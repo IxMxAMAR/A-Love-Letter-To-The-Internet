@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Observatory — A Love Letter to the Web</title>
+  <meta name="description" content="Explore the modern web platform — 8 interactive zones showcasing cutting-edge CSS and HTML features.">
+
+  <meta property="og:title" content="Observatory — A Love Letter to the Web">
+  <meta property="og:description" content="Explore the modern web platform — 8 interactive zones.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/transitions.css">
+  <link rel="stylesheet" href="css/hub.css">
+</head>
+<body>
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
+  <header class="page-header">
+    <a href="index.html" class="logo" data-transition="root">◈ LLTW</a>
+    <nav aria-label="Main navigation">
+      <a href="index.html" data-transition="root">Timeline</a>
+      <a href="hub.html" aria-current="page">Observatory</a>
+      <a href="playground.html" data-transition="root">Playground</a>
+      <a href="components.html" data-transition="root">Components</a>
+    </nav>
+  </header>
+
+  <main id="main-content" class="hub">
+    <div class="hub-intro">
+      <h1>The Observatory</h1>
+      <p class="subtitle">8 zones. Each one a deep dive into a modern web feature.<br>Art. Story. Playground.</p>
+    </div>
+
+    <div class="constellation" id="constellation" aria-label="Feature zone map">
+      <svg class="constellation-lines" aria-hidden="true" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
+        <line x1="200" y1="150" x2="500" y2="100" class="connection-line"/>
+        <line x1="500" y1="100" x2="800" y2="150" class="connection-line"/>
+        <line x1="200" y1="150" x2="350" y2="350" class="connection-line"/>
+        <line x1="500" y1="100" x2="500" y2="300" class="connection-line"/>
+        <line x1="800" y1="150" x2="650" y2="350" class="connection-line"/>
+        <line x1="350" y1="350" x2="650" y2="350" class="connection-line"/>
+        <line x1="350" y1="350" x2="250" y2="500" class="connection-line"/>
+        <line x1="650" y1="350" x2="750" y2="500" class="connection-line"/>
+      </svg>
+
+      <a href="zones/scroll-animations.html" class="zone-node" data-zone="scroll" data-transition="hub-node" style="--node-x: 20%; --node-y: 20%; --zone-color: #646cff;">
+        <div class="node-symbol">◆</div>
+        <div class="node-label">Scroll Animations</div>
+        <div class="node-glow" aria-hidden="true"></div>
+      </a>
+
+      <a href="zones/popover-dialog.html" class="zone-node" data-zone="popover" data-transition="hub-node" style="--node-x: 50%; --node-y: 12%; --zone-color: #a78bfa;">
+        <div class="node-symbol">◇</div>
+        <div class="node-label">Popover & Dialog</div>
+        <div class="node-glow" aria-hidden="true"></div>
+      </a>
+
+      <a href="zones/css-art.html" class="zone-node" data-zone="art" data-transition="hub-node" style="--node-x: 80%; --node-y: 20%; --zone-color: #f472b6;">
+        <div class="node-symbol">●</div>
+        <div class="node-label">CSS Art Gallery</div>
+        <div class="node-glow" aria-hidden="true"></div>
+      </a>
+
+      <a href="zones/container-queries.html" class="zone-node" data-zone="container" data-transition="hub-node" style="--node-x: 35%; --node-y: 50%; --zone-color: #34d399;">
+        <div class="node-symbol">◈</div>
+        <div class="node-label">Container Queries</div>
+        <div class="node-glow" aria-hidden="true"></div>
+      </a>
+
+      <a href="zones/view-transitions.html" class="zone-node" data-zone="transitions" data-transition="hub-node" style="--node-x: 50%; --node-y: 40%; --zone-color: #fbbf24;">
+        <div class="node-symbol">▲</div>
+        <div class="node-label">View Transitions</div>
+        <div class="node-glow" aria-hidden="true"></div>
+      </a>
+
+      <a href="zones/houdini.html" class="zone-node" data-zone="houdini" data-transition="hub-node" style="--node-x: 65%; --node-y: 50%; --zone-color: #60a5fa;">
+        <div class="node-symbol">■</div>
+        <div class="node-label">CSS Houdini</div>
+        <div class="node-glow" aria-hidden="true"></div>
+      </a>
+
+      <a href="zones/has-selector.html" class="zone-node" data-zone="has" data-transition="hub-node" style="--node-x: 25%; --node-y: 78%; --zone-color: #fb923c;">
+        <div class="node-symbol">★</div>
+        <div class="node-label">:has() Selector</div>
+        <div class="node-glow" aria-hidden="true"></div>
+      </a>
+
+      <a href="zones/cascade-layers.html" class="zone-node" data-zone="layers" data-transition="hub-node" style="--node-x: 75%; --node-y: 78%; --zone-color: #e879f9;">
+        <div class="node-symbol">⬡</div>
+        <div class="node-label">Cascade Layers</div>
+        <div class="node-glow" aria-hidden="true"></div>
+      </a>
+    </div>
+
+    <footer class="hub-stats">
+      <span>8 Zones</span>
+      <span aria-hidden="true">·</span>
+      <span>24 Demos</span>
+      <span aria-hidden="true">·</span>
+      <span>0 Dependencies</span>
+    </footer>
+  </main>
+
+  <script type="module" src="js/transitions.js"></script>
+  <script type="module" src="js/hub.js"></script>
+</body>
+</html>

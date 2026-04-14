@@ -1,0 +1,163 @@
+.hub {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 5rem;
+}
+
+.hub-intro {
+  text-align: center;
+  padding: var(--space-xl) var(--content-padding) var(--space-lg);
+}
+
+.hub-intro h1 {
+  margin-bottom: var(--space-sm);
+}
+
+.constellation {
+  flex: 1;
+  position: relative;
+  margin: 0 var(--content-padding);
+  min-height: 500px;
+}
+
+.constellation-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.connection-line {
+  stroke: var(--color-border);
+  stroke-width: 1;
+  opacity: 0.4;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.constellation:has(.zone-node:hover) .connection-line {
+  opacity: 0.1;
+}
+
+.zone-node {
+  position: absolute;
+  left: var(--node-x);
+  top: var(--node-y);
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  text-decoration: none;
+  color: var(--color-muted);
+  transition: all var(--duration-normal) var(--ease-out);
+  z-index: 1;
+}
+
+.node-symbol {
+  font-size: 2rem;
+  color: var(--zone-color);
+  transition: all var(--duration-normal) var(--ease-out);
+  filter: drop-shadow(0 0 8px var(--zone-color));
+  animation: pulse 3s ease-in-out infinite;
+  animation-delay: calc(var(--node-x, 0) * 10ms);
+}
+
+.node-label {
+  font-family: var(--font-code);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+  opacity: 0.6;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.node-glow {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--zone-color) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.zone-node:hover {
+  text-decoration: none;
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.zone-node:hover .node-symbol {
+  filter: drop-shadow(0 0 20px var(--zone-color));
+  animation: none;
+}
+
+.zone-node:hover .node-label {
+  opacity: 1;
+  color: var(--color-text);
+}
+
+.zone-node:hover .node-glow {
+  opacity: 0.15;
+}
+
+.constellation:has(.zone-node:hover) .zone-node:not(:hover) {
+  opacity: 0.3;
+}
+
+.zone-node:focus-visible {
+  outline: none;
+}
+
+.zone-node:focus-visible .node-symbol {
+  outline: 2px solid var(--zone-color);
+  outline-offset: 8px;
+  border-radius: 4px;
+}
+
+.hub-stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  font-family: var(--font-code);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+@media (max-width: 768px) {
+  .constellation {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+    min-height: auto;
+  }
+
+  .constellation-lines {
+    display: none;
+  }
+
+  .zone-node {
+    position: static;
+    transform: none;
+    padding: var(--space-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+  }
+
+  .zone-node:hover {
+    transform: translateY(-2px);
+  }
+
+  .node-glow {
+    display: none;
+  }
+
+  .node-label {
+    opacity: 1;
+  }
+}
