@@ -67,6 +67,7 @@ if (!editor) {
   let importantCount = 0;
   let emptyTimer = null;
   let tabToastShown = false;
+  let prevText = '';
 
   // ─── Night owl check (runs once on load) ─────────────────────────────
 
@@ -93,14 +94,16 @@ if (!editor) {
       showToast('Welcome, developer. ✨', 3000);
     }
 
-    // !important warning (max 3 times)
-    if (importantCount < 3 && text.includes('!important')) {
+    // !important warning (max 3 times) — only when newly added
+    if (importantCount < 3 && text.includes('!important') && !prevText.includes('!important')) {
       importantCount++;
       showToast('⚠️ With great specificity comes great responsibility.', 3500);
     }
 
-    // display: none — fade preview
-    if (text.includes('display: none') || text.includes('display:none')) {
+    // display: none — fade preview — only when newly added
+    const hasDisplayNone = text.includes('display: none') || text.includes('display:none');
+    const hadDisplayNone = prevText.includes('display: none') || prevText.includes('display:none');
+    if (hasDisplayNone && !hadDisplayNone) {
       if (previewPane) {
         previewPane.style.transition = 'opacity 0.4s ease';
         previewPane.style.opacity = '0';
@@ -113,13 +116,15 @@ if (!editor) {
       }
     }
 
-    // color: red
-    if (text.includes('color: red') || text.includes('color:red')) {
+    // color: red — only when newly added
+    const hasColorRed = text.includes('color: red') || text.includes('color:red');
+    const hadColorRed = prevText.includes('color: red') || prevText.includes('color:red');
+    if (hasColorRed && !hadColorRed) {
       showToast("We don't judge your color choices here.", 3000);
     }
 
-    // rotate(180deg)
-    if (text.includes('rotate(180deg)')) {
+    // rotate(180deg) — only when newly added
+    if (text.includes('rotate(180deg)') && !prevText.includes('rotate(180deg)')) {
       editor.style.transition = 'transform 0.5s ease';
       editor.style.transform = 'rotate(180deg)';
       setTimeout(() => {
@@ -134,29 +139,17 @@ if (!editor) {
         showToast('Writer\'s block? Try a preset →', 4000);
       }, 10000);
     }
+
+    prevText = text;
   });
 
-  // ─── Tab key → insert 2 spaces ───────────────────────────────────────
+  // ─── Tab key toast (insertion handled by playground.js) ──────────────
 
   editor.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab') {
-      e.preventDefault();
-
-      // execCommand for contenteditable; fallback for textarea
-      if (editor.isContentEditable) {
-        document.execCommand('insertText', false, '  ');
-      } else {
-        const start = editor.selectionStart;
-        const end = editor.selectionEnd;
-        editor.value =
-          editor.value.substring(0, start) + '  ' + editor.value.substring(end);
-        editor.selectionStart = editor.selectionEnd = start + 2;
-      }
-
-      if (!tabToastShown) {
-        tabToastShown = true;
-        showToast('We chose spaces. Fight us.', 3000);
-      }
+    if (e.key === 'Tab' && !tabToastShown) {
+      tabToastShown = true;
+      // Delay slightly so the toast appears after the spaces are inserted
+      setTimeout(() => showToast('We chose spaces. Fight us.', 3000), 50);
     }
   });
 }
