@@ -1,5 +1,20 @@
 // components-gm.js — Gimmicks for the Components page
 
+// 0. Popover aria-expanded sync
+try {
+  const popoverMenu = document.getElementById('popover-menu-demo');
+  if (popoverMenu) {
+    const trigger = document.querySelector('[popovertarget="popover-menu-demo"]');
+    if (trigger) {
+      popoverMenu.addEventListener('toggle', (e) => {
+        trigger.setAttribute('aria-expanded', e.newState === 'open' ? 'true' : 'false');
+      });
+    }
+  }
+} catch (e) {
+  console.warn('[components-gm] popover aria-expanded:', e);
+}
+
 // 1. Wire Dark Mode Toggle
 try {
   const labels = document.querySelectorAll('label');

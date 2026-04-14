@@ -23,9 +23,10 @@ export async function copyToClipboard(text) {
  * temporarily changes button text to "Copied!" for 2 seconds.
  */
 export function initCopyButtons() {
-  const buttons = document.querySelectorAll('[data-copy-target]');
+  // Handle buttons with explicit data-copy-target
+  const targetButtons = document.querySelectorAll('[data-copy-target]');
 
-  buttons.forEach((button) => {
+  targetButtons.forEach((button) => {
     button.addEventListener('click', async () => {
       const targetSelector = button.dataset.copyTarget;
       const target = document.querySelector(targetSelector);
@@ -34,6 +35,32 @@ export function initCopyButtons() {
 
       const originalText = button.textContent;
       const success = await copyToClipboard(target.textContent);
+
+      if (success) {
+        button.textContent = 'Copied!';
+        button.setAttribute('aria-label', 'Copied to clipboard');
+
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.removeAttribute('aria-label');
+        }, 2000);
+      }
+    });
+  });
+
+  // Handle .copy-btn buttons without data-copy-target (e.g. component cards)
+  // Falls back to copying the sibling <pre> or nearest <pre> in the same parent
+  const fallbackButtons = document.querySelectorAll('.copy-btn:not([data-copy-target])');
+
+  fallbackButtons.forEach((button) => {
+    button.addEventListener('click', async () => {
+      const parent = button.parentElement;
+      const pre = parent && parent.querySelector('pre');
+
+      if (!pre) return;
+
+      const originalText = button.textContent;
+      const success = await copyToClipboard(pre.textContent);
 
       if (success) {
         button.textContent = 'Copied!';

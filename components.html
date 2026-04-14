@@ -91,6 +91,8 @@
               class="demo-popover-trigger"
               popovertarget="popover-menu-demo"
               aria-haspopup="true"
+              aria-expanded="false"
+              aria-controls="popover-menu-demo"
             >
               Options
               <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
@@ -202,7 +204,7 @@
               Show Toast
             </button>
 
-            <div id="toast-demo" class="toast-notification" popover>
+            <div id="toast-demo" class="toast-notification" popover role="status" aria-live="polite">
               <div class="toast-icon" aria-hidden="true">✓</div>
               <div class="toast-body">
                 <strong>Changes saved</strong>
@@ -291,9 +293,10 @@
               id="modal-demo"
               class="modal-dialog"
               closedby="any"
+              aria-labelledby="modal-demo-title"
             >
               <div class="modal-dialog__header">
-                <h2 class="modal-dialog__title">Confirm action</h2>
+                <h2 id="modal-demo-title" class="modal-dialog__title">Confirm action</h2>
                 <button
                   class="modal-dialog__close"
                   onclick="this.closest('dialog').close()"
@@ -857,7 +860,7 @@
   <script type="module" src="js/transitions.js"></script>
   <script type="module">
     import { initCopyButtons } from './js/utils.js';
-    document.addEventListener('DOMContentLoaded', initCopyButtons);
+    initCopyButtons();
   </script>
   <script type="module" src="js/gimmicks/global.js"></script>
   <script type="module" src="js/gimmicks/components-gm.js"></script>

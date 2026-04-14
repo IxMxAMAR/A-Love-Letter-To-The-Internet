@@ -194,13 +194,52 @@
   width: 100%;
 }
 
+.component-card .tab-group input[type="radio"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .component-card .tab-group__nav {
+  display: flex;
+  gap: 0;
   background: var(--color-border);
 }
 
 .component-card .tab-group__label {
   font-size: 0.65rem;
   padding: 0.35rem var(--space-sm);
+  cursor: pointer;
+  color: var(--color-muted);
+  transition: color var(--duration-fast) var(--ease-out);
+  user-select: none;
+}
+
+.component-card .tab-group__label:hover {
+  color: var(--color-text);
+}
+
+/* ── Per-card tab panel visibility ──────────────────────────── */
+/* Default: hide all CSS panels, show HTML panels */
+.component-card .tab-group__panel--css {
+  display: none;
+}
+
+/* When the CSS radio is checked, swap visibility */
+.component-card .tab-group:has(input[id$="-css"]:checked) .tab-group__panel--html {
+  display: none;
+}
+.component-card .tab-group:has(input[id$="-css"]:checked) .tab-group__panel--css {
+  display: block;
+}
+
+/* Active tab label highlight */
+.component-card .tab-group:has(input[id$="-html"]:checked) .tab-group__label[for$="-html"],
+.component-card .tab-group:has(input[id$="-css"]:checked)  .tab-group__label[for$="-css"] {
+  color: var(--color-primary);
+  background: var(--color-surface);
 }
 
 .component-card pre {
@@ -231,11 +270,17 @@
   position: relative;
 }
 
+.component-card .code-block {
+  position: relative;
+}
+
 .component-card .copy-btn {
+  position: absolute;
   top: var(--space-xs);
   right: var(--space-xs);
   font-size: 0.6rem;
   padding: 2px var(--space-xs);
+  z-index: 1;
 }
 
 /* =========================================================== */
@@ -1030,4 +1075,64 @@ dialog.modal-dialog[open]::backdrop {
   height: 1px;
   opacity: 0;
   pointer-events: none;
+}
+
+/* ── Light theme overrides for component demos ──────────────── */
+[data-theme="light"] .component-demo {
+  background: oklch(94% 0.008 265);
+}
+
+[data-theme="light"] .component-card:hover {
+  box-shadow: 0 8px 32px oklch(0% 0 0 / 0.1);
+}
+
+[data-theme="light"] [popover].popover-menu {
+  background: oklch(98% 0.005 265);
+  box-shadow: 0 16px 40px oklch(0% 0 0 / 0.12),
+              0 0 0 1px oklch(0% 0 0 / 0.06);
+}
+
+[data-theme="light"] .popover-menu__item:hover {
+  background: oklch(94% 0.01 265);
+}
+
+[data-theme="light"] [popover].toast-notification {
+  background: oklch(98% 0.005 265);
+  box-shadow: 0 8px 32px oklch(0% 0 0 / 0.1);
+}
+
+[data-theme="light"] dialog.modal-dialog {
+  background: oklch(98% 0.005 265);
+  box-shadow: 0 24px 80px oklch(0% 0 0 / 0.15);
+}
+
+[data-theme="light"] dialog.modal-dialog::backdrop {
+  background: oklch(50% 0 0 / 0.4);
+}
+
+[data-theme="light"] .accordion-item {
+  background: oklch(98% 0.005 265);
+}
+
+[data-theme="light"] .accordion-item > summary:hover {
+  background: oklch(94% 0.01 265);
+}
+
+[data-theme="light"] .toggle-track {
+  background: oklch(80% 0.02 265);
+  border-color: oklch(75% 0.02 265);
+}
+
+[data-theme="light"] .responsive-card {
+  background: oklch(98% 0.005 265);
+}
+
+[data-theme="light"] [popover].tooltip-pop,
+[data-theme="light"] .tooltip-bubble {
+  background: oklch(20% 0.02 265);
+  color: #fff;
+}
+
+[data-theme="light"] .component-card pre {
+  color: oklch(35% 0.06 265);
 }
