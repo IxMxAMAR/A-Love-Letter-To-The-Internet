@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — A Love Letter to the Web</title>
+  <script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/gimmicks.css">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+      margin: 0;
+      padding: 2rem;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      text-align: center;
+      z-index: 1;
+    }
+
+    /* Chain link CSS art */
+    .chain-art {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      height: 80px;
+    }
+
+    @keyframes drift-left {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-40px); }
+    }
+    @keyframes drift-right {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(40px); }
+    }
+
+    .chain-link {
+      width: 60px;
+      height: 40px;
+      border: 6px solid var(--color-accent, oklch(65% 0.2 260));
+      border-radius: 50px;
+      background: transparent;
+      position: relative;
+    }
+
+    .chain-link::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border-radius: 40px;
+      border: 3px solid color-mix(in oklch, var(--color-accent, oklch(65% 0.2 260)) 40%, transparent);
+    }
+
+    .chain-link--left {
+      animation: drift-left 2.5s ease-in-out infinite alternate;
+    }
+
+    .chain-link--right {
+      animation: drift-right 2.5s ease-in-out infinite alternate;
+    }
+
+    .chain-break {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--color-text-muted, oklch(50% 0 0));
+      opacity: 0.4;
+    }
+
+    h1 {
+      font-size: clamp(5rem, 20vw, 10rem);
+      font-weight: 800;
+      margin: 0;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--color-accent, oklch(65% 0.2 260)), oklch(75% 0.25 320));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.7;
+      margin: 0;
+      max-width: 36ch;
+    }
+
+    .back-link {
+      margin-top: 0.5rem;
+      color: var(--color-accent, oklch(65% 0.2 260));
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 0.7; }
+
+    /* 404 facts rotator */
+    .fact-box {
+      margin-top: 1rem;
+      padding: 1.2rem 2rem;
+      border: 1px solid color-mix(in oklch, currentColor 20%, transparent);
+      border-radius: 12px;
+      cursor: pointer;
+      max-width: 44ch;
+      user-select: none;
+      transition: background 0.2s, transform 0.1s;
+      background: color-mix(in oklch, var(--color-surface, white) 80%, transparent);
+    }
+    .fact-box:hover { transform: scale(1.02); }
+    .fact-box:active { transform: scale(0.98); }
+
+    .fact-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.5;
+      margin-bottom: 0.5rem;
+    }
+
+    .fact-text {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    .fact-hint {
+      font-size: 0.75rem;
+      opacity: 0.45;
+      margin-top: 0.5rem;
+    }
+
+    /* Lost pixel */
+    @keyframes wander {
+      0%   { top: 20%;  left: 10%; }
+      15%  { top: 70%;  left: 30%; }
+      30%  { top: 40%;  left: 80%; }
+      45%  { top: 80%;  left: 60%; }
+      60%  { top: 15%;  left: 50%; }
+      75%  { top: 55%;  left: 15%; }
+      90%  { top: 30%;  left: 85%; }
+      100% { top: 20%;  left: 10%; }
+    }
+
+    .lost-pixel {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: oklch(75% 0.3 130);
+      animation: wander 18s ease-in-out infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .pixel-credit {
+      position: fixed;
+      bottom: 1.5rem;
+      font-size: 0.72rem;
+      opacity: 0.4;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="lost-pixel"></div>
+
+  <div class="page-center">
+    <div class="chain-art" aria-hidden="true">
+      <div class="chain-link chain-link--left"></div>
+      <div class="chain-break"></div>
+      <div class="chain-link chain-link--right"></div>
+    </div>
+
+    <h1>404</h1>
+    <p class="subtitle">This link went to the great /dev/null in the sky.</p>
+
+    <a href="hub.html" class="back-link">← Back to the Observatory</a>
+
+    <div class="fact-box" id="factBox" role="button" tabindex="0" aria-label="Click for 404 facts">
+      <div class="fact-label">404 Facts</div>
+      <div class="fact-text" id="factText">The first 404 was Room 404 at CERN — where the web's original file server lived.</div>
+      <div class="fact-hint">Click to cycle facts</div>
+    </div>
+  </div>
+
+  <p class="pixel-credit">Even this pixel is hand-crafted CSS.</p>
+
+  <script type="module">
+    const facts = [
+      "The first 404 was Room 404 at CERN — where the web's original file server lived.",
+      "HTTP 404 was defined in 1992, part of the original HTTP/1.0 specification.",
+      "Some sites return 200 for missing pages. Those sites are wrong."
+    ];
+    let idx = 0;
+    const factText = document.getElementById('factText');
+    const factBox = document.getElementById('factBox');
+
+    function nextFact() {
+      idx = (idx + 1) % facts.length;
+      factText.style.opacity = '0';
+      setTimeout(() => {
+        factText.textContent = facts[idx];
+        factText.style.opacity = '1';
+      }, 200);
+    }
+
+    factBox.addEventListener('click', nextFact);
+    factBox.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') nextFact(); });
+  </script>
+
+  <script type="module" src="js/gimmicks/global.js"></script>
+</body>
+</html>

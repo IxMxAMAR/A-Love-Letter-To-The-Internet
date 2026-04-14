@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lol — A Love Letter to the Web</title>
+  <script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/gimmicks.css">
+  <style>
+    @keyframes hue-shift {
+      from { filter: hue-rotate(0deg); }
+      to   { filter: hue-rotate(360deg); }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    @keyframes float-in {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+      margin: 0;
+      padding: 2rem;
+      box-sizing: border-box;
+      font-family: 'Georgia', serif;
+      animation: hue-shift 10s linear infinite;
+      text-align: center;
+    }
+
+    .page-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      animation: float-in 0.8s ease-out both;
+    }
+
+    .spinner-text {
+      display: inline-block;
+      font-size: clamp(1.5rem, 5vw, 2.8rem);
+      font-weight: bold;
+      animation: spin 3s linear infinite;
+      background: linear-gradient(
+        135deg,
+        oklch(75% 0.3 30),
+        oklch(75% 0.3 120),
+        oklch(75% 0.3 220),
+        oklch(75% 0.3 320),
+        oklch(75% 0.3 30)
+      );
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .spinner-wrapper {
+      /* Keep the gradient fixed while text spins */
+      background: linear-gradient(
+        135deg,
+        oklch(75% 0.3 30),
+        oklch(75% 0.3 120),
+        oklch(75% 0.3 220),
+        oklch(75% 0.3 320)
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      display: inline-block;
+    }
+
+    .note {
+      font-size: 1rem;
+      opacity: 0.75;
+      max-width: 34ch;
+      line-height: 1.6;
+    }
+
+    .back-link {
+      color: oklch(65% 0.2 260);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 0.7; }
+
+    .badge {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0.3rem 0.8rem;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      opacity: 0.45;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-center">
+    <div class="badge">Secret Page Discovered</div>
+
+    <div class="spinner-wrapper" aria-label="You found the secret page!">
+      <span class="spinner-text">You found the secret page!</span>
+    </div>
+
+    <p class="note">How did you find this? Seriously.</p>
+
+    <a href="hub.html" class="back-link">← Back to somewhere normal</a>
+  </div>
+
+  <script type="module" src="js/gimmicks/global.js"></script>
+</body>
+</html>
