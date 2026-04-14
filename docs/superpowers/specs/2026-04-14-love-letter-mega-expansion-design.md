@@ -848,7 +848,7 @@ StateManager
   - `:where()` shield — zero specificity bubble that absorbs one hit
   - `@layer` bomb — clears all asteroids on screen (limited use)
   - `all: unset` — resets player to default state (full health)
-- Score: points based on asteroid size
+- Score: small asteroid = 30pts, medium = 20pts, large = 10pts (harder to dodge but easier to hit)
 - Lives: 3, lost on collision
 - Difficulty: more + faster asteroids over time
 
@@ -977,7 +977,7 @@ StateManager
 - Preview shows your attempt
 - Gallery of creations (pre-seeded with 20 impressive examples)
 - Daily challenge: fixed seed based on date, same for all visitors
-- Scoring: self-rated (fun, not competitive) or community voting (pre-seeded)
+- Scoring: self-rated (fun, not competitive) — no backend, all "community" examples are hardcoded JSON giving the feel of shared creations
 
 #### Type Racer: CSS Edition (`arcade/type-racer.html`)
 
