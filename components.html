@@ -20,23 +20,22 @@
   <link rel="stylesheet" href="css/transitions.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/toolkit.css">
+<script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+  <link rel="stylesheet" href="css/gimmicks.css">
 </head>
 <body class="toolkit-page">
   <a href="#main-content" class="visually-hidden">Skip to main content</a>
   <div class="scroll-progress" aria-hidden="true"></div>
 
-  <!-- ── Site Nav ─────────────────────────────────────────────── -->
-  <nav class="site-nav" aria-label="Site navigation">
-    <div class="site-nav__inner">
-      <a href="index.html" class="site-nav__logo">A Love Letter to the Web</a>
-      <div class="site-nav__links">
-        <a href="index.html"       class="site-nav__link">Timeline</a>
-        <a href="hub.html"         class="site-nav__link">Observatory</a>
-        <a href="playground.html"  class="site-nav__link">Playground</a>
-        <a href="components.html"  class="site-nav__link" aria-current="page">Components</a>
-      </div>
-    </div>
-  </nav>
+  <header class="page-header" role="banner">
+    <a href="index.html" class="page-header__logo" data-transition="root">✦ Web Letter</a>
+    <nav class="page-header__nav" aria-label="Site navigation">
+      <a href="index.html" data-transition="root">Timeline</a>
+      <a href="hub.html" data-transition="hub-node">Observatory</a>
+      <a href="playground.html" data-transition="root">Playground</a>
+      <a href="components.html" aria-current="page">Components</a>
+    </nav>
+  </header>
 
   <main id="main-content">
     <div class="page-content">
@@ -860,5 +859,6 @@
     import { initCopyButtons } from './js/utils.js';
     document.addEventListener('DOMContentLoaded', initCopyButtons);
   </script>
+  <script type="module" src="js/gimmicks/global.js"></script>
 </body>
 </html>

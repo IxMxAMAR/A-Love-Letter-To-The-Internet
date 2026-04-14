@@ -19,13 +19,15 @@
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/transitions.css">
   <link rel="stylesheet" href="css/hub.css">
+<script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+  <link rel="stylesheet" href="css/gimmicks.css">
 </head>
 <body>
   <a href="#main-content" class="visually-hidden">Skip to main content</a>
 
-  <header class="page-header">
-    <a href="index.html" class="logo" data-transition="root">◈ LLTW</a>
-    <nav aria-label="Main navigation">
+  <header class="page-header" role="banner">
+    <a href="index.html" class="page-header__logo" data-transition="root">✦ Web Letter</a>
+    <nav class="page-header__nav" aria-label="Site navigation">
       <a href="index.html" data-transition="root">Timeline</a>
       <a href="hub.html" aria-current="page">Observatory</a>
       <a href="playground.html" data-transition="root">Playground</a>
@@ -111,5 +113,6 @@
 
   <script type="module" src="js/transitions.js"></script>
   <script type="module" src="js/hub.js"></script>
+  <script type="module" src="js/gimmicks/global.js"></script>
 </body>
 </html>

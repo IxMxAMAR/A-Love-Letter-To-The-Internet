@@ -19,6 +19,8 @@
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/transitions.css">
   <link rel="stylesheet" href="css/playground.css">
+<script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+  <link rel="stylesheet" href="css/gimmicks.css">
 </head>
 <body class="page">
 
@@ -26,14 +28,12 @@
 
   <!-- ── Page Header ──────────────────────────────────────────── -->
   <header class="page-header" role="banner">
-    <a href="index.html" class="page-header__logo" data-transition="zone-content">
-      ✦ Web Letter
-    </a>
+    <a href="index.html" class="page-header__logo" data-transition="root">✦ Web Letter</a>
     <nav class="page-header__nav" aria-label="Site navigation">
-      <a href="index.html" data-transition="zone-content">Timeline</a>
+      <a href="index.html" data-transition="root">Timeline</a>
       <a href="hub.html" data-transition="hub-node">Observatory</a>
       <a href="playground.html" aria-current="page">Playground</a>
-      <a href="#components" data-transition="zone-content">Components</a>
+      <a href="components.html" data-transition="root">Components</a>
     </nav>
   </header>
 
@@ -198,5 +198,6 @@
 
   <script type="module" src="js/transitions.js"></script>
   <script type="module" src="js/playground.js"></script>
+  <script type="module" src="js/gimmicks/global.js"></script>
 </body>
 </html>
