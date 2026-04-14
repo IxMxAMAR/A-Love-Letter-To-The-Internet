@@ -19,6 +19,9 @@ function initTypewriter() {
     el.style.visibility = 'hidden';
   });
 
+  // Feature detection: clip-path animation support
+  const supportsClipPathAnimation = CSS.supports('clip-path', 'inset(0 100% 0 0)');
+
   let idx = 0;
   function typeNext() {
     if (idx >= targets.length) {
@@ -26,7 +29,19 @@ function initTypewriter() {
       return;
     }
     const el = targets[idx];
+    el.innerHTML = originalHTML[idx];
     el.style.visibility = 'visible';
+
+    if (!supportsClipPathAnimation) {
+      // Fallback: fade-in for browsers without clip-path support
+      el.style.opacity = '0';
+      el.style.transition = 'opacity 1s ease-in';
+      requestAnimationFrame(() => { el.style.opacity = '1'; });
+      idx++;
+      setTimeout(typeNext, 1100);
+      return;
+    }
+
     const html = originalHTML[idx];
     let charIdx = 0;
     // Strip tags for character-by-character reveal, then swap to full HTML
@@ -39,12 +54,9 @@ function initTypewriter() {
       charIdx++;
       // Reveal portion by clipping text — simple approach: show progressively
       const fraction = charIdx / total;
-      // Use a clip-path trick: just set the innerHTML progressively isn't safe with HTML
-      // So we use a character reveal approach on a wrapper
       el.style.clipPath = `inset(0 ${Math.round((1 - fraction) * 100)}% 0 0)`;
       if (charIdx >= total) {
         clearInterval(interval);
-        el.innerHTML = html;
         el.style.clipPath = '';
         idx++;
         setTimeout(typeNext, 300);
@@ -74,7 +86,7 @@ function initVisitorCounter() {
     sessionStorage.setItem('counted', '1');
   }
 
-  const formatted = String(count).padStart(7, '0').replace(/(\d{3})(\d{3})(\d+)/, (_, a, b, c) => `${a},${b}`);
+  const formatted = String(count).padStart(7, '0').replace(/(\d)(\d{3})(\d{3})$/, '$1,$2,$3');
 
   // Update all counter display elements
   document.querySelectorAll('.counter-num, .visitor-count').forEach(el => {
@@ -218,10 +230,12 @@ function initCardTilt() {
   const cards = document.querySelectorAll('.css3-card');
   cards.forEach(card => {
     card.addEventListener('mousemove', e => {
+      // Skip tilt while card is flipped to avoid transform conflicts
+      if (card.classList.contains('flipped')) return;
       const rect = card.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width  - 0.5;
       const y = (e.clientY - rect.top)  / rect.height - 0.5;
-      card.style.transform = `perspective(600px) rotateX(${(-y * 14).toFixed(1)}deg) rotateY(${(x * 14).toFixed(1)}deg) translateY(-4px)`;
+      card.style.transform = `perspective(800px) rotateX(${(-y * 14).toFixed(1)}deg) rotateY(${(x * 14).toFixed(1)}deg) translateY(-4px)`;
     });
     card.addEventListener('mouseleave', () => {
       card.style.transform = '';
@@ -238,11 +252,21 @@ function initDarkModeCard() {
   darkCard.title = 'Click to toggle dark mode';
 
   darkCard.addEventListener('click', () => {
-    const root = document.documentElement;
-    const current = root.getAttribute('data-theme');
-    const next = current === 'light' ? 'dark' : 'light';
-    root.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
+    // Reuse global toggleTheme if available, otherwise inline equivalent logic
+    if (typeof window.__toggleTheme === 'function') {
+      window.__toggleTheme();
+    } else {
+      const root = document.documentElement;
+      const current = root.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      if (next === 'dark') {
+        root.removeAttribute('data-theme');
+        localStorage.removeItem('theme');
+      } else {
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      }
+    }
   });
 }
 
@@ -289,15 +313,20 @@ function initFlexPopover() {
 
 // ─── Bootstrap all gimmicks ───────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  initTypewriter();
-  initVisitorCounter();
-  initGuestbook();
-  initHampsterDance();
-  initHypermediaHover();
-  initCardFlip();
-  initCardTilt();
-  initDarkModeCard();
-  initFlexPopover();
+  const gimmicks = [
+    ['Typewriter',       initTypewriter],
+    ['VisitorCounter',   initVisitorCounter],
+    ['Guestbook',        initGuestbook],
+    ['HampsterDance',    initHampsterDance],
+    ['HypermediaHover',  initHypermediaHover],
+    ['CardFlip',         initCardFlip],
+    ['CardTilt',         initCardTilt],
+    ['DarkModeCard',     initDarkModeCard],
+    ['FlexPopover',      initFlexPopover],
+  ];
+  for (const [name, fn] of gimmicks) {
+    try { fn(); } catch (err) { console.warn(`[landing] ${name} init failed:`, err); }
+  }
 
 // ─── 1996: Chiptune Music ───────────────────────────────────
 try {

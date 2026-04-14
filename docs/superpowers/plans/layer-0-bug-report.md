@@ -20,3 +20,12 @@
 | 9 | global.js:273 | Info | Scroll velocity `dt` division-by-zero guarded with `|| 1` — no NaN risk | OK |
 | 10 | global.js:327 | Info | `_month === 11` for December is correct (0-indexed getMonth) | OK |
 | 11 | global.js:447 | Info | Speedrun import path `./speedrun.js` resolves correctly to `js/gimmicks/speedrun.js` | OK |
+| 12 | landing.js:77 | Major | Visitor counter regex `(\d{3})(\d{3})(\d+)` captures 3 groups but replacement `${a},${b}` drops the last group — count 4272 displays as "000,427" instead of "0,004,272" | FIXED |
+| 13 | landing.js:7-63 | Major | Typewriter clip-path animation has no fallback for browsers without `clip-path: inset()` support — content stays invisible | FIXED |
+| 14 | landing.js:233-247 | Major | Dark mode card uses independent toggle logic (`setAttribute('data-theme','dark')`) conflicting with global.js which uses `removeAttribute` for dark — toggling from card breaks global theme state | FIXED |
+| 15 | landing.js:291-316 | Major | All 9 gimmick inits called sequentially without try-catch — one failure prevents all subsequent gimmicks from initializing | FIXED |
+| 16 | landing.js:224 | Minor | Card tilt sets inline `perspective(600px)` conflicting with CSS `perspective: 800px` on `.card-flip-root`; also applies tilt while card is flipped causing visual glitch | FIXED |
+| 17 | landing.js:86-122 | Info | Guestbook dialog open/close, backdrop click dismiss, and form submit/reset all verified correct | OK |
+| 18 | landing.js:125-150 | Info | Hampster dance triple-click handler and 5s bounce timeout verified correct | OK |
+| 19 | landing.js:153-180 | Info | Hypermedia font cycle (7 fonts, mouseenter/mouseleave) verified correct | OK |
+| 20 | landing.js:250-288 | Info | Flex centering popover triple-click and popover API usage verified correct | OK |
