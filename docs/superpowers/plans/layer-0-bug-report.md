@@ -46,3 +46,32 @@
 | 35 | components.html | Minor | Missing ARIA on dialog — no `aria-labelledby` linking dialog to its title heading | FIXED |
 | 36 | toolkit.css | Major | Dark backgrounds hardcoded — component demos use oklch dark values that don't adapt to light theme | FIXED |
 | 37 | components.html | Minor | Module timing issue — `DOMContentLoaded` inside `type="module"` may have already fired | FIXED |
+| 38 | zones/scroll-animations | Major | `.scroll-progress-bar` class doesn't match zones.js selector `.scroll-progress` — progress bar invisible | FIXED |
+| 39 | zones/popover-dialog | Major | Missing scroll-progress bar element entirely | FIXED |
+| 40 | zones/css-art | Major | Missing scroll-progress bar element entirely | FIXED |
+| 41 | zones/houdini | Major | Missing scroll-progress bar element entirely | FIXED |
+| 42 | zones/css-art | Minor | "Zone 3 of 9" should be "Zone 3 of 8" | FIXED |
+| 43 | zones/css-art | Major | "Next Zone" link goes to hub.html instead of container-queries.html | FIXED |
+| 44 | zones/css-art | Minor | Playground readout shows clip-path when CSS actually applies `clip-path: none` (both toggles checked) | FIXED |
+| 45 | zones/has-selector | Minor | Logo links to hub.html instead of index.html (inconsistent with other zones) | FIXED |
+| 46 | zones/css-art, houdini | Major | Missing `--zone-color` CSS variable on body — zones.js can't apply colored progress bar | FIXED |
+| 47 | zones/container, view-trans | Major | `--zone-color` set on child elements but not on body — zones.js reads from documentElement/body | FIXED |
+| 48 | zones.js | Major | Only reads `--zone-color` from documentElement, misses pages that set it on body | FIXED |
+| 49 | zone-layers.js | Minor | Native drag fallback drop handler references null `dragCard` instead of `dragSrc` | FIXED |
+| 50 | zone-scroll.css | Minor | Class `.scroll-progress-bar` needed update to `.scroll-progress` | FIXED |
+| 51 | secret.html | Critical | Credits centering broken — `transform: translateX(-50%)` overridden by animation's `translateY()` | FIXED |
+| 52 | secret.html | Major | No navigation back to main site after credits end — user stranded | FIXED |
+| 53 | 404.html | Minor | Space key on fact-box scrolls page (missing preventDefault) | FIXED |
+| 54 | lol.html | Minor | Dead gradient/background-clip CSS on .spinner-wrapper serving no purpose | FIXED |
+| 55 | lol.html | Minor | Back-link hardcoded color doesn't adapt to light theme | FIXED |
+| 56 | speedrun.js | Critical | `JSON.parse()` on corrupted sessionStorage data crashes entire module — no try-catch | FIXED |
+| 57 | speedrun.js | Major | `?speedrun=true` appended to ALL links including external (MDN, GitHub) — leaks param | FIXED |
+| 58 | speedrun.js | Minor | Duplicate inline link-tagging logic in initial scan and MutationObserver | FIXED |
+| 59 | speedrun.js | Minor | `formatTime()` doesn't handle negative ms (clock skew) | FIXED |
+| 60 | speedrun.js | Minor | `getCurrentPageKey()` doesn't strip trailing slashes | FIXED |
+| 61 | chiptune.js | Critical | `audioCtx.resume()` not awaited — playback silent on first click | FIXED |
+| 62 | chiptune.js | Critical | No oscillator cleanup on stop — audio bleed from scheduled oscillators | FIXED |
+| 63 | chiptune.js | Major | No error handling around Web Audio API calls | FIXED |
+| 64 | landing.js | Major | Rapid-click race condition on chiptune — overlapping toggleMusic calls | FIXED |
+| 65 | transitions.js | Major | No error handling — if startViewTransition throws, navigation fails silently | FIXED |
+| 66 | transitions.js | Minor | No external link filtering — links with target="_blank" or external origins intercepted | FIXED |
