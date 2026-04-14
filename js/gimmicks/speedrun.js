@@ -4,6 +4,9 @@
  * Activated by ?speedrun=true URL parameter
  */
 
+// NOTE: Update this list when adding new pages to the site.
+// Layer 2 expansion will add: arcade.html, lab.html, achievements.html, glossary.html, changelog.html
+// Speedrun categories (any%, all-zones, 100%) will be added in Layer 2.
 const SPEEDRUN_PAGES = [
   'index.html',
   'hub.html',
@@ -21,13 +24,22 @@ const SPEEDRUN_PAGES = [
 
 // Normalize current page path relative to site root
 function getCurrentPageKey() {
-  const path = location.pathname;
+  // location.pathname never includes query/hash, but strip trailing slashes
+  const path = location.pathname.replace(/\/+$/, '');
   const parts = path.split('/');
   const last = parts[parts.length - 1] || 'index.html';
   if (parts.includes('zones')) {
     return 'zones/' + last;
   }
   return last || 'index.html';
+}
+
+function safeParseJSON(raw, fallback) {
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return fallback;
+  }
 }
 
 // Init session
@@ -38,7 +50,7 @@ if (!sessionStorage.getItem('speedrunStart')) {
 
 // Record this page
 const currentPage = getCurrentPageKey();
-const visited = JSON.parse(sessionStorage.getItem('speedrunVisited') || '[]');
+const visited = safeParseJSON(sessionStorage.getItem('speedrunVisited'), []);
 if (!visited.includes(currentPage)) {
   visited.push(currentPage);
   sessionStorage.setItem('speedrunVisited', JSON.stringify(visited));
@@ -74,20 +86,21 @@ const total = SPEEDRUN_PAGES.length;
 let done = false;
 
 function formatTime(ms) {
-  const s = Math.floor(ms / 1000);
+  const clamped = Math.max(0, ms);
+  const s = Math.floor(clamped / 1000);
   const m = Math.floor(s / 60);
   const sec = s % 60;
-  const ms3 = Math.floor((ms % 1000) / 10);
-  return (m > 0 ? m + ':' : '') + String(sec).padStart(2, '0') + '.' + String(ms3).padStart(2, '0');
+  const cs = Math.floor((clamped % 1000) / 10); // centiseconds (hundredths)
+  return (m > 0 ? m + ':' : '') + String(sec).padStart(2, '0') + '.' + String(cs).padStart(2, '0');
 }
 
 function checkComplete() {
-  const v = JSON.parse(sessionStorage.getItem('speedrunVisited') || '[]');
+  const v = safeParseJSON(sessionStorage.getItem('speedrunVisited'), []);
   return SPEEDRUN_PAGES.every(p => v.includes(p));
 }
 
 function renderTimer() {
-  const v = JSON.parse(sessionStorage.getItem('speedrunVisited') || '[]');
+  const v = safeParseJSON(sessionStorage.getItem('speedrunVisited'), []);
   const elapsed = Date.now() - startTime;
   const count = v.length;
 
@@ -111,14 +124,17 @@ function renderTimer() {
 
 requestAnimationFrame(renderTimer);
 
-// Propagate ?speedrun=true to all links
-document.querySelectorAll('a[href]').forEach(a => {
+// Propagate ?speedrun=true to same-origin links only
+function tagSpeedrunLink(a) {
   try {
     const url = new URL(a.href, location.href);
+    if (url.origin !== location.origin) return;
     url.searchParams.set('speedrun', 'true');
     a.href = url.toString();
-  } catch (e) {}
-});
+  } catch (e) { /* ignore invalid URLs (javascript:, mailto:, etc.) */ }
+}
+
+document.querySelectorAll('a[href]').forEach(tagSpeedrunLink);
 
 // Also intercept future DOM mutations so dynamically added links are covered
 const linkObserver = new MutationObserver(mutations => {
@@ -126,13 +142,7 @@ const linkObserver = new MutationObserver(mutations => {
     m.addedNodes.forEach(node => {
       if (node.nodeType !== 1) return;
       const links = node.tagName === 'A' ? [node] : [...node.querySelectorAll('a[href]')];
-      links.forEach(a => {
-        try {
-          const url = new URL(a.href, location.href);
-          url.searchParams.set('speedrun', 'true');
-          a.href = url.toString();
-        } catch (e) {}
-      });
+      links.forEach(tagSpeedrunLink);
     });
   });
 });
