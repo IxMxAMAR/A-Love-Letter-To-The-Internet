@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Transitions — A Love Letter to the Web</title>
+  <meta name="description" content="Explore the View Transitions API — same-document morphing, cross-document navigation, and transition configurator.">
+
+  <meta property="og:title" content="View Transitions — A Love Letter to the Web">
+  <meta property="og:description" content="Seamless navigation. Native to the browser.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@400;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/transitions.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/zone-transitions.css">
+</head>
+<body>
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ── Navigation ─────────────────────────────────────────── -->
+  <header class="page-header" style="--zone-color: #fbbf24;">
+    <a href="../index.html" class="page-header__logo">◈ LLTW</a>
+    <nav class="page-header__nav" aria-label="Main navigation">
+      <a href="../index.html">Timeline</a>
+      <a href="../hub.html">Observatory</a>
+      <a href="../hub.html#playground">Playground</a>
+    </nav>
+  </header>
+
+  <main id="main-content" class="page" style="--zone-color: #fbbf24;">
+
+    <!-- ════════════════════════════════════════════════════════
+         ACT 1: HERO — Morphing Card Grid
+    ═══════════════════════════════════════════════════════════ -->
+    <section class="vt-hero section-full" aria-label="View Transitions hero">
+      <div class="vt-hero__bg" aria-hidden="true">
+        <div class="vt-hero__grid-lines"></div>
+        <div class="vt-hero__amber-glow"></div>
+      </div>
+
+      <div class="vt-hero__content content-width">
+        <div class="vt-hero__header">
+          <span class="zone-label vt-zone-label js-reveal">▲ Zone 5</span>
+          <h1 class="vt-hero__title js-reveal">View<br><em>Transitions</em></h1>
+          <p class="subtitle vt-hero__subtitle js-reveal">Seamless navigation. Native to the browser.</p>
+          <p class="vt-hero__hint js-reveal">Click any card to see the transition →</p>
+        </div>
+
+        <!-- 2×3 card grid -->
+        <div class="vt-card-grid stagger-children" role="list" aria-label="Transition demo cards">
+
+          <button class="vt-card" data-card-id="card-1" style="view-transition-name: vt-card-1;" role="listitem" aria-label="Open Morphing card">
+            <div class="vt-card__frame">
+              <div class="vt-card__icon">⇄</div>
+            </div>
+            <div class="vt-card__meta">
+              <span class="vt-card__label">01</span>
+              <h3 class="vt-card__title">Morphing</h3>
+              <p class="vt-card__desc">Elements reshape across states without jarring cuts.</p>
+            </div>
+          </button>
+
+          <button class="vt-card" data-card-id="card-2" style="view-transition-name: vt-card-2;" role="listitem" aria-label="Open Crossfade card">
+            <div class="vt-card__frame">
+              <div class="vt-card__icon">◑</div>
+            </div>
+            <div class="vt-card__meta">
+              <span class="vt-card__label">02</span>
+              <h3 class="vt-card__title">Crossfade</h3>
+              <p class="vt-card__desc">Old state fades out as the new state fades in over it.</p>
+            </div>
+          </button>
+
+          <button class="vt-card" data-card-id="card-3" style="view-transition-name: vt-card-3;" role="listitem" aria-label="Open Slide card">
+            <div class="vt-card__frame">
+              <div class="vt-card__icon">→</div>
+            </div>
+            <div class="vt-card__meta">
+              <span class="vt-card__label">03</span>
+              <h3 class="vt-card__title">Slide</h3>
+              <p class="vt-card__desc">Directional movement implies spatial relationships.</p>
+            </div>
+          </button>
+
+          <button class="vt-card" data-card-id="card-4" style="view-transition-name: vt-card-4;" role="listitem" aria-label="Open Zoom card">
+            <div class="vt-card__frame">
+              <div class="vt-card__icon">⊕</div>
+            </div>
+            <div class="vt-card__meta">
+              <span class="vt-card__label">04</span>
+              <h3 class="vt-card__title">Zoom</h3>
+              <p class="vt-card__desc">Scale transitions anchor the user to a focal element.</p>
+            </div>
+          </button>
+
+          <button class="vt-card" data-card-id="card-5" style="view-transition-name: vt-card-5;" role="listitem" aria-label="Open Shared Element card">
+            <div class="vt-card__frame">
+              <div class="vt-card__icon">◈</div>
+            </div>
+            <div class="vt-card__meta">
+              <span class="vt-card__label">05</span>
+              <h3 class="vt-card__title">Shared Element</h3>
+              <p class="vt-card__desc">Named elements persist and travel between two views.</p>
+            </div>
+          </button>
+
+          <button class="vt-card" data-card-id="card-6" style="view-transition-name: vt-card-6;" role="listitem" aria-label="Open Cross-Document card">
+            <div class="vt-card__frame">
+              <div class="vt-card__icon">⧉</div>
+            </div>
+            <div class="vt-card__meta">
+              <span class="vt-card__label">06</span>
+              <h3 class="vt-card__title">Cross-Document</h3>
+              <p class="vt-card__desc">Full-page navigation with zero JavaScript required.</p>
+            </div>
+          </button>
+
+        </div><!-- /.vt-card-grid -->
+      </div><!-- /.content-width -->
+    </section>
+
+    <!-- ── Card Detail Overlay ─────────────────────────────── -->
+    <div class="vt-detail-overlay" id="vt-detail-overlay" aria-modal="true" role="dialog" aria-label="Card detail" hidden>
+      <div class="vt-detail" id="vt-detail" style="view-transition-name: vt-expanded-card;">
+        <button class="vt-detail__close" id="vt-detail-close" aria-label="Close detail">✕</button>
+        <div class="vt-detail__icon" id="vt-detail-icon">⇄</div>
+        <div class="vt-detail__body">
+          <span class="vt-detail__num" id="vt-detail-num">01</span>
+          <h2 class="vt-detail__title" id="vt-detail-title">Morphing</h2>
+          <p class="vt-detail__text" id="vt-detail-text">
+            Elements reshape and reflow across DOM states without jarring visual cuts.
+            The browser captures a screenshot of the old state, renders the new state,
+            and animates between them using CSS.
+          </p>
+          <div class="vt-detail__code code-block" id="vt-detail-code" role="code" aria-label="Code example"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ════════════════════════════════════════════════════════
+         ACT 2: STORY — The API Explained
+    ═══════════════════════════════════════════════════════════ -->
+    <section class="zone-story vt-story" aria-label="View Transitions story">
+      <div class="section-content">
+
+        <a href="../hub.html" class="back-to-hub">← Observatory</a>
+
+        <h2 class="js-reveal">The <em>View Transitions</em> API</h2>
+        <p class="js-reveal">
+          For decades, navigating between pages felt like a light switch — binary, abrupt, contextless.
+          The View Transitions API changes that. It gives the browser the power to visually connect
+          two states of your interface, whether they're on the same page or two entirely different documents.
+        </p>
+        <p class="js-reveal">
+          The mental model is simple: the browser takes a screenshot of the old state, then renders the new state.
+          Between those two snapshots, you have full CSS control over how elements enter, exit, and morph.
+          Named elements — those with a <code>view-transition-name</code> — get their own individual animation layer,
+          and the browser interpolates their geometry automatically.
+        </p>
+
+        <!-- ── Block 1: startViewTransition ─────────────────── -->
+        <div class="vt-story-block js-reveal">
+          <div class="vt-story-block__header">
+            <span class="vt-story-block__tag">JavaScript</span>
+            <h3>document.startViewTransition()</h3>
+            <button class="copy-btn" data-copy-target="#code-svt" aria-label="Copy code">Copy</button>
+          </div>
+          <pre class="code-block" id="code-svt" tabindex="0"><code><span class="comment">// Wrap any DOM mutation in a transition</span>
+<span class="keyword">document</span>.<span class="function">startViewTransition</span>(<span class="keyword">async</span> () => {
+  <span class="comment">// This callback runs between the old and new state</span>
+  <span class="comment">// Mutate the DOM here — update classes, innerHTML, etc.</span>
+  container.<span class="property">classList</span>.<span class="function">toggle</span>(<span class="string">'expanded'</span>);
+  <span class="keyword">await</span> data.<span class="function">load</span>();  <span class="comment">// async is fully supported</span>
+});
+
+<span class="comment">// The transition object lets you hook into lifecycle</span>
+<span class="keyword">const</span> transition = <span class="keyword">document</span>.<span class="function">startViewTransition</span>(updateDOM);
+<span class="keyword">await</span> transition.<span class="property">ready</span>;   <span class="comment">// animations are about to begin</span>
+<span class="keyword">await</span> transition.<span class="property">finished</span>; <span class="comment">// all animations complete</span></code></pre>
+        </div>
+
+        <!-- ── Block 2: view-transition-name ────────────────── -->
+        <div class="vt-story-block js-reveal">
+          <div class="vt-story-block__header">
+            <span class="vt-story-block__tag">CSS</span>
+            <h3>view-transition-name</h3>
+            <button class="copy-btn" data-copy-target="#code-vtn" aria-label="Copy code">Copy</button>
+          </div>
+          <pre class="code-block" id="code-vtn" tabindex="0"><code><span class="comment">/* Give elements a unique identity across states */</span>
+<span class="selector">.hero-image</span> {
+  <span class="property">view-transition-name</span>: <span class="value">hero-img</span>;
+  <span class="comment">/* Names must be unique in the document at any moment */</span>
+}
+
+<span class="selector">.product-card</span> {
+  <span class="comment">/* Dynamic names via inline style or custom property */</span>
+  <span class="property">view-transition-name</span>: <span class="value">product-42</span>;
+  <span class="property">contain</span>: <span class="value">layout</span>;  <span class="comment">/* Required for named elements */</span>
+}
+
+<span class="comment">/* In JS, set dynamic names before the transition starts */</span>
+<span class="selector">card</span>.<span class="property">style</span>.<span class="property">viewTransitionName</span> = <span class="string">`card-$\{id}</span><span class="string">`</span>;</code></pre>
+        </div>
+
+        <!-- ── Block 3: pseudo-elements ─────────────────────── -->
+        <div class="vt-story-block js-reveal">
+          <div class="vt-story-block__header">
+            <span class="vt-story-block__tag">CSS</span>
+            <h3>::view-transition-old/new</h3>
+            <button class="copy-btn" data-copy-target="#code-pseudo" aria-label="Copy code">Copy</button>
+          </div>
+          <pre class="code-block" id="code-pseudo" tabindex="0"><code><span class="comment">/* The browser creates a pseudo-element tree for each named element */</span>
+<span class="selector">::view-transition-old(hero-img)</span> {
+  <span class="comment">/* The screenshot of the old state */</span>
+  <span class="property">animation</span>: <span class="value">shrink-out 400ms ease-in-out both</span>;
+}
+
+<span class="selector">::view-transition-new(hero-img)</span> {
+  <span class="comment">/* The live rendering of the new state */</span>
+  <span class="property">animation</span>: <span class="value">expand-in 400ms ease-in-out both</span>;
+}
+
+<span class="comment">/* Apply different timings for different elements */</span>
+<span class="selector">::view-transition-old(root)</span>,
+<span class="selector">::view-transition-new(root)</span> {
+  <span class="property">animation-duration</span>: <span class="value">300ms</span>;
+}</code></pre>
+        </div>
+
+        <!-- ── Block 4: Cross-document ───────────────────────── -->
+        <div class="vt-story-block js-reveal">
+          <div class="vt-story-block__header">
+            <span class="vt-story-block__tag">CSS</span>
+            <h3>Cross-Document (zero JS)</h3>
+            <button class="copy-btn" data-copy-target="#code-cross" aria-label="Copy code">Copy</button>
+          </div>
+          <pre class="code-block" id="code-cross" tabindex="0"><code><span class="comment">/* Opt both pages into cross-document transitions */</span>
+<span class="keyword">@view-transition</span> {
+  <span class="property">navigation</span>: <span class="value">auto</span>;
+}
+
+<span class="comment">/* Works for same-origin navigation — no JS needed at all. */</span>
+<span class="comment">/* Add this to both the source and destination page's CSS. */</span>
+
+<span class="comment">/* Match named elements on both pages for shared-element magic */</span>
+<span class="selector">.product-hero</span> {
+  <span class="property">view-transition-name</span>: <span class="value">product-hero</span>;
+}
+<span class="comment">/* The browser handles geometry interpolation automatically */</span></code></pre>
+        </div>
+
+        <!-- ── Browser Support ───────────────────────────────── -->
+        <div class="vt-support-row js-reveal">
+          <div class="browser-support">
+            <span class="supported">● Chrome 111+</span>
+            <span class="supported">● Edge 111+</span>
+            <span class="supported">● Safari 18+</span>
+            <span class="partial">◐ Firefox (partial)</span>
+          </div>
+          <p class="vt-support-note">
+            Same-document transitions have wide support. Cross-document transitions require
+            <code>@view-transition { navigation: auto }</code> and Chrome/Edge 126+ or Safari 18.2+.
+            Always feature-detect with <code>if (document.startViewTransition)</code>.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════════════════════
+         ACT 3: PLAYGROUND — Transition Configurator
+    ═══════════════════════════════════════════════════════════ -->
+    <section class="zone-playground vt-playground" aria-label="View Transitions configurator">
+      <div class="section-content">
+
+        <h2 class="js-reveal">Transition <em>Configurator</em></h2>
+        <p class="js-reveal">Dial in your perfect transition. The generated CSS updates live.</p>
+
+        <div class="vt-configurator js-reveal">
+
+          <!-- Preview stage -->
+          <div class="vt-configurator__stage" aria-label="Transition preview stage">
+            <div class="vt-stage-scene" id="vt-stage-scene" aria-live="polite">
+              <div class="vt-stage-state vt-stage-state--a" id="vt-stage-state" style="view-transition-name: vt-playground-element;">
+                <div class="vt-stage-state__symbol">▲</div>
+                <div class="vt-stage-state__label">State A</div>
+                <div class="vt-stage-state__sub">Click "Toggle" to transition →</div>
+              </div>
+            </div>
+
+            <div class="vt-configurator__actions">
+              <button class="vt-toggle-btn" id="vt-toggle-btn" aria-label="Toggle between state A and state B">
+                Toggle State
+              </button>
+              <span class="vt-toggle-count" id="vt-toggle-count" aria-live="polite">0 transitions fired</span>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="vt-configurator__controls">
+            <div class="vt-controls-grid">
+
+              <!-- Transition Type -->
+              <div class="control-group">
+                <label for="ctrl-type">Type</label>
+                <select id="ctrl-type" aria-label="Transition type">
+                  <option value="crossfade">crossfade</option>
+                  <option value="slide">slide</option>
+                  <option value="zoom">zoom</option>
+                  <option value="flip">flip</option>
+                  <option value="rotate">rotate</option>
+                </select>
+              </div>
+
+              <!-- Easing -->
+              <div class="control-group">
+                <label for="ctrl-easing">Easing</label>
+                <select id="ctrl-easing" aria-label="Easing function">
+                  <option value="ease">ease</option>
+                  <option value="ease-in-out" selected>ease-in-out</option>
+                  <option value="ease-in">ease-in</option>
+                  <option value="ease-out">ease-out</option>
+                  <option value="linear">linear</option>
+                  <option value="cubic-bezier(0.34, 1.56, 0.64, 1)">spring (overshoot)</option>
+                  <option value="cubic-bezier(0.16, 1, 0.3, 1)">snappy out</option>
+                  <option value="cubic-bezier(0.87, 0, 0.13, 1)">sharp in-out</option>
+                </select>
+              </div>
+
+              <!-- Duration -->
+              <div class="control-group">
+                <label for="ctrl-duration">
+                  Duration — <output for="ctrl-duration" id="ctrl-duration-output">400ms</output>
+                </label>
+                <input type="range" id="ctrl-duration" min="100" max="1000" step="50" value="400"
+                  aria-label="Transition duration in milliseconds">
+              </div>
+
+              <!-- Direction (for slide) -->
+              <div class="control-group" id="ctrl-direction-group">
+                <label for="ctrl-direction">Direction</label>
+                <select id="ctrl-direction" aria-label="Slide direction">
+                  <option value="right">→ right</option>
+                  <option value="left">← left</option>
+                  <option value="up">↑ up</option>
+                  <option value="down">↓ down</option>
+                </select>
+              </div>
+
+            </div><!-- /.vt-controls-grid -->
+
+            <!-- Generated CSS output -->
+            <div class="vt-generated">
+              <div class="vt-generated__header">
+                <span class="vt-generated__label">Generated CSS</span>
+                <button class="copy-btn" data-copy-target="#vt-generated-code" aria-label="Copy generated CSS">Copy</button>
+              </div>
+              <pre class="code-block vt-generated__code" id="vt-generated-code" tabindex="0" aria-label="Generated CSS code"></pre>
+            </div>
+
+          </div><!-- /.vt-configurator__controls -->
+
+        </div><!-- /.vt-configurator -->
+
+      </div>
+    </section>
+
+  </main><!-- /#main-content -->
+
+  <!-- ── Zone Navigation ──────────────────────────────────── -->
+  <nav class="zone-nav" aria-label="Zone navigation">
+    <a href="container-queries.html">← Container Queries</a>
+    <span aria-hidden="true">·</span>
+    <a href="view-transitions.html" aria-current="page" style="color: #fbbf24;">▲ View Transitions</a>
+    <span aria-hidden="true">·</span>
+    <a href="houdini.html">CSS Houdini →</a>
+  </nav>
+
+  <script type="module" src="../js/transitions.js"></script>
+  <script type="module" src="../js/zone-transitions.js"></script>
+</body>
+</html>

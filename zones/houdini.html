@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Houdini — A Love Letter to the Web</title>
+  <meta name="description" content="Explore the CSS Houdini Paint API — extend the browser's rendering engine with generative geometric patterns and live @property playgrounds.">
+
+  <meta property="og:title" content="CSS Houdini — A Love Letter to the Web">
+  <meta property="og:description" content="Paint the web with your own brush. CSS Houdini opens the rendering engine to custom paint worklets.">
+  <meta property="og:type" content="article">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/transitions.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/zone-houdini.css">
+</head>
+<body>
+
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
+  <!-- Nav Header -->
+  <header class="zone-header" role="banner">
+    <nav class="zone-nav-bar content-width" aria-label="Site navigation">
+      <a href="../index.html" class="nav-home" aria-label="Return to landing page">
+        <span class="nav-home-icon" aria-hidden="true">←</span>
+        <span>A Love Letter to the Web</span>
+      </a>
+      <a href="../hub.html" class="nav-hub">Observatory</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ═══════════════════════════════════════════════════
+         ACT 1: HERO — Houdini Paint Canvas
+         ═══════════════════════════════════════════════════ -->
+    <section class="zone-hero" aria-label="CSS Houdini — generative paint art" id="act-hero">
+      <div class="hero-paint-stage" id="heroPaintStage" aria-hidden="true">
+        <!-- Paint worklet renders here; CSS fallback gradient applied when API unavailable -->
+        <div class="hero-paint-canvas" id="heroPaintCanvas"></div>
+        <div class="hero-noise-overlay" aria-hidden="true"></div>
+      </div>
+
+      <div class="hero-content content-width">
+        <div class="hero-eyebrow">
+          <span class="zone-badge">■ Zone 6</span>
+          <span class="zone-badge-sep" aria-hidden="true">·</span>
+          <span class="zone-badge-tag">Houdini APIs</span>
+        </div>
+        <h1 class="hero-title">
+          CSS<br>
+          <em>Houdini</em>
+        </h1>
+        <p class="hero-subtitle subtitle">Extend the browser's rendering engine.</p>
+        <div class="hero-scroll-hint" aria-hidden="true">
+          <span class="scroll-indicator"></span>
+          <span class="scroll-label">Scroll to explore</span>
+        </div>
+      </div>
+
+      <!-- Browser support callout -->
+      <div class="browser-support-badge" id="supportBadge" aria-live="polite">
+        <span class="support-icon" aria-hidden="true">◉</span>
+        <span class="support-text" id="supportText">Checking Paint API support…</span>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════
+         ACT 2: STORY — What is Houdini?
+         ═══════════════════════════════════════════════════ -->
+    <section class="zone-story" id="act-story" aria-label="CSS Houdini explained">
+      <div class="content-width">
+
+        <header class="story-header">
+          <span class="label">Act II</span>
+          <h2>What is CSS Houdini?</h2>
+          <p class="subtitle">
+            Houdini is a collection of low-level APIs that give developers direct access to the CSS engine —
+            letting you paint custom backgrounds, create typed custom properties, and define layout algorithms
+            that the browser natively executes.
+          </p>
+        </header>
+
+        <div class="story-grid">
+
+          <!-- Paint API -->
+          <article class="story-card story-card--featured">
+            <div class="story-card-icon" aria-hidden="true">🎨</div>
+            <h3>Paint API</h3>
+            <p>
+              Register a <code>PaintWorklet</code> class and use it as a CSS <code>background-image</code>
+              value via <code>paint(yourWorkletName)</code>. The worklet receives a canvas-like context,
+              the element's dimensions, and any registered custom properties — and paints on every repaint.
+            </p>
+            <div class="code-block-wrapper">
+              <button class="copy-btn" aria-label="Copy Paint API code" data-target="code-paint-api">
+                <span class="copy-icon" aria-hidden="true">⎘</span>
+                <span>Copy</span>
+              </button>
+              <pre class="code-block" id="code-paint-api"><code><span class="token-comment">/* 1. Register the worklet */</span>
+<span class="token-keyword">await</span> CSS.paintWorklet.addModule(<span class="token-string">'pattern-worklet.js'</span>);
+
+<span class="token-comment">/* 2. Use it in CSS */</span>
+<span class="token-selector">.my-element</span> {
+  <span class="token-property">background-image</span>: <span class="token-value">paint(patternPainter)</span>;
+  <span class="token-property">--pattern-density</span>: <span class="token-number">12</span>;
+  <span class="token-property">--pattern-size</span>: <span class="token-number">40</span>;
+}</code></pre>
+            </div>
+          </article>
+
+          <!-- @property -->
+          <article class="story-card">
+            <div class="story-card-icon" aria-hidden="true">🔑</div>
+            <h3>@property — Typed Custom Properties</h3>
+            <p>
+              <code>@property</code> lets you declare the <em>type</em>, initial value, and inheritance
+              of custom properties. This unlocks CSS transitions on things like colors and numbers that
+              were previously un-interpolatable.
+            </p>
+            <div class="code-block-wrapper">
+              <button class="copy-btn" aria-label="Copy @property code" data-target="code-property">
+                <span class="copy-icon" aria-hidden="true">⎘</span>
+                <span>Copy</span>
+              </button>
+              <pre class="code-block" id="code-property"><code><span class="token-at-rule">@property</span> <span class="token-var">--pattern-color-h</span> {
+  <span class="token-property">syntax</span>: <span class="token-string">'&lt;number&gt;'</span>;
+  <span class="token-property">inherits</span>: <span class="token-value">false</span>;
+  <span class="token-property">initial-value</span>: <span class="token-number">210</span>;
+}
+
+<span class="token-selector">.box</span> {
+  <span class="token-property">transition</span>: <span class="token-value">--pattern-color-h 600ms ease</span>;
+}</code></pre>
+            </div>
+          </article>
+
+          <!-- Worklet class structure -->
+          <article class="story-card">
+            <div class="story-card-icon" aria-hidden="true">⚙️</div>
+            <h3>Paint Worklet Class</h3>
+            <p>
+              Every paint worklet is a class with an <code>inputProperties</code> static getter
+              and a <code>paint()</code> method. The browser calls <code>paint()</code> whenever
+              it needs to render that element's background — efficiently, off the main thread.
+            </p>
+            <div class="code-block-wrapper">
+              <button class="copy-btn" aria-label="Copy worklet class code" data-target="code-worklet-class">
+                <span class="copy-icon" aria-hidden="true">⎘</span>
+                <span>Copy</span>
+              </button>
+              <pre class="code-block" id="code-worklet-class"><code><span class="token-keyword">class</span> <span class="token-name">patternPainter</span> {
+  <span class="token-keyword">static</span> <span class="token-keyword">get</span> <span class="token-name">inputProperties</span>() {
+    <span class="token-keyword">return</span> [
+      <span class="token-string">'--pattern-density'</span>,
+      <span class="token-string">'--pattern-color-h'</span>,
+      <span class="token-string">'--pattern-size'</span>,
+    ];
+  }
+
+  <span class="token-name">paint</span>(<span class="token-param">ctx, size, props</span>) {
+    <span class="token-comment">// ctx = CanvasRenderingContext2D-like</span>
+    <span class="token-comment">// size = { width, height }</span>
+    <span class="token-comment">// props = StylePropertyMapReadOnly</span>
+    <span class="token-keyword">const</span> density = props.<span class="token-name">get</span>(<span class="token-string">'--pattern-density'</span>);
+    <span class="token-comment">// … draw with ctx …</span>
+  }
+}
+
+registerPaint(<span class="token-string">'patternPainter'</span>, patternPainter);</code></pre>
+            </div>
+          </article>
+
+          <!-- Browser Support -->
+          <article class="story-card story-card--support">
+            <div class="story-card-icon" aria-hidden="true">🌐</div>
+            <h3>Browser Support</h3>
+            <div class="support-table" role="table" aria-label="Houdini API browser support">
+              <div class="support-row support-row--header" role="row">
+                <span role="columnheader">API</span>
+                <span role="columnheader">Chrome</span>
+                <span role="columnheader">Firefox</span>
+                <span role="columnheader">Safari</span>
+              </div>
+              <div class="support-row" role="row">
+                <span role="cell"><code>CSS.paintWorklet</code></span>
+                <span role="cell" class="support-yes">✓ 65+</span>
+                <span role="cell" class="support-no">✗ No</span>
+                <span role="cell" class="support-no">✗ No</span>
+              </div>
+              <div class="support-row" role="row">
+                <span role="cell"><code>@property</code></span>
+                <span role="cell" class="support-yes">✓ 85+</span>
+                <span role="cell" class="support-yes">✓ 128+</span>
+                <span role="cell" class="support-yes">✓ 16.4+</span>
+              </div>
+              <div class="support-row" role="row">
+                <span role="cell">Properties &amp; Values API (JS)</span>
+                <span role="cell" class="support-yes">✓ 78+</span>
+                <span role="cell" class="support-partial">~ Flag</span>
+                <span role="cell" class="support-no">✗ No</span>
+              </div>
+            </div>
+            <p class="support-note">
+              <strong>Tip:</strong> Use <code>@supports (background: paint(x))</code> or
+              <code>'paintWorklet' in CSS</code> to feature-detect and provide graceful fallbacks.
+            </p>
+          </article>
+
+        </div><!-- .story-grid -->
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════
+         ACT 3: PLAYGROUND — Live @property Controls
+         ═══════════════════════════════════════════════════ -->
+    <section class="zone-playground" id="act-playground" aria-label="Interactive Houdini playground">
+      <div class="content-width">
+
+        <header class="playground-header">
+          <span class="label">Act III</span>
+          <h2>Live Pattern Playground</h2>
+          <p class="subtitle">
+            Drag the sliders to update <code>@property</code> custom properties.
+            The paint worklet reads them and redraws instantly — no JavaScript polling required.
+          </p>
+        </header>
+
+        <div class="playground-layout">
+
+          <!-- Painted Canvas Preview -->
+          <div class="playground-preview-wrapper">
+            <div
+              class="playground-canvas"
+              id="playgroundCanvas"
+              aria-label="Live paint worklet preview"
+              role="img"
+            ></div>
+            <div class="canvas-fallback-message" id="canvasFallback" hidden>
+              <span class="fallback-icon" aria-hidden="true">■</span>
+              <p>Paint API not supported in this browser.</p>
+              <p>Try Chrome 65+ or Edge 79+ to see the live worklet rendering.</p>
+              <p>The gradient below is the CSS fallback.</p>
+            </div>
+          </div>
+
+          <!-- Controls Panel -->
+          <div class="playground-controls">
+
+            <fieldset class="control-group">
+              <legend class="control-legend">Pattern Properties</legend>
+
+              <!-- Density -->
+              <div class="control-row">
+                <div class="control-meta">
+                  <label for="sliderDensity" class="control-label">
+                    <code>--pattern-density</code>
+                  </label>
+                  <output class="control-value" id="valueDensity" for="sliderDensity">12</output>
+                </div>
+                <input
+                  type="range"
+                  id="sliderDensity"
+                  min="1" max="50" value="12" step="1"
+                  class="houdini-slider"
+                  aria-describedby="descDensity"
+                >
+                <p class="control-desc" id="descDensity">Number of circles in the grid (1–50)</p>
+              </div>
+
+              <!-- Hue -->
+              <div class="control-row">
+                <div class="control-meta">
+                  <label for="sliderHue" class="control-label">
+                    <code>--pattern-color-h</code>
+                  </label>
+                  <output class="control-value" id="valueHue" for="sliderHue">210</output>
+                </div>
+                <input
+                  type="range"
+                  id="sliderHue"
+                  min="0" max="360" value="210" step="1"
+                  class="houdini-slider houdini-slider--hue"
+                  aria-describedby="descHue"
+                >
+                <p class="control-desc" id="descHue">Base hue for circle colors (0–360°)</p>
+              </div>
+
+              <!-- Size -->
+              <div class="control-row">
+                <div class="control-meta">
+                  <label for="sliderSize" class="control-label">
+                    <code>--pattern-size</code>
+                  </label>
+                  <output class="control-value" id="valueSize" for="sliderSize">40</output>
+                </div>
+                <input
+                  type="range"
+                  id="sliderSize"
+                  min="5" max="100" value="40" step="1"
+                  class="houdini-slider"
+                  aria-describedby="descSize"
+                >
+                <p class="control-desc" id="descSize">Maximum circle radius in px (5–100)</p>
+              </div>
+
+            </fieldset>
+
+            <!-- Generated CSS output -->
+            <div class="generated-css-wrapper">
+              <div class="generated-css-header">
+                <span class="label">Generated CSS</span>
+                <button class="copy-btn copy-btn--small" aria-label="Copy generated CSS" id="copyGeneratedBtn" data-target="generatedCssOutput">
+                  <span class="copy-icon" aria-hidden="true">⎘</span>
+                  <span>Copy</span>
+                </button>
+              </div>
+              <pre class="code-block code-block--generated" id="generatedCssOutput" aria-live="polite" aria-atomic="true"><code></code></pre>
+            </div>
+
+          </div><!-- .playground-controls -->
+        </div><!-- .playground-layout -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Zone Navigation Footer -->
+  <nav class="zone-footer-nav" aria-label="Zone navigation">
+    <div class="content-width">
+      <div class="zone-nav-links">
+        <a href="view-transitions.html" class="zone-nav-link zone-nav-link--prev">
+          <span class="zone-nav-dir" aria-hidden="true">←</span>
+          <span>
+            <span class="zone-nav-label">Previous</span>
+            <span class="zone-nav-name">View Transitions</span>
+          </span>
+        </a>
+        <a href="../hub.html" class="zone-nav-link zone-nav-link--hub">
+          <span aria-hidden="true">◉</span>
+          <span>Observatory</span>
+        </a>
+        <a href="has-selector.html" class="zone-nav-link zone-nav-link--next">
+          <span>
+            <span class="zone-nav-label">Next</span>
+            <span class="zone-nav-name">:has() Selector</span>
+          </span>
+          <span class="zone-nav-dir" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <script type="module" src="../js/transitions.js"></script>
+  <script type="module" src="../js/zone-houdini.js"></script>
+</body>
+</html>

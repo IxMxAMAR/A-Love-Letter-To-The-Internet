@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>:has() Selector — A Love Letter to the Web</title>
+  <meta name="description" content="CSS finally learned to look up. Explore the :has() selector — parent selection, state-driven styling, and zero JavaScript form magic.">
+
+  <meta property="og:title" content=":has() Selector — A Love Letter to the Web">
+  <meta property="og:description" content="CSS finally learned to look up.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/transitions.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/zone-has.css">
+</head>
+<body>
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ── Header ──────────────────────────────────────────────── -->
+  <header class="page-header">
+    <a href="../hub.html" class="page-header__logo" data-transition="root">◈ LLTW</a>
+    <nav class="page-header__nav" aria-label="Main navigation">
+      <a href="../index.html" data-transition="root">Timeline</a>
+      <a href="../hub.html" data-transition="root">Observatory</a>
+    </nav>
+  </header>
+
+  <main id="main-content" class="page">
+
+    <!-- ══════════════════════════════════════════════════════════
+         ACT 1 — HERO: Self-Styling Form (zero JS for behavior)
+    ══════════════════════════════════════════════════════════ -->
+    <section class="zone-hero has-hero" aria-label="Zone 7 — :has() Selector" style="view-transition-name: zone-hero;">
+
+      <!-- Background ambience -->
+      <div class="has-hero__bg" aria-hidden="true">
+        <div class="has-hero__orb has-hero__orb--1"></div>
+        <div class="has-hero__orb has-hero__orb--2"></div>
+        <div class="has-hero__orb has-hero__orb--3"></div>
+        <div class="has-hero__grid"></div>
+      </div>
+
+      <div class="content-width" style="view-transition-name: zone-content;">
+        <a href="../hub.html" class="back-to-hub" data-transition="hub-node">
+          <span aria-hidden="true">←</span> Observatory
+        </a>
+
+        <div class="zone-hero__header stagger-children">
+          <p class="zone-label">★ Zone 7</p>
+          <h1>:has()</h1>
+          <p class="subtitle">CSS finally learned to look up.</p>
+        </div>
+
+        <!-- THE MAGIC FORM — all state driven by :has() -->
+        <div class="has-demo-wrap animate-fade-in-up" style="animation-delay: 300ms;">
+
+          <!-- Status ribbon — driven by :has() on the form -->
+          <div class="form-status-bar" aria-live="polite">
+            <span class="form-status-bar__state form-status-bar__state--empty">Fill in all fields to see the magic</span>
+            <span class="form-status-bar__state form-status-bar__state--partial">Getting there — keep going…</span>
+            <span class="form-status-bar__state form-status-bar__state--complete">✦ All fields complete — pure CSS detected this</span>
+          </div>
+
+          <form class="has-form" id="contact-form" novalidate>
+
+            <!-- Name fieldset -->
+            <fieldset class="has-fieldset">
+              <legend class="has-legend">01</legend>
+              <div class="has-field">
+                <label class="has-label" for="f-name">Your name</label>
+                <input
+                  class="has-input"
+                  type="text"
+                  id="f-name"
+                  name="name"
+                  placeholder="e.g. Ada Lovelace"
+                  required
+                  autocomplete="name"
+                >
+                <span class="has-field__check" aria-hidden="true">✓</span>
+              </div>
+            </fieldset>
+
+            <!-- Email fieldset -->
+            <fieldset class="has-fieldset">
+              <legend class="has-legend">02</legend>
+              <div class="has-field">
+                <label class="has-label" for="f-email">Email address</label>
+                <input
+                  class="has-input"
+                  type="email"
+                  id="f-email"
+                  name="email"
+                  placeholder="you@example.com"
+                  required
+                  autocomplete="email"
+                >
+                <span class="has-field__check" aria-hidden="true">✓</span>
+              </div>
+            </fieldset>
+
+            <!-- Message fieldset -->
+            <fieldset class="has-fieldset">
+              <legend class="has-legend">03</legend>
+              <div class="has-field">
+                <label class="has-label" for="f-message">Your message</label>
+                <textarea
+                  class="has-input has-input--textarea"
+                  id="f-message"
+                  name="message"
+                  placeholder="Tell me something interesting…"
+                  required
+                  rows="4"
+                ></textarea>
+                <span class="has-field__check" aria-hidden="true">✓</span>
+              </div>
+            </fieldset>
+
+            <!-- Submit -->
+            <div class="has-form__footer">
+              <button class="has-submit" type="submit">
+                <span class="has-submit__text">Send message</span>
+                <span class="has-submit__icon" aria-hidden="true">→</span>
+                <span class="has-submit__celebration" aria-hidden="true">✦</span>
+              </button>
+              <p class="has-form__note">
+                <span class="has-form__note--idle">Not a single line of JavaScript controls these styles.</span>
+                <span class="has-form__note--active">Submit enabled by <code>:has(input:not(:placeholder-shown))</code> on all fields.</span>
+              </p>
+            </div>
+
+            <!-- Completion celebration overlay -->
+            <div class="has-celebration" aria-hidden="true">
+              <span class="has-celebration__star">✦</span>
+              <span class="has-celebration__star">★</span>
+              <span class="has-celebration__star">✦</span>
+            </div>
+
+          </form>
+
+          <!-- Selector display — shows current active selectors live -->
+          <div class="has-selector-display" aria-label="Active CSS selectors">
+            <p class="has-selector-display__heading">Active :has() selectors right now</p>
+            <ul class="has-selector-list">
+              <li class="has-selector-item has-selector-item--focus">
+                <code>fieldset:has(input:focus)</code>
+                <span class="has-selector-item__dot"></span>
+              </li>
+              <li class="has-selector-item has-selector-item--filled">
+                <code>fieldset:has(input:not(:placeholder-shown))</code>
+                <span class="has-selector-item__dot"></span>
+              </li>
+              <li class="has-selector-item has-selector-item--complete">
+                <code>form:has(input:not(:placeholder-shown):not(:first-of-type))</code>
+                <span class="has-selector-item__dot"></span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ACT 2 — STORY
+    ══════════════════════════════════════════════════════════ -->
+    <section class="zone-story" aria-label="The story of :has()">
+      <div class="section-content">
+
+        <a href="../hub.html" class="back-to-hub" data-transition="hub-node" aria-hidden="true">
+          <span>←</span> Observatory
+        </a>
+
+        <div class="browser-support">
+          <span class="supported">● Chrome 105+</span>
+          <span class="supported">● Firefox 121+</span>
+          <span class="supported">● Safari 15.4+</span>
+          <span>Baseline 2023</span>
+        </div>
+
+        <h2 class="scroll-reveal">The parent selector CSS never had</h2>
+
+        <div class="story-grid">
+          <div class="story-prose scroll-reveal">
+            <p>
+              For decades, CSS could only select elements based on their ancestors, not their children. You could style a parent that <em>contained</em> a certain kind of child — but only in your head. In the stylesheet, you were powerless.
+            </p>
+            <p>
+              Developers hacked around this with JavaScript: listen for an event, walk the DOM, add a class to the parent, style that class. Three steps to do something that should be one.
+            </p>
+            <p>
+              <code>:has()</code> ended that. It lets any selector look <em>inside</em> itself — at its children, its descendants, even what follows it in the DOM. The colon-has pattern unlocks parent selection, sibling-based logic, and state-driven composition that used to require a full framework.
+            </p>
+            <p>
+              The form above proves it. Every label recolor, every fieldset highlight, every button state change, and the final completion celebration — all triggered by <code>:has()</code>. Not one event listener.
+            </p>
+          </div>
+
+          <div class="story-sidebar scroll-reveal">
+            <div class="has-anatomy">
+              <p class="has-anatomy__label">Anatomy</p>
+              <div class="has-anatomy__diagram">
+                <span class="anat-part anat-part--subject">form</span><span class="anat-part anat-part--pseudo">:</span><span class="anat-part anat-part--fn">has</span><span class="anat-part anat-part--paren">(</span><span class="anat-part anat-part--arg">input:focus</span><span class="anat-part anat-part--paren">)</span>
+                <div class="anat-labels">
+                  <div class="anat-label anat-label--subject">Subject<br><small>the element styled</small></div>
+                  <div class="anat-label anat-label--fn">:has()<br><small>the relational filter</small></div>
+                  <div class="anat-label anat-label--arg">Argument<br><small>what it looks for inside</small></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Code examples ─────────────────────────────── -->
+        <div class="story-examples scroll-reveal">
+
+          <h3>Core patterns</h3>
+
+          <div class="example-tabs" role="tablist" aria-label="Code examples">
+
+            <!-- Tab 1 — Parent selection -->
+            <div class="example-card">
+              <div class="example-card__header">
+                <span class="example-card__tag">Pattern 1</span>
+                <h4>Parent selection</h4>
+                <p>Style a container based on what it contains.</p>
+              </div>
+              <div class="code-block-wrap">
+                <div class="code-block" role="region" aria-label="Parent selection example">
+<span class="keyword">/* Style a card that contains an img */</span>
+<span class="selector">.card</span><span class="keyword">:</span><span class="function">has</span>(<span class="value">img</span>) {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-rows</span>: <span class="value">auto 1fr</span>;
+}
+
+<span class="keyword">/* Style a nav that contains the current page link */</span>
+<span class="selector">nav</span><span class="keyword">:</span><span class="function">has</span>(<span class="value">a[aria-current="page"]</span>) {
+  <span class="property">border-bottom</span>: <span class="value">2px solid var(--accent)</span>;
+}</div>
+                <button class="copy-btn" data-copy="pattern-1" aria-label="Copy code">Copy</button>
+              </div>
+            </div>
+
+            <!-- Tab 2 — State-driven form -->
+            <div class="example-card">
+              <div class="example-card__header">
+                <span class="example-card__tag">Pattern 2</span>
+                <h4>State-driven forms</h4>
+                <p>React to input state without JavaScript.</p>
+              </div>
+              <div class="code-block-wrap">
+                <div class="code-block" role="region" aria-label="State-driven form example">
+<span class="keyword">/* Label turns accent when input has a value */</span>
+<span class="selector">.field</span><span class="keyword">:</span><span class="function">has</span>(<span class="value">input:not(:placeholder-shown)</span>) <span class="selector">.label</span> {
+  <span class="property">color</span>: <span class="value">var(--accent)</span>;
+}
+
+<span class="keyword">/* Fieldset border highlights on focus */</span>
+<span class="selector">fieldset</span><span class="keyword">:</span><span class="function">has</span>(<span class="value">input:focus, textarea:focus</span>) {
+  <span class="property">border-left-color</span>: <span class="value">var(--accent)</span>;
+}
+
+<span class="keyword">/* Submit button activates when all required fields filled */</span>
+<span class="selector">form</span><span class="keyword">:</span><span class="function">has</span>(<span class="value">.required-name:not(:placeholder-shown)</span>)<span class="keyword">:</span><span class="function">has</span>(<span class="value">.required-email:not(:placeholder-shown)</span>) <span class="selector">.submit</span> {
+  <span class="property">opacity</span>: <span class="value">1</span>;
+  <span class="property">pointer-events</span>: <span class="value">auto</span>;
+}</div>
+                <button class="copy-btn" data-copy="pattern-2" aria-label="Copy code">Copy</button>
+              </div>
+            </div>
+
+            <!-- Tab 3 — Sibling logic -->
+            <div class="example-card">
+              <div class="example-card__header">
+                <span class="example-card__tag">Pattern 3</span>
+                <h4>Sibling-based logic</h4>
+                <p>Combine :has() with :not() and :checked for complex UI states.</p>
+              </div>
+              <div class="code-block-wrap">
+                <div class="code-block" role="region" aria-label="Sibling logic example">
+<span class="keyword">/* Hide sibling content when a checkbox is checked */</span>
+<span class="selector">.panel</span><span class="keyword">:</span><span class="function">has</span>(<span class="value">input[type="checkbox"]:checked</span>) <span class="selector">.extra</span> {
+  <span class="property">display</span>: <span class="value">none</span>;
+}
+
+<span class="keyword">/* Dim list items that don't match a selected filter */</span>
+<span class="selector">ul</span><span class="keyword">:</span><span class="function">has</span>(<span class="value">[data-tag="urgent"]</span>) <span class="selector">li</span><span class="keyword">:</span><span class="function">not</span>(<span class="value">:has([data-tag="urgent"])</span>) {
+  <span class="property">opacity</span>: <span class="value">0.4</span>;
+}
+
+<span class="keyword">/* Global layout change when sidebar is open */</span>
+<span class="selector">body</span><span class="keyword">:</span><span class="function">has</span>(<span class="value">#sidebar:popover-open</span>) {
+  <span class="property">overflow</span>: <span class="value">hidden</span>;
+}</div>
+                <button class="copy-btn" data-copy="pattern-3" aria-label="Copy code">Copy</button>
+              </div>
+            </div>
+
+            <!-- Tab 4 — Real world use cases -->
+            <div class="example-card">
+              <div class="example-card__header">
+                <span class="example-card__tag">Pattern 4</span>
+                <h4>Real-world use cases</h4>
+                <p>What :has() replaced three JavaScript patterns with one CSS rule.</p>
+              </div>
+              <div class="code-block-wrap">
+                <div class="code-block" role="region" aria-label="Real world use cases">
+<span class="keyword">/* Dark overlay when modal is open */</span>
+<span class="selector">html</span><span class="keyword">:</span><span class="function">has</span>(<span class="value">dialog[open]</span>)<span class="keyword">::</span><span class="function">before</span> {
+  <span class="property">content</span>: <span class="string">""</span>;
+  <span class="property">position</span>: <span class="value">fixed</span>;
+  <span class="property">inset</span>: <span class="value">0</span>;
+  <span class="property">background</span>: <span class="value">oklch(0% 0 0 / 0.6)</span>;
+}
+
+<span class="keyword">/* Sticky header when page has been scrolled */</span>
+<span class="selector">body</span><span class="keyword">:</span><span class="function">has</span>(<span class="value">.scroll-sentinel:not(:is(:first-child))</span>) <span class="selector">header</span> {
+  <span class="property">box-shadow</span>: <span class="value">0 4px 24px oklch(0% 0 0 / 0.3)</span>;
+}
+
+<span class="keyword">/* Grid layout changes based on number of items */</span>
+<span class="selector">.grid</span><span class="keyword">:</span><span class="function">has</span>(<span class="value">> :nth-child(4)</span>) {
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(4, 1fr)</span>;
+}</div>
+                <button class="copy-btn" data-copy="pattern-4" aria-label="Copy code">Copy</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ACT 3 — PLAYGROUND: :has() Query Builder
+    ══════════════════════════════════════════════════════════ -->
+    <section class="zone-playground" aria-label=":has() query builder playground">
+      <div class="section-content">
+
+        <h2 class="scroll-reveal">Query Builder</h2>
+        <p class="subtitle scroll-reveal">Build a <code>:has()</code> selector and watch the DOM respond in real-time.</p>
+
+        <div class="qb-layout">
+
+          <!-- Controls -->
+          <div class="qb-controls scroll-reveal" role="form" aria-label="Query builder controls">
+
+            <div class="qb-control-group">
+              <label class="qb-label" for="qb-target">Target element</label>
+              <select class="qb-select" id="qb-target" aria-describedby="qb-output">
+                <option value="form">form</option>
+                <option value="div" selected>div</option>
+                <option value="section">section</option>
+                <option value="ul">ul</option>
+              </select>
+            </div>
+
+            <div class="qb-control-arrow" aria-hidden="true">:</div>
+            <div class="qb-control-has" aria-hidden="true">has</div>
+            <div class="qb-control-paren" aria-hidden="true">(</div>
+
+            <div class="qb-control-group">
+              <label class="qb-label" for="qb-inner">Inner selector</label>
+              <select class="qb-select" id="qb-inner" aria-describedby="qb-output">
+                <option value="input:focus">input:focus</option>
+                <option value="input:checked" selected>input:checked</option>
+                <option value=".active">.active</option>
+                <option value="img">img</option>
+              </select>
+            </div>
+
+            <div class="qb-control-paren" aria-hidden="true">)</div>
+
+            <div class="qb-control-group qb-control-group--not">
+              <label class="qb-label qb-label--checkbox" for="qb-not">
+                <input type="checkbox" id="qb-not" class="qb-checkbox">
+                Wrap with <code>:not()</code>
+              </label>
+            </div>
+
+          </div>
+
+          <!-- Generated CSS output -->
+          <div class="qb-output-wrap scroll-reveal">
+            <div class="qb-output-header">
+              <span class="qb-output-label">Generated CSS</span>
+              <button class="copy-btn" id="qb-copy-btn" aria-label="Copy generated CSS">Copy</button>
+            </div>
+            <div class="code-block qb-output" id="qb-output" aria-live="polite" aria-label="Generated CSS selector">
+              <span class="selector" id="qb-out-target">div</span><span class="keyword">:</span><span class="function">has</span>(<span class="value" id="qb-out-inner">input:checked</span>) {
+  <span class="comment">/* your styles here */</span>
+}
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Live DOM preview -->
+        <div class="qb-preview scroll-reveal" aria-label="Live DOM preview">
+          <div class="qb-preview-header">
+            <span class="qb-preview-label">Live DOM — matching elements highlight</span>
+            <span class="qb-preview-hint">Interact with the demo elements</span>
+          </div>
+
+          <div class="qb-dom" id="qb-dom">
+
+            <!-- form node -->
+            <div class="qb-node qb-node--form" data-element="form">
+              <div class="qb-node-tag">&lt;form&gt;</div>
+              <div class="qb-node-inner">
+                <div class="qb-node qb-node--field" data-element="div">
+                  <div class="qb-node-tag">&lt;div&gt;</div>
+                  <div class="qb-node-inner">
+                    <label class="qb-demo-label">
+                      <input type="checkbox" class="qb-demo-input" data-element="input">
+                      <span>Option A</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="qb-node qb-node--field" data-element="div">
+                  <div class="qb-node-tag">&lt;div&gt;</div>
+                  <div class="qb-node-inner">
+                    <label class="qb-demo-label">
+                      <input type="checkbox" class="qb-demo-input" data-element="input">
+                      <span>Option B</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- section node -->
+            <div class="qb-node qb-node--section" data-element="section">
+              <div class="qb-node-tag">&lt;section&gt;</div>
+              <div class="qb-node-inner">
+                <div class="qb-node qb-node--field" data-element="div">
+                  <div class="qb-node-tag">&lt;div class="active"&gt;</div>
+                  <div class="qb-node-inner qb-node-inner--active">
+                    <span class="active">Active content</span>
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect width='32' height='32' rx='4' fill='%23fb923c22'/%3E%3C/svg%3E" alt="Demo image" width="32" height="32">
+                  </div>
+                </div>
+                <div class="qb-node qb-node--field" data-element="div">
+                  <div class="qb-node-tag">&lt;div&gt;</div>
+                  <div class="qb-node-inner">
+                    <label class="qb-demo-label">
+                      <input type="checkbox" class="qb-demo-input" data-element="input">
+                      <span>Option C</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ul node -->
+            <div class="qb-node qb-node--ul" data-element="ul">
+              <div class="qb-node-tag">&lt;ul&gt;</div>
+              <div class="qb-node-inner">
+                <div class="qb-node qb-node--li" data-element="div">
+                  <div class="qb-node-tag">&lt;li&gt;</div>
+                  <div class="qb-node-inner">
+                    <label class="qb-demo-label">
+                      <input type="checkbox" class="qb-demo-input" data-element="input" checked>
+                      <span>Pre-checked</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="qb-node qb-node--li" data-element="div">
+                  <div class="qb-node-tag">&lt;li&gt;</div>
+                  <div class="qb-node-inner">
+                    <span class="qb-img-wrap"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect width='32' height='32' rx='4' fill='%23fb923c44'/%3E%3C/svg%3E" alt="Demo image" width="32" height="32" data-element="img"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Zone Nav ─────────────────────────────────────────────── -->
+  <nav class="zone-nav" aria-label="Zone navigation">
+    <a href="houdini.html" data-transition="zone-content">← Houdini</a>
+    <a href="has-selector.html" aria-current="page" data-transition="zone-content">★ :has()</a>
+    <a href="cascade-layers.html" data-transition="zone-content">Layers →</a>
+  </nav>
+
+  <script type="module" src="../js/transitions.js"></script>
+  <script type="module">
+    /* ── Copy button handler ──────────────────────────────────── */
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const target = btn.dataset.copy;
+        let text = '';
+
+        if (target) {
+          // Named code block
+          const block = btn.previousElementSibling;
+          text = block ? block.textContent.trim() : '';
+        } else if (btn.id === 'qb-copy-btn') {
+          // Query builder output
+          text = document.getElementById('qb-output').textContent.trim();
+        }
+
+        try {
+          await navigator.clipboard.writeText(text);
+          btn.textContent = 'Copied!';
+          setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+        } catch {
+          btn.textContent = 'Copy failed';
+          setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+        }
+      });
+    });
+
+    /* ── Query Builder ────────────────────────────────────────── */
+    const qbTarget = document.getElementById('qb-target');
+    const qbInner  = document.getElementById('qb-inner');
+    const qbNot    = document.getElementById('qb-not');
+    const qbOutTarget = document.getElementById('qb-out-target');
+    const qbOutInner  = document.getElementById('qb-out-inner');
+    const qbDom    = document.getElementById('qb-dom');
+
+    function updateQueryBuilder() {
+      const target = qbTarget.value;
+      const inner  = qbInner.value;
+      const useNot = qbNot.checked;
+
+      // Update displayed selector
+      qbOutTarget.textContent = target;
+      qbOutInner.textContent  = useNot ? `${inner}` : inner;
+
+      // Wrap with not if needed
+      const innerDisplay = useNot ? `not(${inner})` : inner;
+      qbOutInner.textContent = innerDisplay;
+
+      // Highlight matching nodes in the DOM preview
+      // We do it by class toggling since we can't inject real :has() CSS dynamically
+      // — but we CAN set a data attribute and use CSS :has() on that!
+      qbDom.dataset.target = target;
+      qbDom.dataset.inner  = inner;
+      qbDom.dataset.not    = useNot ? 'true' : 'false';
+
+      // Mark nodes that match
+      const nodes = qbDom.querySelectorAll('.qb-node');
+      nodes.forEach(node => {
+        node.removeAttribute('data-matched');
+        const el = node.dataset.element;
+        if (el !== target) return;
+
+        // Check if inner selector matches something inside
+        let matched = false;
+        try {
+          const innerEl = node.querySelector(inner);
+          matched = !!innerEl;
+        } catch { matched = false; }
+
+        if (useNot) matched = !matched;
+        if (matched) node.dataset.matched = 'true';
+      });
+    }
+
+    qbTarget.addEventListener('change', updateQueryBuilder);
+    qbInner.addEventListener('change', updateQueryBuilder);
+    qbNot.addEventListener('change', updateQueryBuilder);
+
+    // Initial run
+    updateQueryBuilder();
+
+    // Re-run on checkbox interaction inside the DOM preview
+    qbDom.addEventListener('change', updateQueryBuilder);
+    qbDom.addEventListener('focus', updateQueryBuilder, true);
+    qbDom.addEventListener('blur', updateQueryBuilder, true);
+  </script>
+</body>
+</html>

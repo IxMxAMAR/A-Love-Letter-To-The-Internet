@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Art Gallery — A Love Letter to the Web</title>
+  <meta name="description" content="Six pure CSS illustrations proving that every pixel is a style rule.">
+
+  <meta property="og:title" content="CSS Art Gallery — A Love Letter to the Web">
+  <meta property="og:description" content="Six pure CSS illustrations proving that every pixel is a style rule.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/transitions.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/zone-art.css">
+</head>
+<body class="zone-page">
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
+  <!-- Nav -->
+  <header class="zone-header" role="banner">
+    <nav class="zone-nav-top content-width" aria-label="Site navigation">
+      <a href="../index.html" class="nav-back">
+        <span class="nav-back-arrow" aria-hidden="true">←</span>
+        <span>A Love Letter to the Web</span>
+      </a>
+      <a href="../hub.html" class="nav-hub">Observatory</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ═══════════════════════════════════════════════════
+         ACT 1 — HERO: CSS Art Gallery
+    ════════════════════════════════════════════════════ -->
+    <section class="act act-hero" aria-labelledby="hero-title">
+      <div class="content-width">
+        <div class="zone-label-row">
+          <span class="zone-symbol" aria-hidden="true">●</span>
+          <span class="label zone-label">Zone 3</span>
+        </div>
+        <h1 id="hero-title" class="zone-title">CSS Art Gallery</h1>
+        <p class="subtitle zone-subtitle">Every pixel is a style rule.</p>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="gallery-grid" role="list" aria-label="CSS art illustrations">
+
+        <!-- 1. Sunset Landscape -->
+        <figure class="art-frame" role="listitem" aria-label="Sunset landscape — layered gradients and clip-path mountains">
+          <div class="art-canvas" aria-hidden="true">
+            <div class="css-art css-sunset">
+              <div class="sunset-sky"></div>
+              <div class="sunset-sun"></div>
+              <div class="sunset-reflection"></div>
+              <div class="sunset-mountain sunset-mountain--far"></div>
+              <div class="sunset-mountain sunset-mountain--near"></div>
+              <div class="sunset-water"></div>
+              <div class="sunset-ripple sunset-ripple--1"></div>
+              <div class="sunset-ripple sunset-ripple--2"></div>
+              <div class="sunset-ripple sunset-ripple--3"></div>
+            </div>
+          </div>
+          <figcaption class="art-caption">
+            <span class="art-title">Golden Hour</span>
+            <span class="art-technique">clip-path · linear-gradient</span>
+          </figcaption>
+        </figure>
+
+        <!-- 2. Geometric Fox -->
+        <figure class="art-frame" role="listitem" aria-label="Geometric fox face — border triangles and transforms">
+          <div class="art-canvas" aria-hidden="true">
+            <div class="css-art css-fox">
+              <div class="fox-head"></div>
+              <div class="fox-ear fox-ear--left"></div>
+              <div class="fox-ear fox-ear--right"></div>
+              <div class="fox-inner-ear fox-inner-ear--left"></div>
+              <div class="fox-inner-ear fox-inner-ear--right"></div>
+              <div class="fox-face">
+                <div class="fox-eye fox-eye--left">
+                  <div class="fox-pupil"></div>
+                </div>
+                <div class="fox-eye fox-eye--right">
+                  <div class="fox-pupil"></div>
+                </div>
+                <div class="fox-nose"></div>
+                <div class="fox-whisker fox-whisker--left"></div>
+                <div class="fox-whisker fox-whisker--right"></div>
+              </div>
+              <div class="fox-chest"></div>
+              <div class="fox-tail"></div>
+            </div>
+          </div>
+          <figcaption class="art-caption">
+            <span class="art-title">Geometric Fox</span>
+            <span class="art-technique">border triangles · transform</span>
+          </figcaption>
+        </figure>
+
+        <!-- 3. Coffee Cup -->
+        <figure class="art-frame" role="listitem" aria-label="Coffee cup with steam — border-radius and box-shadow">
+          <div class="art-canvas" aria-hidden="true">
+            <div class="css-art css-coffee">
+              <div class="coffee-steam">
+                <div class="steam-line steam-line--1"></div>
+                <div class="steam-line steam-line--2"></div>
+                <div class="steam-line steam-line--3"></div>
+              </div>
+              <div class="coffee-cup">
+                <div class="coffee-liquid"></div>
+                <div class="coffee-foam"></div>
+                <div class="coffee-handle"></div>
+              </div>
+              <div class="coffee-saucer"></div>
+              <div class="coffee-plate"></div>
+              <div class="coffee-spoon"></div>
+            </div>
+          </div>
+          <figcaption class="art-caption">
+            <span class="art-title">Morning Ritual</span>
+            <span class="art-technique">border-radius · box-shadow</span>
+          </figcaption>
+        </figure>
+
+        <!-- 4. Animated Eye -->
+        <figure class="art-frame" role="listitem" aria-label="Animated eye with iris — @property and radial-gradient">
+          <div class="art-canvas" aria-hidden="true">
+            <div class="css-art css-eye">
+              <div class="eye-outer">
+                <div class="eye-white">
+                  <div class="eye-iris">
+                    <div class="eye-pupil">
+                      <div class="eye-specular"></div>
+                    </div>
+                    <div class="eye-iris-ring"></div>
+                  </div>
+                </div>
+                <div class="eye-lid eye-lid--top"></div>
+                <div class="eye-lid eye-lid--bottom"></div>
+              </div>
+              <div class="eye-lash eye-lash--1"></div>
+              <div class="eye-lash eye-lash--2"></div>
+              <div class="eye-lash eye-lash--3"></div>
+              <div class="eye-lash eye-lash--4"></div>
+              <div class="eye-lash eye-lash--5"></div>
+            </div>
+          </div>
+          <figcaption class="art-caption">
+            <span class="art-title">The Watcher</span>
+            <span class="art-technique">@property · radial-gradient</span>
+          </figcaption>
+        </figure>
+
+        <!-- 5. Mountain Scene -->
+        <figure class="art-frame" role="listitem" aria-label="Mountain scene — overlapping border triangles">
+          <div class="art-canvas" aria-hidden="true">
+            <div class="css-art css-mountains">
+              <div class="mtn-sky"></div>
+              <div class="mtn-stars">
+                <div class="mtn-star mtn-star--1"></div>
+                <div class="mtn-star mtn-star--2"></div>
+                <div class="mtn-star mtn-star--3"></div>
+                <div class="mtn-star mtn-star--4"></div>
+                <div class="mtn-star mtn-star--5"></div>
+                <div class="mtn-star mtn-star--6"></div>
+              </div>
+              <div class="mtn-moon"></div>
+              <div class="mtn-peak mtn-peak--3"></div>
+              <div class="mtn-peak mtn-peak--2"></div>
+              <div class="mtn-snow mtn-snow--2"></div>
+              <div class="mtn-peak mtn-peak--1"></div>
+              <div class="mtn-snow mtn-snow--1"></div>
+              <div class="mtn-ground"></div>
+              <div class="mtn-pine mtn-pine--1"></div>
+              <div class="mtn-pine mtn-pine--2"></div>
+              <div class="mtn-pine mtn-pine--3"></div>
+            </div>
+          </div>
+          <figcaption class="art-caption">
+            <span class="art-title">Alpine Night</span>
+            <span class="art-technique">border triangles · clip-path</span>
+          </figcaption>
+        </figure>
+
+        <!-- 6. Vinyl Record -->
+        <figure class="art-frame" role="listitem" aria-label="Spinning vinyl record — conic-gradient and rotation">
+          <div class="art-canvas" aria-hidden="true">
+            <div class="css-art css-vinyl">
+              <div class="vinyl-shadow"></div>
+              <div class="vinyl-record">
+                <div class="vinyl-grooves"></div>
+                <div class="vinyl-label">
+                  <div class="vinyl-label-ring"></div>
+                  <div class="vinyl-hole"></div>
+                  <div class="vinyl-text vinyl-text--top">SIDE A</div>
+                  <div class="vinyl-text vinyl-text--bottom">● CSS Art</div>
+                </div>
+              </div>
+              <div class="vinyl-arm">
+                <div class="vinyl-arm-head"></div>
+                <div class="vinyl-arm-needle"></div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="art-caption">
+            <span class="art-title">Spinning</span>
+            <span class="art-technique">conic-gradient · @keyframes</span>
+          </figcaption>
+        </figure>
+
+      </div><!-- /gallery-grid -->
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════
+         ACT 2 — STORY: Techniques
+    ════════════════════════════════════════════════════ -->
+    <section class="act act-story" aria-labelledby="story-title">
+      <div class="content-width">
+        <span class="label act-label">The Craft</span>
+        <h2 id="story-title">How CSS becomes art</h2>
+        <p class="subtitle story-intro">
+          No canvas. No WebGL. No image files. Every form above is built from a single
+          element — or a handful — styled with pure CSS. These are the techniques.
+        </p>
+
+        <div class="techniques-grid">
+
+          <article class="technique-card">
+            <div class="technique-icon" aria-hidden="true">
+              <div class="icon-gradient-stack"></div>
+            </div>
+            <h3>Gradient Stacking</h3>
+            <p>
+              CSS allows multiple backgrounds on a single element. Layer
+              <code>linear-gradient</code>, <code>radial-gradient</code>, and
+              <code>conic-gradient</code> with precise stops to paint without pixels.
+            </p>
+          </article>
+
+          <article class="technique-card">
+            <div class="technique-icon" aria-hidden="true">
+              <div class="icon-clip"></div>
+            </div>
+            <h3>clip-path</h3>
+            <p>
+              <code>clip-path: polygon()</code> carves any shape from a rectangle.
+              Triangles, diamonds, stars, mountains — all from a div and some coordinates.
+            </p>
+          </article>
+
+          <article class="technique-card">
+            <div class="technique-icon" aria-hidden="true">
+              <div class="icon-shadow"></div>
+            </div>
+            <h3>Box-shadow Art</h3>
+            <p>
+              <code>box-shadow</code> accepts comma-separated shadows. Each one is a
+              colored rectangle you can position anywhere — making a single
+              <code>div</code> render hundreds of pixels.
+            </p>
+          </article>
+
+          <article class="technique-card">
+            <div class="technique-icon" aria-hidden="true">
+              <div class="icon-triangle"></div>
+            </div>
+            <h3>Border Triangles</h3>
+            <p>
+              Zero-size elements with thick <code>border</code> values produce triangles.
+              The classic trick: set three borders transparent and one with color.
+            </p>
+          </article>
+
+          <article class="technique-card">
+            <div class="technique-icon" aria-hidden="true">
+              <div class="icon-conic"></div>
+            </div>
+            <h3>conic-gradient</h3>
+            <p>
+              Sweeping colors from a center point. Hard stops create pie charts and
+              vinyl record grooves. Soft stops produce color wheels and iridescent surfaces.
+            </p>
+          </article>
+
+          <article class="technique-card">
+            <div class="technique-icon" aria-hidden="true">
+              <div class="icon-property"></div>
+            </div>
+            <h3>@property Animations</h3>
+            <p>
+              Register a CSS custom property as a typed value and the browser can interpolate
+              it. Animate <code>hue-rotate</code>, gradient angles, or radial positions
+              smoothly — things that were impossible before.
+            </p>
+          </article>
+
+        </div><!-- /techniques-grid -->
+
+        <!-- Code blocks -->
+        <div class="code-examples">
+
+          <div class="code-example">
+            <div class="code-header">
+              <span class="code-label">Border Triangle</span>
+              <button class="copy-btn" data-copy="triangle" aria-label="Copy border triangle code">
+                <span class="copy-text">Copy</span>
+                <span class="copy-check" aria-hidden="true">✓</span>
+              </button>
+            </div>
+            <pre class="code-block" id="code-triangle"><code><span class="tok-selector">.triangle</span> <span class="tok-brace">{</span>
+  <span class="tok-prop">width</span><span class="tok-colon">:</span> <span class="tok-value">0</span><span class="tok-semi">;</span>
+  <span class="tok-prop">height</span><span class="tok-colon">:</span> <span class="tok-value">0</span><span class="tok-semi">;</span>
+  <span class="tok-prop">border-left</span><span class="tok-colon">:</span>   <span class="tok-value">40px solid transparent</span><span class="tok-semi">;</span>
+  <span class="tok-prop">border-right</span><span class="tok-colon">:</span>  <span class="tok-value">40px solid transparent</span><span class="tok-semi">;</span>
+  <span class="tok-prop">border-bottom</span><span class="tok-colon">:</span> <span class="tok-value">70px solid #f472b6</span><span class="tok-semi">;</span>
+<span class="tok-brace">}</span></code></pre>
+          </div>
+
+          <div class="code-example">
+            <div class="code-header">
+              <span class="code-label">conic-gradient Vinyl</span>
+              <button class="copy-btn" data-copy="vinyl" aria-label="Copy vinyl conic-gradient code">
+                <span class="copy-text">Copy</span>
+                <span class="copy-check" aria-hidden="true">✓</span>
+              </button>
+            </div>
+            <pre class="code-block" id="code-vinyl"><code><span class="tok-selector">.record</span> <span class="tok-brace">{</span>
+  <span class="tok-prop">background</span><span class="tok-colon">:</span> <span class="tok-fn">conic-gradient</span><span class="tok-paren">(</span>
+    <span class="tok-value">from 0deg</span><span class="tok-comma">,</span>
+    <span class="tok-value">#111 0deg</span><span class="tok-comma">,</span>
+    <span class="tok-value">#222 1deg</span><span class="tok-comma">,</span>
+    <span class="tok-value">#111 2deg</span>
+  <span class="tok-paren">)</span><span class="tok-semi">;</span>
+  <span class="tok-prop">border-radius</span><span class="tok-colon">:</span> <span class="tok-value">50%</span><span class="tok-semi">;</span>
+  <span class="tok-prop">animation</span><span class="tok-colon">:</span> <span class="tok-value">spin 3s linear infinite</span><span class="tok-semi">;</span>
+<span class="tok-brace">}</span></code></pre>
+          </div>
+
+          <div class="code-example">
+            <div class="code-header">
+              <span class="code-label">@property Animation</span>
+              <button class="copy-btn" data-copy="property" aria-label="Copy @property animation code">
+                <span class="copy-text">Copy</span>
+                <span class="copy-check" aria-hidden="true">✓</span>
+              </button>
+            </div>
+            <pre class="code-block" id="code-property"><code><span class="tok-at">@property</span> <span class="tok-selector">--iris-hue</span> <span class="tok-brace">{</span>
+  <span class="tok-prop">syntax</span><span class="tok-colon">:</span> <span class="tok-string">'&lt;angle&gt;'</span><span class="tok-semi">;</span>
+  <span class="tok-prop">inherits</span><span class="tok-colon">:</span> <span class="tok-value">false</span><span class="tok-semi">;</span>
+  <span class="tok-prop">initial-value</span><span class="tok-colon">:</span> <span class="tok-value">0deg</span><span class="tok-semi">;</span>
+<span class="tok-brace">}</span>
+
+<span class="tok-selector">.iris</span> <span class="tok-brace">{</span>
+  <span class="tok-prop">background</span><span class="tok-colon">:</span> <span class="tok-fn">radial-gradient</span><span class="tok-paren">(</span>
+    <span class="tok-value">circle</span><span class="tok-comma">,</span>
+    <span class="tok-fn">oklch</span><span class="tok-paren">(</span><span class="tok-value">0.5 0.3 var(--iris-hue)</span><span class="tok-paren">)</span><span class="tok-comma">,</span>
+    <span class="tok-fn">oklch</span><span class="tok-paren">(</span><span class="tok-value">0.3 0.2 var(--iris-hue)</span><span class="tok-paren">)</span>
+  <span class="tok-paren">)</span><span class="tok-semi">;</span>
+  <span class="tok-prop">animation</span><span class="tok-colon">:</span> <span class="tok-value">shift-hue 4s linear infinite</span><span class="tok-semi">;</span>
+<span class="tok-brace">}</span>
+
+<span class="tok-at">@keyframes</span> <span class="tok-selector">shift-hue</span> <span class="tok-brace">{</span>
+  <span class="tok-value">to</span> <span class="tok-brace">{</span> <span class="tok-prop">--iris-hue</span><span class="tok-colon">:</span> <span class="tok-value">360deg</span><span class="tok-semi">;</span> <span class="tok-brace">}</span>
+<span class="tok-brace">}</span></code></pre>
+          </div>
+
+        </div><!-- /code-examples -->
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════
+         ACT 3 — PLAYGROUND: Step-by-step builder
+    ════════════════════════════════════════════════════ -->
+    <section class="act act-playground" aria-labelledby="playground-title">
+      <div class="content-width">
+        <span class="label act-label">Interactive</span>
+        <h2 id="playground-title">Build a shape, live</h2>
+        <p class="subtitle">
+          Toggle CSS properties one by one and watch a blank div become art.
+          Each checkbox adds exactly one technique.
+        </p>
+
+        <div class="playground-layout">
+
+          <!-- Controls -->
+          <div class="playground-controls" role="group" aria-label="CSS property toggles">
+            <label class="toggle-row" for="toggle-gradient">
+              <input type="checkbox" id="toggle-gradient" class="toggle-input" name="toggle-gradient">
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+              <div class="toggle-info">
+                <span class="toggle-step">01</span>
+                <span class="toggle-name">background gradient</span>
+                <code class="toggle-code">background: linear-gradient(…)</code>
+              </div>
+            </label>
+
+            <label class="toggle-row" for="toggle-clip">
+              <input type="checkbox" id="toggle-clip" class="toggle-input" name="toggle-clip">
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+              <div class="toggle-info">
+                <span class="toggle-step">02</span>
+                <span class="toggle-name">clip-path shape</span>
+                <code class="toggle-code">clip-path: polygon(…)</code>
+              </div>
+            </label>
+
+            <label class="toggle-row" for="toggle-shadow">
+              <input type="checkbox" id="toggle-shadow" class="toggle-input" name="toggle-shadow">
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+              <div class="toggle-info">
+                <span class="toggle-step">03</span>
+                <span class="toggle-name">box-shadow depth</span>
+                <code class="toggle-code">box-shadow: 0 20px 60px …</code>
+              </div>
+            </label>
+
+            <label class="toggle-row" for="toggle-radius">
+              <input type="checkbox" id="toggle-radius" class="toggle-input" name="toggle-radius">
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+              <div class="toggle-info">
+                <span class="toggle-step">04</span>
+                <span class="toggle-name">border-radius curves</span>
+                <code class="toggle-code">border-radius: 60% 40% …</code>
+              </div>
+            </label>
+
+            <label class="toggle-row" for="toggle-animation">
+              <input type="checkbox" id="toggle-animation" class="toggle-input" name="toggle-animation">
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+              <div class="toggle-info">
+                <span class="toggle-step">05</span>
+                <span class="toggle-name">animation pulse</span>
+                <code class="toggle-code">animation: breathe 3s ease-in-out …</code>
+              </div>
+            </label>
+          </div>
+
+          <!-- Preview -->
+          <div class="playground-stage">
+            <div class="playground-viewport">
+              <div class="playground-container">
+                <div class="playground-div" aria-label="Live CSS preview"></div>
+              </div>
+              <div class="playground-label-strip">
+                <span class="playground-label-text">Live Preview</span>
+              </div>
+            </div>
+            <div class="playground-css-readout" aria-live="polite" aria-label="Active CSS properties">
+              <div class="readout-line" id="readout-1">
+                <span class="readout-prop">/* toggle properties above */</span>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /playground-layout -->
+      </div>
+    </section>
+
+    <!-- Zone Nav -->
+    <nav class="zone-nav-bottom content-width" aria-label="Zone navigation">
+      <a href="../hub.html" class="zone-nav-link zone-nav-link--back">
+        <span aria-hidden="true">←</span>
+        <span>Observatory</span>
+      </a>
+      <div class="zone-nav-meta">
+        <span class="zone-nav-symbol" aria-hidden="true">●</span>
+        <span class="zone-nav-number">Zone 3 of 9</span>
+      </div>
+      <a href="../hub.html" class="zone-nav-link zone-nav-link--next">
+        <span>Next Zone</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </nav>
+
+  </main>
+
+  <script type="module" src="../js/transitions.js"></script>
+  <script>
+    // Copy button logic
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = 'code-' + btn.dataset.copy;
+        const el = document.getElementById(id);
+        if (!el) return;
+        const text = el.textContent;
+        navigator.clipboard.writeText(text).then(() => {
+          btn.classList.add('copied');
+          setTimeout(() => btn.classList.remove('copied'), 1800);
+        });
+      });
+    });
+
+    // Playground readout
+    const toggleIds = ['toggle-gradient', 'toggle-clip', 'toggle-shadow', 'toggle-radius', 'toggle-animation'];
+    const propLabels = {
+      'toggle-gradient':  'background: linear-gradient(135deg, #f472b6 0%, #a78bfa 50%, #38bdf8 100%);',
+      'toggle-clip':      'clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);',
+      'toggle-shadow':    'box-shadow: 0 20px 60px oklch(0.64 0.3 330 / 0.5), 0 0 0 2px oklch(0.64 0.3 330 / 0.2);',
+      'toggle-radius':    'border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;',
+      'toggle-animation': 'animation: breathe 3s ease-in-out infinite;'
+    };
+    const readout = document.querySelector('.playground-css-readout');
+
+    function updateReadout() {
+      const active = toggleIds.filter(id => document.getElementById(id).checked);
+      if (active.length === 0) {
+        readout.innerHTML = '<div class="readout-line"><span class="readout-prop">/* toggle properties above */</span></div>';
+        return;
+      }
+      readout.innerHTML = active.map(id => {
+        const parts = propLabels[id].split(':');
+        return `<div class="readout-line"><span class="readout-prop-name">${parts[0]}</span><span class="readout-colon">:</span><span class="readout-prop-val">${parts.slice(1).join(':')}</span></div>`;
+      }).join('');
+    }
+
+    toggleIds.forEach(id => {
+      document.getElementById(id).addEventListener('change', updateReadout);
+    });
+  </script>
+</body>
+</html>

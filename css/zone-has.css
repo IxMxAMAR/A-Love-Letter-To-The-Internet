@@ -1,0 +1,1184 @@
+/* =============================================================
+   zone-has.css — :has() Selector Zone
+   A Love Letter to the Web — Zone 7
+   Accent: #fb923c  Symbol: ★
+
+   The headline feature: every state change in the form
+   is driven by :has() — zero JavaScript for styling.
+   ============================================================= */
+
+/* ── Zone token ─────────────────────────────────────────────── */
+:root {
+  --zone-color:        #fb923c;
+  --zone-color-dim:    oklch(65% 0.18 50 / 0.15);
+  --zone-color-glow:   oklch(65% 0.18 50 / 0.35);
+  --zone-color-full:   oklch(65% 0.18 50);
+
+  --has-form-radius:   var(--radius-xl);
+  --has-field-radius:  var(--radius-md);
+  --has-transition:    var(--duration-slow) var(--ease-out);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HERO SECTION
+══════════════════════════════════════════════════════════════ */
+
+.has-hero {
+  min-height: 100dvh;
+  padding-top: 5rem;
+  padding-bottom: 8rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Background ─────────────────────────────────────────────── */
+.has-hero__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.has-hero__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(oklch(22% 0.03 265 / 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(22% 0.03 265 / 0.3) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 30%, transparent 80%);
+}
+
+.has-hero__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: float 8s ease-in-out infinite;
+}
+
+.has-hero__orb--1 {
+  width: 500px;
+  height: 500px;
+  top: -150px;
+  right: -100px;
+  background: radial-gradient(circle, oklch(65% 0.18 50 / 0.12), transparent 70%);
+  animation-delay: 0s;
+}
+
+.has-hero__orb--2 {
+  width: 350px;
+  height: 350px;
+  bottom: 0;
+  left: -80px;
+  background: radial-gradient(circle, oklch(65% 0.18 50 / 0.08), transparent 70%);
+  animation-delay: -3s;
+}
+
+.has-hero__orb--3 {
+  width: 250px;
+  height: 250px;
+  top: 40%;
+  left: 30%;
+  background: radial-gradient(circle, oklch(60% 0.18 265 / 0.06), transparent 70%);
+  animation-delay: -6s;
+}
+
+/* ── Hero header ────────────────────────────────────────────── */
+.has-hero .content-width {
+  position: relative;
+  z-index: 1;
+}
+
+.zone-hero__header {
+  margin-bottom: var(--space-xl);
+}
+
+.zone-hero__header .zone-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--zone-color);
+  margin-bottom: var(--space-md);
+}
+
+.zone-hero__header h1 {
+  color: var(--zone-color);
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: var(--space-sm);
+}
+
+.zone-hero__header .subtitle {
+  font-size: var(--text-lg);
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   THE MAGIC FORM — all state via :has()
+   No JavaScript touches these styles.
+══════════════════════════════════════════════════════════════ */
+
+.has-demo-wrap {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-lg);
+  align-items: start;
+  max-width: 860px;
+}
+
+@media (max-width: 900px) {
+  .has-demo-wrap {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Status bar ─────────────────────────────────────────────── */
+.form-status-bar {
+  grid-column: 1 / -1;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.form-status-bar__state {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  transition: opacity var(--has-transition), transform var(--has-transition);
+}
+
+/* Default state: show empty message */
+.form-status-bar__state--empty {
+  color: var(--color-muted);
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.form-status-bar__state--partial {
+  color: var(--zone-color);
+  opacity: 0;
+  transform: translateY(0.75rem);
+}
+
+.form-status-bar__state--complete {
+  color: var(--zone-color);
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(0.75rem);
+}
+
+/* ── Form shell ─────────────────────────────────────────────── */
+.has-form {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--has-form-radius);
+  padding: var(--space-xl);
+  position: relative;
+  overflow: hidden;
+  transition:
+    border-color var(--has-transition),
+    background var(--duration-xslow) var(--ease-out),
+    box-shadow var(--has-transition);
+}
+
+/* ── Fieldsets ──────────────────────────────────────────────── */
+.has-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0 0 var(--space-lg);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 var(--space-md);
+  align-items: center;
+  position: relative;
+}
+
+.has-fieldset::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--color-border);
+  border-radius: 99px;
+  transition: background var(--has-transition), transform var(--has-transition);
+}
+
+.has-legend {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-muted);
+  letter-spacing: 0.06em;
+  padding-left: var(--space-md);
+  transition: color var(--has-transition);
+  align-self: center;
+  grid-row: 1 / 3;
+}
+
+/* ── Field wrapper ──────────────────────────────────────────── */
+.has-field {
+  display: grid;
+  gap: var(--space-xs);
+  position: relative;
+}
+
+/* ── Labels ─────────────────────────────────────────────────── */
+.has-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-muted);
+  transition: color var(--has-transition);
+  cursor: text;
+}
+
+/* ── Inputs ─────────────────────────────────────────────────── */
+.has-input {
+  background: var(--color-base);
+  border: 1px solid var(--color-border);
+  border-radius: var(--has-field-radius);
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
+  color: var(--color-text);
+  font-size: var(--text-base);
+  width: 100%;
+  transition:
+    border-color var(--has-transition),
+    box-shadow var(--has-transition),
+    background var(--has-transition);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.has-input--textarea {
+  resize: vertical;
+  padding-right: 1rem;
+  min-height: 7rem;
+  font-family: inherit;
+}
+
+.has-input::placeholder {
+  color: oklch(45% 0.02 265);
+}
+
+/* ── Check indicator ────────────────────────────────────────── */
+.has-field__check {
+  position: absolute;
+  right: 0.75rem;
+  top: calc(var(--text-sm) + var(--space-xs) + 0.85rem);
+  font-size: 0.875rem;
+  color: var(--zone-color);
+  opacity: 0;
+  transform: scale(0.5) rotate(-20deg);
+  transition:
+    opacity var(--has-transition),
+    transform var(--has-transition);
+  pointer-events: none;
+}
+
+/* textarea check: position at top of field, not middle */
+.has-fieldset:last-of-type .has-field__check {
+  top: calc(var(--text-sm) + var(--space-xs) + 0.85rem);
+}
+
+/* ── Submit area ─────────────────────────────────────────────── */
+.has-form__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+  margin-top: var(--space-lg);
+}
+
+.has-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.875rem 2rem;
+  background: oklch(22% 0.03 265);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: not-allowed;
+  transition:
+    background var(--has-transition),
+    border-color var(--has-transition),
+    color var(--has-transition),
+    box-shadow var(--has-transition),
+    transform var(--duration-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.has-submit__icon {
+  transition: transform var(--has-transition);
+}
+
+.has-submit__celebration {
+  position: absolute;
+  right: 1rem;
+  font-size: 1rem;
+  color: var(--zone-color);
+  opacity: 0;
+  transform: scale(0);
+  transition: all var(--has-transition);
+}
+
+.has-form__note {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  position: relative;
+  max-width: 32ch;
+}
+
+.has-form__note code {
+  color: var(--zone-color);
+  font-size: 0.7em;
+}
+
+.has-form__note--idle,
+.has-form__note--active {
+  transition: opacity var(--has-transition), transform var(--has-transition);
+  display: block;
+}
+
+.has-form__note--active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: translateY(0.5rem);
+}
+
+/* ── Celebration overlay ────────────────────────────────────── */
+.has-celebration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 2rem;
+  opacity: 0;
+  transition: opacity var(--has-transition);
+}
+
+.has-celebration__star {
+  color: var(--zone-color);
+  display: block;
+  opacity: 0;
+  transform: scale(0) rotate(-30deg);
+  transition:
+    opacity var(--duration-xslow) var(--ease-out),
+    transform var(--duration-xslow) var(--ease-out);
+}
+
+.has-celebration__star:nth-child(1) { transition-delay: 0ms; }
+.has-celebration__star:nth-child(2) { transition-delay: 100ms; }
+.has-celebration__star:nth-child(3) { transition-delay: 200ms; }
+
+/* ════════════════════════════════════════════════════════════════
+   :has() DRIVEN STATE CHANGES
+   This is the whole point of this zone page.
+   Every rule here is a parent/sibling selector using :has().
+════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Fieldset left border glows when field focused ────────── */
+.has-fieldset:has(input:focus),
+.has-fieldset:has(textarea:focus) {
+  &::after {
+    background: var(--zone-color);
+    box-shadow: 0 0 8px var(--zone-color-glow);
+  }
+
+  .has-legend {
+    color: var(--zone-color);
+  }
+}
+
+/* ── 2. Label recolors when input has a value ────────────────── */
+.has-field:has(input:not(:placeholder-shown)) .has-label,
+.has-field:has(textarea:not(:placeholder-shown)) .has-label {
+  color: var(--zone-color);
+}
+
+/* ── 3. Input border glows on focus ──────────────────────────── */
+.has-fieldset:has(input:focus) .has-input,
+.has-fieldset:has(textarea:focus) .has-input {
+  border-color: var(--zone-color);
+  box-shadow: 0 0 0 3px oklch(65% 0.18 50 / 0.12);
+  outline: none;
+}
+
+/* ── 4. Check mark appears when field has a value ────────────── */
+.has-field:has(input:not(:placeholder-shown)) .has-field__check,
+.has-field:has(textarea:not(:placeholder-shown)) .has-field__check {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+/* ── 5. Input background tints subtly when filled ────────────── */
+.has-field:has(input:not(:placeholder-shown)) .has-input,
+.has-field:has(textarea:not(:placeholder-shown)) .has-input {
+  background: oklch(65% 0.18 50 / 0.04);
+  border-color: oklch(65% 0.18 50 / 0.4);
+}
+
+/* ── 6. Detect "partial fill": name OR email filled ─────────── */
+/*    Uses :has() on the form itself — parent selection!       */
+.has-form:has(.has-input:not(:placeholder-shown)):not(
+  :has(input[name="name"]:not(:placeholder-shown)):has(input[name="email"]:not(:placeholder-shown)):has(textarea:not(:placeholder-shown))
+) ~ .form-status-bar .form-status-bar__state--empty,
+.has-form:has(.has-input:not(:placeholder-shown)):not(
+  :has(input[name="name"]:not(:placeholder-shown)):has(input[name="email"]:not(:placeholder-shown)):has(textarea:not(:placeholder-shown))
+) ~ .form-status-bar .form-status-bar__state--complete {
+  /* handled differently — see sibling approach below */
+  display: none; /* fallback; main logic via grid-row-start sibling below */
+}
+
+/* ── Simpler approach: sibling status bar ────────────────────── */
+/*    .has-form ~ .form-status-bar using form's :has() state    */
+
+/* When at least one field is filled (partial) */
+.has-demo-wrap:has(.has-input:not(:placeholder-shown)) .form-status-bar__state--empty {
+  opacity: 0;
+  transform: translateY(-0.75rem);
+}
+
+.has-demo-wrap:has(.has-input:not(:placeholder-shown)):not(
+  :has(input[name="name"]:not(:placeholder-shown)):not(
+    :has(input[name="email"]:not(:placeholder-shown)):not(
+      :has(textarea:not(:placeholder-shown))
+    )
+  )
+) .form-status-bar__state--partial {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* When ALL fields filled — using :has() chained three times */
+.has-demo-wrap:has(input[name="name"]:not(:placeholder-shown)):has(input[name="email"]:not(:placeholder-shown)):has(textarea:not(:placeholder-shown)) .form-status-bar__state--partial {
+  opacity: 0;
+  transform: translateY(-0.75rem);
+}
+
+.has-demo-wrap:has(input[name="name"]:not(:placeholder-shown)):has(input[name="email"]:not(:placeholder-shown)):has(textarea:not(:placeholder-shown)) .form-status-bar__state--empty {
+  opacity: 0;
+  transform: translateY(-0.75rem);
+}
+
+.has-demo-wrap:has(input[name="name"]:not(:placeholder-shown)):has(input[name="email"]:not(:placeholder-shown)):has(textarea:not(:placeholder-shown)) .form-status-bar__state--complete {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── 7. Form background celebration gradient — all fields filled */
+.has-form:has(input[name="name"]:not(:placeholder-shown)):has(input[name="email"]:not(:placeholder-shown)):has(textarea:not(:placeholder-shown)) {
+  background: linear-gradient(
+    135deg,
+    var(--color-surface) 0%,
+    oklch(65% 0.18 50 / 0.06) 50%,
+    var(--color-surface) 100%
+  );
+  border-color: oklch(65% 0.18 50 / 0.4);
+  box-shadow: 0 0 48px oklch(65% 0.18 50 / 0.08);
+}
+
+/* ── 8. Submit button activates when all required fields filled  */
+.has-form:has(input[name="name"]:not(:placeholder-shown)):has(input[name="email"]:not(:placeholder-shown)):has(textarea:not(:placeholder-shown)) .has-submit {
+  background: var(--zone-color);
+  border-color: var(--zone-color);
+  color: oklch(10% 0.01 265);
+  cursor: pointer;
+  box-shadow: 0 4px 24px oklch(65% 0.18 50 / 0.4);
+}
+
+.has-form:has(input[name="name"]:not(:placeholder-shown)):has(input[name="email"]:not(:placeholder-shown)):has(textarea:not(:placeholder-shown)) .has-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px oklch(65% 0.18 50 / 0.5);
+}
+
+.has-form:has(input[name="name"]:not(:placeholder-shown)):has(input[name="email"]:not(:placeholder-shown)):has(textarea:not(:placeholder-shown)) .has-submit .has-submit__icon {
+  transform: translateX(4px);
+}
+
+/* ── 9. Form note swaps when form is complete ────────────────── */
+.has-form:has(input[name="name"]:not(:placeholder-shown)):has(input[name="email"]:not(:placeholder-shown)):has(textarea:not(:placeholder-shown)) .has-form__note--idle {
+  opacity: 0;
+  transform: translateY(-0.5rem);
+}
+
+.has-form:has(input[name="name"]:not(:placeholder-shown)):has(input[name="email"]:not(:placeholder-shown)):has(textarea:not(:placeholder-shown)) .has-form__note--active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── 10. Partial-fill state: show "partial" status ───────────── */
+/* Show partial message when SOME but not all fields are filled */
+.has-demo-wrap:has(.has-input:not(:placeholder-shown)) .form-status-bar__state--empty {
+  opacity: 0;
+  transform: translateY(-0.75rem);
+}
+
+/* Show partial as long as NOT all three are filled */
+.has-demo-wrap:has(.has-input:not(:placeholder-shown)) .form-status-bar__state--partial {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Override: hide partial when all three are filled */
+.has-demo-wrap:has(input[name="name"]:not(:placeholder-shown)):has(input[name="email"]:not(:placeholder-shown)):has(textarea:not(:placeholder-shown)) .form-status-bar__state--partial {
+  opacity: 0;
+  transform: translateY(-0.75rem);
+}
+
+/* ── Selector display panel — driven by the form state ───────── */
+.has-selector-display {
+  background: oklch(8% 0.01 265);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  min-width: 260px;
+  align-self: start;
+  position: sticky;
+  top: 5rem;
+}
+
+.has-selector-display__heading {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-md);
+}
+
+.has-selector-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.has-selector-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  transition:
+    border-color var(--has-transition),
+    background var(--has-transition);
+}
+
+.has-selector-item code {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--color-muted);
+  line-height: 1.5;
+  transition: color var(--has-transition);
+  word-break: break-all;
+}
+
+.has-selector-item__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-border);
+  flex-shrink: 0;
+  transition: background var(--has-transition), box-shadow var(--has-transition);
+}
+
+/* Activate "focus" selector item when any field is focused */
+.has-demo-wrap:has(.has-input:focus) .has-selector-item--focus {
+  border-color: oklch(65% 0.18 50 / 0.3);
+  background: oklch(65% 0.18 50 / 0.05);
+}
+
+.has-demo-wrap:has(.has-input:focus) .has-selector-item--focus code {
+  color: var(--zone-color);
+}
+
+.has-demo-wrap:has(.has-input:focus) .has-selector-item--focus .has-selector-item__dot {
+  background: var(--zone-color);
+  box-shadow: 0 0 6px var(--zone-color);
+}
+
+/* Activate "filled" selector item when any field has a value */
+.has-demo-wrap:has(.has-input:not(:placeholder-shown)) .has-selector-item--filled {
+  border-color: oklch(65% 0.18 50 / 0.3);
+  background: oklch(65% 0.18 50 / 0.05);
+}
+
+.has-demo-wrap:has(.has-input:not(:placeholder-shown)) .has-selector-item--filled code {
+  color: var(--zone-color);
+}
+
+.has-demo-wrap:has(.has-input:not(:placeholder-shown)) .has-selector-item--filled .has-selector-item__dot {
+  background: var(--zone-color);
+  box-shadow: 0 0 6px var(--zone-color);
+}
+
+/* Activate "complete" selector item when ALL fields are filled */
+.has-demo-wrap:has(input[name="name"]:not(:placeholder-shown)):has(input[name="email"]:not(:placeholder-shown)):has(textarea:not(:placeholder-shown)) .has-selector-item--complete {
+  border-color: oklch(65% 0.18 50 / 0.5);
+  background: oklch(65% 0.18 50 / 0.08);
+}
+
+.has-demo-wrap:has(input[name="name"]:not(:placeholder-shown)):has(input[name="email"]:not(:placeholder-shown)):has(textarea:not(:placeholder-shown)) .has-selector-item--complete code {
+  color: var(--zone-color);
+}
+
+.has-demo-wrap:has(input[name="name"]:not(:placeholder-shown)):has(input[name="email"]:not(:placeholder-shown)):has(textarea:not(:placeholder-shown)) .has-selector-item--complete .has-selector-item__dot {
+  background: var(--zone-color);
+  box-shadow: 0 0 10px var(--zone-color), 0 0 20px oklch(65% 0.18 50 / 0.3);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   STORY SECTION
+══════════════════════════════════════════════════════════════ */
+
+.zone-story {
+  background: var(--color-base);
+  border-top: 1px solid var(--color-border);
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: var(--space-xl);
+  align-items: start;
+  margin-bottom: var(--space-xl);
+}
+
+@media (max-width: 900px) {
+  .story-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.story-prose p {
+  color: var(--color-muted);
+  line-height: 1.9;
+  margin-bottom: var(--space-md);
+  max-width: 62ch;
+}
+
+.story-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  color: var(--zone-color);
+  background: oklch(65% 0.18 50 / 0.08);
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+}
+
+/* ── Anatomy diagram ─────────────────────────────────────────── */
+.has-anatomy {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  position: sticky;
+  top: 5rem;
+}
+
+.has-anatomy__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  margin-bottom: var(--space-md);
+}
+
+.has-anatomy__diagram {
+  font-family: var(--font-mono);
+  font-size: clamp(0.75rem, 1.5vw, 1rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: var(--space-xl);
+  word-break: break-all;
+}
+
+.anat-part {
+  display: inline;
+}
+
+.anat-part--subject { color: oklch(72% 0.15 220); }
+.anat-part--pseudo  { color: var(--color-muted); }
+.anat-part--fn      { color: var(--zone-color); font-weight: 700; }
+.anat-part--paren   { color: var(--color-muted); }
+.anat-part--arg     { color: oklch(75% 0.18 145); }
+
+.anat-labels {
+  margin-top: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.anat-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  border-left: 2px solid transparent;
+}
+
+.anat-label small {
+  color: var(--color-muted);
+  display: block;
+}
+
+.anat-label--subject {
+  border-left-color: oklch(72% 0.15 220);
+  color: oklch(72% 0.15 220);
+  background: oklch(72% 0.15 220 / 0.06);
+}
+
+.anat-label--fn {
+  border-left-color: var(--zone-color);
+  color: var(--zone-color);
+  background: oklch(65% 0.18 50 / 0.06);
+}
+
+.anat-label--arg {
+  border-left-color: oklch(75% 0.18 145);
+  color: oklch(75% 0.18 145);
+  background: oklch(75% 0.18 145 / 0.06);
+}
+
+/* ── Code examples grid ──────────────────────────────────────── */
+.story-examples h3 {
+  margin-bottom: var(--space-lg);
+}
+
+.example-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));
+  gap: var(--space-lg);
+}
+
+.example-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color var(--duration-base) var(--ease-out);
+}
+
+.example-card:hover {
+  border-color: oklch(65% 0.18 50 / 0.4);
+}
+
+.example-card__header {
+  padding: var(--space-lg) var(--space-lg) var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.example-card__tag {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--zone-color);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.example-card__header h4 {
+  font-size: var(--text-md);
+  margin-bottom: var(--space-xs);
+}
+
+.example-card__header p {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+.code-block-wrap {
+  position: relative;
+}
+
+.code-block-wrap .copy-btn {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  z-index: 1;
+}
+
+.example-card .code-block {
+  border: none;
+  border-radius: 0;
+  font-size: var(--text-xs);
+  padding: var(--space-lg);
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PLAYGROUND SECTION — Query Builder
+══════════════════════════════════════════════════════════════ */
+
+.zone-playground .subtitle {
+  margin-bottom: var(--space-xl);
+  margin-top: var(--space-sm);
+}
+
+.zone-playground .subtitle code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--zone-color);
+  background: oklch(65% 0.18 50 / 0.1);
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+}
+
+.qb-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .qb-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Controls ────────────────────────────────────────────────── */
+.qb-controls {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm) var(--space-xs);
+}
+
+.qb-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.qb-control-group--not {
+  width: 100%;
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-border);
+}
+
+.qb-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.qb-label--checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+.qb-label--checkbox code {
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  color: var(--zone-color);
+}
+
+.qb-checkbox {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--zone-color);
+  cursor: pointer;
+}
+
+.qb-select {
+  background: var(--color-base);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-xs) var(--space-sm);
+  color: var(--zone-color);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out);
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23fb923c'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  padding-right: 1.75rem;
+}
+
+.qb-select:focus {
+  outline: none;
+  border-color: var(--zone-color);
+  box-shadow: 0 0 0 2px oklch(65% 0.18 50 / 0.15);
+}
+
+.qb-control-arrow,
+.qb-control-has,
+.qb-control-paren {
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  font-weight: 700;
+  align-self: flex-end;
+  padding-bottom: 2px;
+  line-height: 1;
+  padding-top: calc(var(--text-xs) + var(--space-xs));
+}
+
+.qb-control-arrow { color: var(--color-muted); }
+.qb-control-has   { color: var(--zone-color); }
+.qb-control-paren { color: var(--color-muted); }
+
+/* ── Output ──────────────────────────────────────────────────── */
+.qb-output-wrap {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.qb-output-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.qb-output-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+}
+
+.qb-output {
+  border: none;
+  border-radius: 0;
+  font-size: var(--text-sm);
+  transition: background var(--duration-base);
+  min-height: 100px;
+}
+
+/* ── DOM Preview ─────────────────────────────────────────────── */
+.qb-preview {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.qb-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.qb-preview-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+}
+
+.qb-preview-hint {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: oklch(65% 0.18 50 / 0.7);
+  font-style: italic;
+}
+
+.qb-dom {
+  padding: var(--space-xl);
+  display: flex;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+  min-height: 200px;
+  align-items: flex-start;
+}
+
+/* ── DOM Nodes ───────────────────────────────────────────────── */
+.qb-node {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition:
+    border-color var(--has-transition),
+    box-shadow var(--has-transition),
+    background var(--has-transition);
+  min-width: 160px;
+}
+
+.qb-node-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--color-muted);
+  background: oklch(10% 0.01 265);
+  padding: var(--space-xs) var(--space-sm);
+  border-bottom: 1px solid var(--color-border);
+  transition: color var(--has-transition);
+}
+
+.qb-node-inner {
+  padding: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+/* Top-level wrapper nodes */
+.qb-node--form,
+.qb-node--section,
+.qb-node--ul {
+  background: var(--color-base);
+  flex: 1;
+  min-width: 180px;
+}
+
+/* Child nodes inside */
+.qb-node--field,
+.qb-node--li {
+  background: oklch(10% 0.01 265);
+}
+
+/* Matched node highlight */
+.qb-node[data-matched="true"] {
+  border-color: var(--zone-color);
+  box-shadow: 0 0 16px oklch(65% 0.18 50 / 0.2), inset 0 0 24px oklch(65% 0.18 50 / 0.04);
+  background: oklch(65% 0.18 50 / 0.03);
+}
+
+.qb-node[data-matched="true"] > .qb-node-tag {
+  color: var(--zone-color);
+  background: oklch(65% 0.18 50 / 0.1);
+}
+
+/* ── Demo elements inside the DOM preview ────────────────────── */
+.qb-demo-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+.qb-demo-input {
+  accent-color: var(--zone-color);
+  cursor: pointer;
+}
+
+.qb-node-inner--active .active {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--zone-color);
+  display: block;
+}
+
+.qb-img-wrap {
+  display: block;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE TWEAKS
+══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 640px) {
+  .has-form {
+    padding: var(--space-lg);
+  }
+
+  .has-fieldset {
+    grid-template-columns: auto 1fr;
+    gap: 0 var(--space-sm);
+  }
+
+  .has-form__footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .has-selector-display {
+    position: static;
+  }
+
+  .has-demo-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .zone-hero__header h1 {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   REDUCED MOTION
+══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .has-hero__orb {
+    animation: none;
+  }
+
+  .has-form,
+  .has-fieldset::after,
+  .has-label,
+  .has-input,
+  .has-field__check,
+  .has-submit,
+  .has-selector-item,
+  .has-selector-item__dot,
+  .form-status-bar__state,
+  .has-form__note--idle,
+  .has-form__note--active,
+  .qb-node,
+  .qb-node-tag {
+    transition: none !important;
+  }
+
+  .has-selector-item--complete .has-selector-item__dot {
+    animation: none;
+  }
+}

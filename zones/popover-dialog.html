@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popover &amp; Dialog — A Love Letter to the Web</title>
+  <meta name="description" content="Native overlays without a library. Explore the Popover API, the dialog element, closedby, and @starting-style entry animations.">
+
+  <meta property="og:title" content="Popover &amp; Dialog — A Love Letter to the Web">
+  <meta property="og:description" content="Native overlays. No library required.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/transitions.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/zone-popover.css">
+</head>
+<body class="page" style="--zone-color: #a78bfa;">
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
+  <!-- ── Header ─────────────────────────────────────────────── -->
+  <header class="page-header">
+    <a href="../index.html" class="page-header__logo" data-transition="root">◈ LLTW</a>
+    <nav class="page-header__nav" aria-label="Main navigation">
+      <a href="../index.html" data-transition="root">Timeline</a>
+      <a href="../hub.html" data-transition="hub-node">Observatory</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ══════════════════════════════════════════════════════════
+         ACT 1 — HERO: Cascading Popover Tower
+    ═══════════════════════════════════════════════════════════ -->
+    <section class="zone-hero" aria-label="Popover &amp; Dialog — Zone 2">
+
+      <!-- Ambient background grid -->
+      <div class="hero-grid" aria-hidden="true"></div>
+
+      <!-- Popover tower art -->
+      <div class="tower-stage" aria-hidden="true">
+        <div class="tower-card tower-card--4">
+          <span class="tower-icon">◇</span>
+          <span class="tower-text">closedby="any"</span>
+        </div>
+        <div class="tower-card tower-card--3">
+          <span class="tower-icon">◇</span>
+          <span class="tower-text">@starting-style</span>
+        </div>
+        <div class="tower-card tower-card--2">
+          <span class="tower-icon">◇</span>
+          <span class="tower-text">popover="manual"</span>
+        </div>
+        <div class="tower-card tower-card--1">
+          <span class="tower-icon">◇</span>
+          <span class="tower-text">popover="auto"</span>
+        </div>
+      </div>
+
+      <!-- Hero text -->
+      <div class="hero-text stagger-children">
+        <span class="zone-label label">◇ Zone 2</span>
+        <h1 class="hero-title">Popover &amp; Dialog</h1>
+        <p class="subtitle hero-subtitle">Native overlays. No library required.</p>
+        <div class="hero-actions">
+          <button class="btn-primary" popovertarget="demo-popover-1">
+            Show a Popover
+          </button>
+          <button class="btn-secondary" id="open-dialog-btn">
+            Open a Dialog
+          </button>
+        </div>
+      </div>
+
+      <!-- Demo popover (auto, dismissed on outside click) -->
+      <div popover id="demo-popover-1" class="demo-popover">
+        <div class="demo-popover__header">
+          <span class="demo-popover__icon">◇</span>
+          <strong>A real Popover</strong>
+          <button class="demo-popover__close" popovertarget="demo-popover-1" popovertargetaction="hide" aria-label="Close">✕</button>
+        </div>
+        <p>No JavaScript needed. Just <code>popover</code> and <code>popovertarget</code>. Click outside to dismiss — that's <code>popover="auto"</code> at work.</p>
+        <div class="demo-popover__footer">
+          <code class="demo-popover__tag">popover="auto"</code>
+        </div>
+      </div>
+
+      <!-- Demo dialog -->
+      <dialog id="demo-dialog" class="demo-dialog" closedby="any">
+        <div class="demo-dialog__inner">
+          <div class="demo-dialog__header">
+            <span class="demo-dialog__icon">◇</span>
+            <strong>A native &lt;dialog&gt;</strong>
+          </div>
+          <p>This is a genuine <code>&lt;dialog&gt;</code> element. It traps focus, blocks background interaction, and has a <code>::backdrop</code> pseudo-element. Powered by the HTML spec — zero dependencies.</p>
+          <p>The <code>closedby="any"</code> attribute lets you close it by clicking the backdrop.</p>
+          <div class="demo-dialog__actions">
+            <button class="btn-primary" id="close-dialog-btn">Close Dialog</button>
+          </div>
+        </div>
+      </dialog>
+
+      <!-- Scroll cue -->
+      <div class="scroll-cue" aria-hidden="true">
+        <span class="scroll-cue__label">Scroll to explore</span>
+        <div class="scroll-cue__arrow"></div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ACT 2 — STORY: The API Explained
+    ═══════════════════════════════════════════════════════════ -->
+    <section class="zone-story section-content" aria-label="How it works">
+
+      <a href="../hub.html" class="back-to-hub" data-transition="hub-node">
+        ← Back to Observatory
+      </a>
+
+      <h2 class="scroll-reveal">The Popover API</h2>
+
+      <div class="story-lead scroll-reveal">
+        <p>For years, overlays required hefty JavaScript libraries — managing z-index, focus trapping, outside-click detection, Escape key handling, accessibility roles. The modern web ships all of this natively.</p>
+        <p>The <strong>Popover API</strong> and <code>&lt;dialog&gt;</code> element together give you a complete overlay system. The browser handles the top-layer promotion, focus management, light-dismiss, and backdrop — leaving you to write only the CSS you actually care about.</p>
+      </div>
+
+      <!-- Browser support -->
+      <div class="browser-support scroll-reveal" role="status">
+        <span>Browser Support</span>
+        <span class="supported">● Chrome 114+</span>
+        <span class="supported">● Firefox 125+</span>
+        <span class="supported">● Safari 17+</span>
+        <span class="supported">● Edge 114+</span>
+      </div>
+
+      <!-- Concept cards -->
+      <div class="concept-grid scroll-reveal">
+        <div class="concept-card">
+          <div class="concept-card__symbol">◇</div>
+          <h3>popover attribute</h3>
+          <p>Add <code>popover</code> to any element. The browser promotes it to the <em>top layer</em> — above all other content, including fixed elements and stacking contexts.</p>
+        </div>
+        <div class="concept-card">
+          <div class="concept-card__symbol">◇</div>
+          <h3>popovertarget</h3>
+          <p>Wire a button to any popover by ID. The browser handles the click, the toggle, the Escape key, and the light-dismiss — no addEventListener required.</p>
+        </div>
+        <div class="concept-card">
+          <div class="concept-card__symbol">◇</div>
+          <h3>&lt;dialog&gt; element</h3>
+          <p>A semantic, accessible modal container. Provides focus trapping, a <code>::backdrop</code> layer, and integrates with the top-layer stack beside popovers.</p>
+        </div>
+        <div class="concept-card">
+          <div class="concept-card__symbol">◇</div>
+          <h3>@starting-style</h3>
+          <p>Define the <em>before-open</em> state of an element. The browser interpolates from it on entry — enabling pure-CSS show/hide transitions that were previously impossible.</p>
+        </div>
+      </div>
+
+      <!-- Code blocks -->
+      <div class="code-section scroll-reveal">
+        <div class="code-block-wrapper">
+          <div class="code-block-header">
+            <span class="code-block-title">Basic Popover</span>
+            <button class="copy-btn" data-copy="snippet-popover-basic" aria-label="Copy code">
+              <span class="copy-btn__icon">⎘</span>
+              <span class="copy-btn__text">Copy</span>
+            </button>
+          </div>
+          <pre class="code-block" id="snippet-popover-basic"><code><span class="comment">&lt;!-- The trigger button --&gt;</span>
+<span class="keyword">&lt;button</span> <span class="property">popovertarget</span>=<span class="string">"my-popover"</span><span class="keyword">&gt;</span>
+  Show Popover
+<span class="keyword">&lt;/button&gt;</span>
+
+<span class="comment">&lt;!-- The popover itself (auto = light-dismiss + Escape) --&gt;</span>
+<span class="keyword">&lt;div</span> <span class="property">popover</span>=<span class="string">"auto"</span> <span class="property">id</span>=<span class="string">"my-popover"</span><span class="keyword">&gt;</span>
+  <span class="keyword">&lt;p&gt;</span>I live in the top layer.<span class="keyword">&lt;/p&gt;</span>
+<span class="keyword">&lt;/div&gt;</span>
+
+<span class="comment">&lt;!-- manual = stays open until explicitly closed --&gt;</span>
+<span class="keyword">&lt;div</span> <span class="property">popover</span>=<span class="string">"manual"</span> <span class="property">id</span>=<span class="string">"sticky-tip"</span><span class="keyword">&gt;</span>
+  I won't auto-dismiss.
+<span class="keyword">&lt;/div&gt;</span></code></pre>
+        </div>
+
+        <div class="code-block-wrapper">
+          <div class="code-block-header">
+            <span class="code-block-title">Dialog with closedby</span>
+            <button class="copy-btn" data-copy="snippet-dialog" aria-label="Copy code">
+              <span class="copy-btn__icon">⎘</span>
+              <span class="copy-btn__text">Copy</span>
+            </button>
+          </div>
+          <pre class="code-block" id="snippet-dialog"><code><span class="comment">&lt;!-- closedby="any" allows backdrop-click to close --&gt;</span>
+<span class="keyword">&lt;dialog</span> <span class="property">id</span>=<span class="string">"modal"</span> <span class="property">closedby</span>=<span class="string">"any"</span><span class="keyword">&gt;</span>
+  <span class="keyword">&lt;h2&gt;</span>Confirm Action<span class="keyword">&lt;/h2&gt;</span>
+  <span class="keyword">&lt;p&gt;</span>Are you sure?<span class="keyword">&lt;/p&gt;</span>
+  <span class="keyword">&lt;form</span> <span class="property">method</span>=<span class="string">"dialog"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;button</span> <span class="property">value</span>=<span class="string">"confirm"</span><span class="keyword">&gt;</span>Confirm<span class="keyword">&lt;/button&gt;</span>
+    <span class="keyword">&lt;button</span> <span class="property">value</span>=<span class="string">"cancel"</span><span class="keyword">&gt;</span>Cancel<span class="keyword">&lt;/button&gt;</span>
+  <span class="keyword">&lt;/form&gt;</span>
+<span class="keyword">&lt;/dialog&gt;</span>
+
+<span class="comment">&lt;!-- Open it with JS --&gt;</span>
+<span class="function">document</span>.<span class="function">querySelector</span>(<span class="string">'#modal'</span>).<span class="function">showModal</span>();
+
+<span class="comment">&lt;!-- Or non-modal (no backdrop, no focus trap) --&gt;</span>
+<span class="function">document</span>.<span class="function">querySelector</span>(<span class="string">'#modal'</span>).<span class="function">show</span>();</code></pre>
+        </div>
+
+        <div class="code-block-wrapper">
+          <div class="code-block-header">
+            <span class="code-block-title">@starting-style Entry Animation</span>
+            <button class="copy-btn" data-copy="snippet-starting-style" aria-label="Copy code">
+              <span class="copy-btn__icon">⎘</span>
+              <span class="copy-btn__text">Copy</span>
+            </button>
+          </div>
+          <pre class="code-block" id="snippet-starting-style"><code><span class="comment">/* The final open state */</span>
+[<span class="property">popover</span>]:<span class="function">popover-open</span> {
+  <span class="property">opacity</span>: <span class="value">1</span>;
+  <span class="property">transform</span>: <span class="function">translateY</span>(<span class="value">0</span>);
+  <span class="property">transition</span>:
+    <span class="value">opacity 400ms ease</span>,
+    <span class="value">transform 400ms ease</span>,
+    <span class="value">display 400ms allow-discrete</span>,
+    <span class="value">overlay 400ms allow-discrete</span>;
+}
+
+<span class="comment">/* Where the animation begins — the "before open" state */</span>
+<span class="selector">@starting-style</span> {
+  [<span class="property">popover</span>]:<span class="function">popover-open</span> {
+    <span class="property">opacity</span>: <span class="value">0</span>;
+    <span class="property">transform</span>: <span class="function">translateY</span>(<span class="value">1rem</span>);
+  }
+}
+
+<span class="comment">/* Exit: when NOT :popover-open (via allow-discrete) */</span>
+[<span class="property">popover</span>]:<span class="keyword">not</span>(:<span class="function">popover-open</span>) {
+  <span class="property">opacity</span>: <span class="value">0</span>;
+  <span class="property">transform</span>: <span class="function">translateY</span>(<span class="value">0.5rem</span>);
+}</code></pre>
+        </div>
+      </div>
+
+      <!-- Concept table -->
+      <div class="attr-table scroll-reveal">
+        <h3>popovertargetaction values</h3>
+        <div class="attr-table__grid">
+          <div class="attr-row">
+            <code class="attr-name">toggle</code>
+            <span class="attr-desc">Default. Show if hidden, hide if visible.</span>
+          </div>
+          <div class="attr-row">
+            <code class="attr-name">show</code>
+            <span class="attr-desc">Only show the popover. Idempotent if already open.</span>
+          </div>
+          <div class="attr-row">
+            <code class="attr-name">hide</code>
+            <span class="attr-desc">Only hide the popover. Safe to call when closed.</span>
+          </div>
+        </div>
+        <h3 style="margin-top: var(--space-xl);">closedby attribute</h3>
+        <div class="attr-table__grid">
+          <div class="attr-row">
+            <code class="attr-name">any</code>
+            <span class="attr-desc">Close on Escape, close request, or clicking outside.</span>
+          </div>
+          <div class="attr-row">
+            <code class="attr-name">closerequest</code>
+            <span class="attr-desc">Close only on Escape or platform close gesture.</span>
+          </div>
+          <div class="attr-row">
+            <code class="attr-name">none</code>
+            <span class="attr-desc">Never auto-close. Requires explicit JS or button.</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ACT 3 — PLAYGROUND: Build-a-Popover
+    ═══════════════════════════════════════════════════════════ -->
+    <section class="zone-playground" aria-label="Build-a-Popover playground">
+      <div class="section-content">
+        <h2 class="scroll-reveal">Build a Popover</h2>
+        <p class="subtitle scroll-reveal">Configure and preview a live popover with generated code.</p>
+
+        <div class="playground-layout">
+          <!-- Controls panel -->
+          <div class="playground-controls scroll-reveal" role="form" aria-label="Popover configuration">
+
+            <fieldset class="control-fieldset">
+              <legend class="control-legend">Popover Type</legend>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="popover-type" value="auto" checked>
+                  <span class="radio-custom"></span>
+                  <span class="radio-text"><code>auto</code> — light-dismiss, Escape closes</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="popover-type" value="manual">
+                  <span class="radio-custom"></span>
+                  <span class="radio-text"><code>manual</code> — stays open until explicitly closed</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="control-group">
+              <label for="entry-animation" class="control-label">Entry Animation</label>
+              <select id="entry-animation" class="control-select">
+                <option value="fade">Fade</option>
+                <option value="slide-up" selected>Slide Up</option>
+                <option value="slide-down">Slide Down</option>
+                <option value="scale">Scale</option>
+                <option value="scale-up">Scale Up</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <label for="closedby-attr" class="control-label">closedby (dialog only)</label>
+              <select id="closedby-attr" class="control-select">
+                <option value="any" selected>any</option>
+                <option value="closerequest">closerequest</option>
+                <option value="none">none</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <label for="popover-content" class="control-label">Popover Content</label>
+              <input
+                type="text"
+                id="popover-content"
+                class="control-input"
+                value="Hello from the top layer!"
+                maxlength="80"
+                aria-describedby="content-hint"
+              >
+              <span id="content-hint" class="control-hint">Text shown inside the popover</span>
+            </div>
+
+            <button class="btn-primary btn-show-popover" id="show-preview-popover">
+              <span class="btn-icon">◇</span>
+              Show Popover
+            </button>
+
+          </div>
+
+          <!-- Generated code -->
+          <div class="playground-output scroll-reveal">
+            <div class="code-block-wrapper">
+              <div class="code-block-header">
+                <span class="code-block-title">Generated Code</span>
+                <button class="copy-btn" id="copy-generated" aria-label="Copy generated code">
+                  <span class="copy-btn__icon">⎘</span>
+                  <span class="copy-btn__text">Copy</span>
+                </button>
+              </div>
+              <pre class="code-block" id="generated-code" aria-live="polite" aria-label="Generated popover code"></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- The live preview popover -->
+        <div popover id="preview-popover" class="preview-popover" role="dialog" aria-modal="true">
+          <div class="preview-popover__body">
+            <div class="preview-popover__icon" aria-hidden="true">◇</div>
+            <p class="preview-popover__text" id="preview-text">Hello from the top layer!</p>
+            <div class="preview-popover__meta">
+              <code id="preview-type-badge" class="preview-badge">popover="auto"</code>
+              <code id="preview-anim-badge" class="preview-badge">slide-up</code>
+            </div>
+          </div>
+          <button
+            class="preview-popover__close"
+            popovertarget="preview-popover"
+            popovertargetaction="hide"
+            aria-label="Close popover"
+          >✕</button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Zone Nav ───────────────────────────────────────────── -->
+  <nav class="zone-nav" aria-label="Zone navigation">
+    <a href="scroll-animations.html" title="Scroll Animations" data-transition="zone-content">◆</a>
+    <a href="popover-dialog.html"    title="Popover &amp; Dialog" aria-current="page" data-transition="zone-content">◇</a>
+    <a href="css-art.html"           title="CSS Art Gallery" data-transition="zone-content">●</a>
+    <a href="container-queries.html" title="Container Queries" data-transition="zone-content">◈</a>
+    <a href="view-transitions.html"  title="View Transitions" data-transition="zone-content">▲</a>
+    <a href="houdini.html"           title="CSS Houdini" data-transition="zone-content">■</a>
+    <a href="has-selector.html"      title=":has() Selector" data-transition="zone-content">★</a>
+    <a href="cascade-layers.html"    title="Cascade Layers" data-transition="zone-content">⬡</a>
+  </nav>
+
+  <script type="module" src="../js/transitions.js"></script>
+  <script>
+    /* ── Zone 2: Popover & Dialog Playground ─────────────────── */
+
+    // Dialog open/close
+    const dialog     = document.getElementById('demo-dialog');
+    const openBtn    = document.getElementById('open-dialog-btn');
+    const closeBtn   = document.getElementById('close-dialog-btn');
+
+    openBtn?.addEventListener('click', () => dialog.showModal());
+    closeBtn?.addEventListener('click', () => dialog.close());
+
+    // Copy buttons (generic)
+    document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = document.getElementById(btn.dataset.copy);
+        if (!target) return;
+        navigator.clipboard.writeText(target.textContent.trim()).then(() => {
+          const label = btn.querySelector('.copy-btn__text');
+          const prev = label.textContent;
+          label.textContent = 'Copied!';
+          setTimeout(() => { label.textContent = prev; }, 1600);
+        });
+      });
+    });
+
+    // ── Playground ─────────────────────────────────────────────
+    const previewPopover = document.getElementById('preview-popover');
+    const previewText    = document.getElementById('preview-text');
+    const previewTypeBadge = document.getElementById('preview-type-badge');
+    const previewAnimBadge = document.getElementById('preview-anim-badge');
+    const generatedCode  = document.getElementById('generated-code');
+    const showBtn        = document.getElementById('show-preview-popover');
+    const copyGenBtn     = document.getElementById('copy-generated');
+
+    const animClasses = ['anim-fade','anim-slide-up','anim-slide-down','anim-scale','anim-scale-up'];
+
+    function getConfig() {
+      return {
+        type:     document.querySelector('input[name="popover-type"]:checked')?.value ?? 'auto',
+        anim:     document.getElementById('entry-animation').value,
+        closedby: document.getElementById('closedby-attr').value,
+        content:  document.getElementById('popover-content').value || 'Hello from the top layer!',
+      };
+    }
+
+    function applyConfig(cfg) {
+      // Update type
+      previewPopover.setAttribute('popover', cfg.type);
+
+      // Update animation class
+      animClasses.forEach(c => previewPopover.classList.remove(c));
+      previewPopover.classList.add('anim-' + cfg.anim);
+
+      // Update content
+      previewText.textContent = cfg.content;
+      previewTypeBadge.textContent = `popover="${cfg.type}"`;
+      previewAnimBadge.textContent = cfg.anim;
+    }
+
+    function buildCode(cfg) {
+      const closedbyNote = cfg.type === 'manual'
+        ? `\n\n<!-- For a manual popover with closedby, use <dialog> instead:\n     <dialog closedby="${cfg.closedby}"> -->`
+        : '';
+
+      const animCSS = {
+        'fade':       'opacity: 0;',
+        'slide-up':   'opacity: 0;\n  transform: translateY(1rem);',
+        'slide-down': 'opacity: 0;\n  transform: translateY(-1rem);',
+        'scale':      'opacity: 0;\n  transform: scale(0.9);',
+        'scale-up':   'opacity: 0;\n  transform: scale(1.1);',
+      }[cfg.anim] || 'opacity: 0;';
+
+      return `<!-- HTML -->
+<button popovertarget="my-pop">Open</button>
+
+<div popover="${cfg.type}" id="my-pop">
+  ${cfg.content}
+</div>${closedbyNote}
+
+/* CSS — @starting-style entry animation */
+[popover]:popover-open {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 400ms ease,
+    transform 400ms ease,
+    display 400ms allow-discrete,
+    overlay 400ms allow-discrete;
+}
+
+@starting-style {
+  [popover]:popover-open {
+    ${animCSS}
+  }
+}`;
+    }
+
+    function update() {
+      const cfg = getConfig();
+      applyConfig(cfg);
+      generatedCode.textContent = buildCode(cfg);
+    }
+
+    // Show the preview popover
+    showBtn.addEventListener('click', () => {
+      update();
+      // Small delay lets DOM settle the new attributes
+      requestAnimationFrame(() => {
+        if (previewPopover.matches(':popover-open')) {
+          previewPopover.hidePopover();
+          requestAnimationFrame(() => previewPopover.showPopover());
+        } else {
+          previewPopover.showPopover();
+        }
+      });
+    });
+
+    // Live-update code on any control change
+    document.querySelectorAll('input[name="popover-type"], #entry-animation, #closedby-attr, #popover-content')
+      .forEach(el => el.addEventListener('change', update));
+    document.getElementById('popover-content').addEventListener('input', update);
+
+    // Copy generated code
+    copyGenBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(generatedCode.textContent.trim()).then(() => {
+        const label = copyGenBtn.querySelector('.copy-btn__text');
+        label.textContent = 'Copied!';
+        setTimeout(() => { label.textContent = 'Copy'; }, 1600);
+      });
+    });
+
+    // Initialize
+    update();
+  </script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cascade Layers — Zone 8 — A Love Letter to the Web</title>
+  <meta name="description" content="Tame the cascade with @layer. Control specificity through declaration order, not selector weight.">
+
+  <meta property="og:title" content="Cascade Layers — A Love Letter to the Web">
+  <meta property="og:description" content="Tame the cascade. Control specificity.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/transitions.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/zone-layers.css">
+
+  <!-- Live layer demo style block — updated by JS -->
+  <style id="layer-demo-style">
+    @layer reset, base, components, utilities;
+
+    @layer reset {
+      .layer-target {
+        color: oklch(72% 0.18 340);
+        font-size: 1rem;
+        border: 2px solid oklch(72% 0.18 340);
+        font-weight: 400;
+      }
+    }
+    @layer base {
+      .layer-target {
+        color: oklch(75% 0.2 200);
+        font-size: 1.1rem;
+        border: 2px solid oklch(75% 0.2 200);
+        font-weight: 500;
+      }
+    }
+    @layer components {
+      .layer-target {
+        color: oklch(70% 0.22 140);
+        font-size: 1.25rem;
+        border: 2px solid oklch(70% 0.22 140);
+        font-weight: 600;
+      }
+    }
+    @layer utilities {
+      .layer-target {
+        color: oklch(72% 0.25 310);
+        font-size: 1.5rem;
+        border: 2px solid oklch(72% 0.25 310);
+        font-weight: 700;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <header class="page-header">
+    <a href="../index.html" class="page-header__logo" data-transition="root">◈ LLTW</a>
+    <nav class="page-header__nav" aria-label="Main navigation">
+      <a href="../index.html" data-transition="root">Timeline</a>
+      <a href="../hub.html" data-transition="root">Observatory</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         ACT 1 — HERO
+         Glass pane stacking visual
+    ═══════════════════════════════════════════════════════════ -->
+    <section class="zone-hero layers-hero" aria-label="Zone hero">
+      <div class="layers-hero__art" aria-hidden="true">
+        <div class="glass-stack">
+          <div class="glass-pane" data-layer="reset" style="--pane-index: 0; --pane-hue: 340;">
+            <span class="pane-label">@layer reset</span>
+            <span class="pane-priority">priority 1</span>
+          </div>
+          <div class="glass-pane" data-layer="base" style="--pane-index: 1; --pane-hue: 200;">
+            <span class="pane-label">@layer base</span>
+            <span class="pane-priority">priority 2</span>
+          </div>
+          <div class="glass-pane" data-layer="components" style="--pane-index: 2; --pane-hue: 140;">
+            <span class="pane-label">@layer components</span>
+            <span class="pane-priority">priority 3</span>
+          </div>
+          <div class="glass-pane" data-layer="utilities" style="--pane-index: 3; --pane-hue: 310;">
+            <span class="pane-label">@layer utilities</span>
+            <span class="pane-priority">priority 4 — wins</span>
+          </div>
+        </div>
+        <div class="hero-axis-label hero-axis-label--low">
+          <span>← lower priority</span>
+        </div>
+        <div class="hero-axis-label hero-axis-label--high">
+          <span>higher priority →</span>
+        </div>
+      </div>
+
+      <div class="layers-hero__content stagger-children">
+        <p class="zone-label">⬡ Zone 8</p>
+        <h1>Cascade Layers</h1>
+        <p class="subtitle">Tame the cascade. Control specificity.</p>
+        <a href="#story" class="hero-scroll-cue" aria-label="Scroll to story">
+          <span class="scroll-cue-line"></span>
+          <span>Explore</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         ACT 2 — STORY
+    ═══════════════════════════════════════════════════════════ -->
+    <section class="zone-story" id="story" aria-label="How Cascade Layers work">
+      <div class="section-content">
+
+        <a href="../hub.html" class="back-to-hub" data-transition="root">
+          ← Observatory
+        </a>
+
+        <div class="browser-support">
+          <span>Browser support:</span>
+          <span class="supported">Chrome 99+</span>
+          <span>·</span>
+          <span class="supported">Firefox 97+</span>
+          <span>·</span>
+          <span class="supported">Safari 15.4+</span>
+        </div>
+
+        <h2 class="js-reveal">The cascade, tamed.</h2>
+
+        <div class="story-lead js-reveal">
+          <p>Before <code>@layer</code>, specificity wars plagued every stylesheet. A third-party component's <code>.btn.primary</code> would fight your <code>.my-app .btn</code>. You'd reach for <code>!important</code> and dig the hole deeper.</p>
+          <p>Cascade layers let you declare <em>entire groups of styles</em> as a named layer — and then set the priority of those layers explicitly. Specificity still matters within a layer, but layers always defeat lower-priority layers, regardless of selector weight.</p>
+        </div>
+
+        <!-- ── Section: Declaring layers ── -->
+        <div class="story-section js-reveal">
+          <h3>Declaring layer order</h3>
+          <p>The <strong>first</strong> place a layer name appears in the stylesheet establishes its priority. A common pattern: declare all layer names upfront in one statement.</p>
+
+          <div class="code-wrapper">
+            <pre class="code-block" id="code-order"><code><span class="comment">/* Declare order first — lowest to highest priority */</span>
+<span class="keyword">@layer</span> reset, base, components, utilities;
+
+<span class="comment">/* Now fill each layer — order of filling doesn't matter */</span>
+<span class="keyword">@layer</span> utilities {
+  <span class="selector">.mt-4</span> { <span class="property">margin-top</span>: <span class="value">1rem</span>; }
+}
+
+<span class="keyword">@layer</span> reset {
+  <span class="selector">*</span> { <span class="property">box-sizing</span>: <span class="value">border-box</span>; }
+}</code></pre>
+            <button class="copy-btn" data-copy-target="#code-order">Copy</button>
+          </div>
+        </div>
+
+        <!-- ── Section: !important reversal ── -->
+        <div class="story-section js-reveal">
+          <h3><code>!important</code> reverses layer priority</h3>
+          <p>This surprises everyone at first: <code>!important</code> declarations in a <em>lower-priority</em> layer win over <code>!important</code> in a higher-priority layer. It follows the same rule as the normal cascade — important declarations are sorted in reverse.</p>
+
+          <div class="code-wrapper">
+            <pre class="code-block" id="code-important"><code><span class="keyword">@layer</span> reset, base, utilities;
+
+<span class="keyword">@layer</span> utilities {
+  <span class="selector">.text-red</span> { <span class="property">color</span>: <span class="value">red</span>; }          <span class="comment">/* wins normally */</span>
+  <span class="selector">.text-red</span> { <span class="property">color</span>: <span class="value">red !important</span>; }  <span class="comment">/* loses to reset's !important */</span>
+}
+
+<span class="keyword">@layer</span> reset {
+  <span class="selector">.text-red</span> { <span class="property">color</span>: <span class="value">blue !important</span>; } <span class="comment">/* wins — reset has !important priority */</span>
+}</code></pre>
+            <button class="copy-btn" data-copy-target="#code-important">Copy</button>
+          </div>
+        </div>
+
+        <!-- ── Section: Unlayered styles ── -->
+        <div class="story-section js-reveal">
+          <h3>Unlayered styles always win</h3>
+          <p>Any styles <em>outside</em> a layer are treated as an implicit highest-priority layer. This means your existing CSS won't be clobbered when you adopt <code>@layer</code> — a deliberate design choice for incremental adoption.</p>
+
+          <div class="code-wrapper">
+            <pre class="code-block" id="code-unlayered"><code><span class="keyword">@layer</span> base, utilities;
+
+<span class="keyword">@layer</span> utilities {
+  <span class="selector">.btn</span> { <span class="property">color</span>: <span class="value">purple</span>; } <span class="comment">/* layer — loses */</span>
+}
+
+<span class="comment">/* Unlayered — always beats any @layer */</span>
+<span class="selector">.btn</span> { <span class="property">color</span>: <span class="value">hotpink</span>; } <span class="comment">/* wins */</span></code></pre>
+            <button class="copy-btn" data-copy-target="#code-unlayered">Copy</button>
+          </div>
+        </div>
+
+        <!-- ── Section: Nested layers ── -->
+        <div class="story-section js-reveal">
+          <h3>Nesting layers</h3>
+          <p>Layers can be nested using dot notation or by nesting <code>@layer</code> blocks. This is powerful for organizing third-party library styles without polluting your own layer namespace.</p>
+
+          <div class="code-wrapper">
+            <pre class="code-block" id="code-nested"><code><span class="comment">/* Dot notation */</span>
+<span class="keyword">@layer</span> framework.reset, framework.theme, framework.components;
+
+<span class="comment">/* Block nesting */</span>
+<span class="keyword">@layer</span> framework {
+  <span class="keyword">@layer</span> reset {
+    <span class="selector">*</span> { <span class="property">margin</span>: <span class="value">0</span>; }
+  }
+  <span class="keyword">@layer</span> components {
+    <span class="selector">.card</span> { <span class="property">padding</span>: <span class="value">1rem</span>; }
+  }
+}
+
+<span class="comment">/* Append to nested layer from outside */</span>
+<span class="keyword">@layer</span> framework.components {
+  <span class="selector">.card</span> { <span class="property">border-radius</span>: <span class="value">0.5rem</span>; }
+}</code></pre>
+            <button class="copy-btn" data-copy-target="#code-nested">Copy</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         ACT 3 — PLAYGROUND
+         Layer ordering sandbox
+    ═══════════════════════════════════════════════════════════ -->
+    <section class="zone-playground" id="playground" aria-label="Layer ordering sandbox">
+      <div class="section-content">
+
+        <h2>Layer Ordering Sandbox</h2>
+        <p class="subtitle" style="margin-bottom: var(--space-xl);">Drag layers to reorder them. The rightmost layer wins. Watch the demo element update live.</p>
+
+        <div class="sandbox">
+          <!-- Layer deck -->
+          <div class="sandbox__deck-area">
+            <p class="sandbox__deck-label label">Drag to reorder — left = lowest priority, right = highest</p>
+            <div class="layer-deck" id="layer-deck" role="list" aria-label="Layer priority order, drag to reorder">
+              <div class="layer-card" role="listitem" data-layer-name="reset" data-layer-hue="340" draggable="true" tabindex="0" aria-label="reset layer, drag to reorder">
+                <span class="layer-card__symbol">①</span>
+                <span class="layer-card__name">@layer reset</span>
+                <span class="layer-card__desc">Normalizes browser defaults</span>
+                <div class="layer-card__swatch" style="--swatch-hue: 340;"></div>
+              </div>
+              <div class="layer-card" role="listitem" data-layer-name="base" data-layer-hue="200" draggable="true" tabindex="0" aria-label="base layer, drag to reorder">
+                <span class="layer-card__symbol">②</span>
+                <span class="layer-card__name">@layer base</span>
+                <span class="layer-card__desc">Design system foundations</span>
+                <div class="layer-card__swatch" style="--swatch-hue: 200;"></div>
+              </div>
+              <div class="layer-card" role="listitem" data-layer-name="components" data-layer-hue="140" draggable="true" tabindex="0" aria-label="components layer, drag to reorder">
+                <span class="layer-card__symbol">③</span>
+                <span class="layer-card__name">@layer components</span>
+                <span class="layer-card__desc">Reusable UI components</span>
+                <div class="layer-card__swatch" style="--swatch-hue: 140;"></div>
+              </div>
+              <div class="layer-card layer-card--winner" role="listitem" data-layer-name="utilities" data-layer-hue="310" draggable="true" tabindex="0" aria-label="utilities layer, drag to reorder">
+                <span class="layer-card__symbol">④</span>
+                <span class="layer-card__name">@layer utilities</span>
+                <span class="layer-card__desc">Atomic utility overrides</span>
+                <div class="layer-card__swatch" style="--swatch-hue: 310;"></div>
+              </div>
+            </div>
+            <div class="priority-arrow" aria-hidden="true">
+              <span class="priority-arrow__track"></span>
+              <span class="priority-arrow__label">increasing priority →</span>
+            </div>
+          </div>
+
+          <!-- Winner badge -->
+          <div class="sandbox__winner" id="sandbox-winner" aria-live="polite">
+            <span class="winner-label label">Current winner</span>
+            <span class="winner-name" id="winner-name">@layer utilities</span>
+            <span class="winner-badge" id="winner-badge" style="--badge-hue: 310;">⬡</span>
+          </div>
+
+          <!-- Demo element preview -->
+          <div class="sandbox__preview">
+            <p class="sandbox__preview-label label">Live preview</p>
+            <div class="preview-stage">
+              <div class="layer-target" id="layer-target" aria-live="polite">
+                The cascade resolves here.
+              </div>
+            </div>
+            <p class="sandbox__preview-note">Color, font size, and border — each defined in every layer. The winning layer's values apply.</p>
+          </div>
+
+          <!-- Generated CSS output -->
+          <div class="sandbox__code-output">
+            <p class="sandbox__code-label label">Generated CSS</p>
+            <div class="code-wrapper code-wrapper--live">
+              <pre class="code-block code-block--live" id="generated-code" aria-live="polite"><code></code></pre>
+              <button class="copy-btn" data-copy-target="#generated-code">Copy</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Zone Nav ──────────────────────────────────────────────── -->
+  <nav class="zone-nav" aria-label="Zone navigation">
+    <a href="../hub.html" data-transition="root">⬡ Hub</a>
+    <a href="scroll-animations.html" data-transition="zone">◆ Scroll</a>
+    <a href="popover-dialog.html" data-transition="zone">◇ Popover</a>
+    <a href="css-art.html" data-transition="zone">● Art</a>
+    <a href="container-queries.html" data-transition="zone">◈ Container</a>
+    <a href="view-transitions.html" data-transition="zone">▲ Transitions</a>
+    <a href="houdini.html" data-transition="zone">■ Houdini</a>
+    <a href="has-selector.html" data-transition="zone">★ :has()</a>
+    <a href="cascade-layers.html" aria-current="page" data-transition="zone">⬡ Layers</a>
+  </nav>
+
+  <script type="module" src="../js/transitions.js"></script>
+  <script type="module" src="../js/zone-layers.js"></script>
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Container Queries — A Love Letter to the Web</title>
+  <meta name="description" content="Components that know their own size. An interactive deep-dive into CSS Container Queries.">
+
+  <meta property="og:title" content="Container Queries — A Love Letter to the Web">
+  <meta property="og:description" content="Components that know their own size.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/transitions.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/zone-container.css">
+</head>
+<body>
+
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ── Header ──────────────────────────────────────────────── -->
+  <header class="page-header">
+    <a href="../index.html" class="logo" data-transition="root">◈ LLTW</a>
+    <nav aria-label="Main navigation">
+      <a href="../index.html" data-transition="root">Timeline</a>
+      <a href="../hub.html" data-transition="root">Observatory</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ══════════════════════════════════════════════════════════
+         ACT 1 · HERO — Morphing Product Card
+         ════════════════════════════════════════════════════════ -->
+    <section class="zone-hero cq-hero" aria-labelledby="zone-title" style="--zone-color: #34d399;">
+
+      <!-- Ambient grid background -->
+      <div class="cq-grid-bg" aria-hidden="true"></div>
+
+      <div class="content-width cq-hero-inner">
+
+        <div class="zone-label stagger-children">
+          <span>◈ Zone 4</span>
+        </div>
+
+        <h1 id="zone-title" class="animate-fade-in-up" style="animation-delay: 100ms;">
+          Container<br>Queries
+        </h1>
+        <p class="subtitle animate-fade-in-up" style="animation-delay: 200ms;">
+          Components that know their own size.
+        </p>
+
+        <!-- 4-size showcase -->
+        <div class="cq-showcase animate-fade-in" style="animation-delay: 400ms;" aria-label="Product card shown at four different container widths">
+
+          <!-- Nano (~100px) -->
+          <div class="cq-size-slot">
+            <div class="cq-size-label">~100px</div>
+            <div class="cq-wrapper cq-wrapper--nano" style="container-type: inline-size; container-name: product-card;">
+              <article class="product-card" aria-label="Product card at nano size">
+                <div class="pc-image">
+                  <span class="pc-emoji" aria-hidden="true">🌿</span>
+                </div>
+                <div class="pc-body">
+                  <h2 class="pc-name">Verdant</h2>
+                  <p class="pc-tagline">Premium botanical</p>
+                  <div class="pc-price">$48</div>
+                  <button class="pc-cta" aria-label="Add Verdant to cart">Add</button>
+                </div>
+                <div class="pc-badge" aria-label="New product">New</div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Compact (~250px) -->
+          <div class="cq-size-slot">
+            <div class="cq-size-label">~250px</div>
+            <div class="cq-wrapper cq-wrapper--compact" style="container-type: inline-size; container-name: product-card;">
+              <article class="product-card" aria-label="Product card at compact size">
+                <div class="pc-image">
+                  <span class="pc-emoji" aria-hidden="true">🌿</span>
+                </div>
+                <div class="pc-body">
+                  <h2 class="pc-name">Verdant</h2>
+                  <p class="pc-tagline">Premium botanical</p>
+                  <div class="pc-price">$48</div>
+                  <button class="pc-cta" aria-label="Add Verdant to cart">Add to cart</button>
+                </div>
+                <div class="pc-badge" aria-label="New product">New</div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Row (~500px) -->
+          <div class="cq-size-slot cq-size-slot--wide">
+            <div class="cq-size-label">~500px</div>
+            <div class="cq-wrapper cq-wrapper--row" style="container-type: inline-size; container-name: product-card;">
+              <article class="product-card" aria-label="Product card at row size">
+                <div class="pc-image">
+                  <span class="pc-emoji" aria-hidden="true">🌿</span>
+                </div>
+                <div class="pc-body">
+                  <h2 class="pc-name">Verdant</h2>
+                  <p class="pc-tagline">Premium botanical extract</p>
+                  <div class="pc-price">$48</div>
+                  <button class="pc-cta" aria-label="Add Verdant to cart">Add to cart</button>
+                </div>
+                <div class="pc-badge" aria-label="New product">New</div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Hero (~800px) -->
+          <div class="cq-size-slot cq-size-slot--hero">
+            <div class="cq-size-label">~800px</div>
+            <div class="cq-wrapper cq-wrapper--hero" style="container-type: inline-size; container-name: product-card;">
+              <article class="product-card" aria-label="Product card at hero banner size">
+                <div class="pc-image">
+                  <span class="pc-emoji" aria-hidden="true">🌿</span>
+                </div>
+                <div class="pc-body">
+                  <h2 class="pc-name">Verdant</h2>
+                  <p class="pc-tagline">Premium botanical extract — crafted from wild-harvested botanicals for a refined, lasting scent.</p>
+                  <div class="pc-price">$48 <span class="pc-price-note">free shipping</span></div>
+                  <div class="pc-actions">
+                    <button class="pc-cta" aria-label="Add Verdant to cart">Add to cart</button>
+                    <button class="pc-cta pc-cta--ghost" aria-label="View Verdant details">Details</button>
+                  </div>
+                </div>
+                <div class="pc-badge" aria-label="New product">New</div>
+              </article>
+            </div>
+          </div>
+
+        </div><!-- /.cq-showcase -->
+
+        <!-- Hint arrow -->
+        <div class="cq-scroll-hint animate-fade-in" style="animation-delay: 800ms;" aria-hidden="true">
+          <span>scroll to explore</span>
+          <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
+            <path d="M8 4v16M2 14l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+      </div><!-- /.cq-hero-inner -->
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ACT 2 · STORY — The Concept
+         ════════════════════════════════════════════════════════ -->
+    <section class="zone-story cq-story" aria-labelledby="story-heading" style="--zone-color: #34d399;">
+      <div class="content-width">
+
+        <a href="../hub.html" class="back-to-hub" data-transition="hub-node">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Observatory
+        </a>
+
+        <div class="browser-support">
+          <span class="supported">✓ Chrome 106+</span>
+          <span class="supported">✓ Firefox 110+</span>
+          <span class="supported">✓ Safari 16+</span>
+          <span>Baseline 2023</span>
+        </div>
+
+        <h2 id="story-heading" class="js-reveal">The Problem with Media Queries</h2>
+
+        <p class="js-reveal">
+          For years, responsive design meant one thing: watch the viewport. You'd write
+          <code>@media (min-width: 768px)</code> and hope your component landed in the right
+          context. But viewport width is a blunt instrument — a sidebar card and a hero card
+          can occupy the same viewport, yet need completely different layouts.
+        </p>
+
+        <p class="js-reveal">
+          Container Queries change the contract. Instead of asking <em>"how wide is the window?"</em>,
+          a component can ask <em>"how wide is my container?"</em> — and reshape itself accordingly.
+          The component becomes truly self-contained, portable across any layout.
+        </p>
+
+        <!-- Concept grid -->
+        <div class="cq-concept-grid js-reveal">
+          <div class="cq-concept-card">
+            <div class="cq-concept-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <rect x="3" y="3" width="22" height="22" rx="3" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="7" y="7" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+              </svg>
+            </div>
+            <h3>container-type</h3>
+            <p>Declares a containment context. <code>inline-size</code> creates a query context for the inline axis. <code>size</code> covers both axes.</p>
+          </div>
+          <div class="cq-concept-card">
+            <div class="cq-concept-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path d="M6 14h16M14 6v16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="14" cy="14" r="5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/>
+              </svg>
+            </div>
+            <h3>container-name</h3>
+            <p>Assigns an identifier so nested queries can target a specific ancestor — essential when containers are nested inside one another.</p>
+          </div>
+          <div class="cq-concept-card">
+            <div class="cq-concept-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path d="M4 8h20M4 14h14M4 20h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>@container rule</h3>
+            <p>The query itself. Works like a media query but uses the nearest containment ancestor as the source of truth for its conditions.</p>
+          </div>
+          <div class="cq-concept-card">
+            <div class="cq-concept-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path d="M7 14c0-3.87 3.13-7 7-7s7 3.13 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="14" cy="17" r="3" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <h3>Container units</h3>
+            <p><code>cqi</code>, <code>cqb</code>, <code>cqw</code>, <code>cqh</code> — percentage units relative to the query container's dimensions. Like <code>vw</code> but local.</p>
+          </div>
+        </div>
+
+        <!-- Code examples -->
+        <div class="cq-code-section js-reveal">
+
+          <h3>Basic Container Query</h3>
+          <p>Set up a containment context on the parent, then query it from within the component.</p>
+          <div class="cq-code-block" id="code-basic-parent">
+            <div class="cq-code-header">
+              <span class="cq-code-lang">CSS</span>
+              <button class="copy-btn" data-copy-target="#code-basic-pre" aria-label="Copy code">Copy</button>
+            </div>
+            <pre id="code-basic-pre"><code><span class="tok-comment">/* 1. Declare the containment context */</span>
+<span class="tok-selector">.card-container</span> {
+  <span class="tok-prop">container-type</span>: <span class="tok-value">inline-size</span>;
+}
+
+<span class="tok-comment">/* 2. Style the card based on container width */</span>
+<span class="tok-at">@container</span> (<span class="tok-prop">min-width</span>: <span class="tok-value">500px</span>) {
+  <span class="tok-selector">.card</span> {
+    <span class="tok-prop">display</span>: <span class="tok-value">grid</span>;
+    <span class="tok-prop">grid-template-columns</span>: <span class="tok-value">1fr 2fr</span>;
+    <span class="tok-prop">gap</span>: <span class="tok-value">1.5rem</span>;
+  }
+}</code></pre>
+          </div>
+
+          <h3>Named Containers</h3>
+          <p>When containers are nested, name them so the query targets the right ancestor.</p>
+          <div class="cq-code-block" id="code-named-parent">
+            <div class="cq-code-header">
+              <span class="cq-code-lang">CSS</span>
+              <button class="copy-btn" data-copy-target="#code-named-pre" aria-label="Copy code">Copy</button>
+            </div>
+            <pre id="code-named-pre"><code><span class="tok-selector">.sidebar</span> {
+  <span class="tok-prop">container-type</span>: <span class="tok-value">inline-size</span>;
+  <span class="tok-prop">container-name</span>: <span class="tok-value">sidebar</span>;
+}
+
+<span class="tok-selector">.main</span> {
+  <span class="tok-prop">container-type</span>: <span class="tok-value">inline-size</span>;
+  <span class="tok-prop">container-name</span>: <span class="tok-value">main-content</span>;
+}
+
+<span class="tok-comment">/* Query the named container specifically */</span>
+<span class="tok-at">@container</span> sidebar (<span class="tok-prop">min-width</span>: <span class="tok-value">300px</span>) {
+  <span class="tok-selector">.card</span> { <span class="tok-prop">font-size</span>: <span class="tok-value">1rem</span>; }
+}
+
+<span class="tok-at">@container</span> main-content (<span class="tok-prop">min-width</span>: <span class="tok-value">600px</span>) {
+  <span class="tok-selector">.card</span> { <span class="tok-prop">font-size</span>: <span class="tok-value">1.25rem</span>; }
+}</code></pre>
+          </div>
+
+          <h3>Container Query Units</h3>
+          <p>Use <code>cqi</code>, <code>cqb</code>, <code>cqw</code>, <code>cqh</code>, <code>cqmin</code>, <code>cqmax</code> to size elements relative to their container.</p>
+          <div class="cq-code-block" id="code-units-parent">
+            <div class="cq-code-header">
+              <span class="cq-code-lang">CSS</span>
+              <button class="copy-btn" data-copy-target="#code-units-pre" aria-label="Copy code">Copy</button>
+            </div>
+            <pre id="code-units-pre"><code><span class="tok-comment">/* cqi = 1% of container's inline size (usually width)  */</span>
+<span class="tok-comment">/* cqb = 1% of container's block size (usually height)  */</span>
+<span class="tok-comment">/* cqw = 1% of container width (physical)               */</span>
+<span class="tok-comment">/* cqh = 1% of container height (physical)              */</span>
+
+<span class="tok-selector">.card-title</span> {
+  <span class="tok-prop">font-size</span>: <span class="tok-value">clamp(1rem, 4cqi, 3rem)</span>;
+  <span class="tok-prop">padding</span>: <span class="tok-value">2cqi</span>;
+}
+
+<span class="tok-selector">.card-image</span> {
+  <span class="tok-prop">width</span>: <span class="tok-value">30cqi</span>;
+  <span class="tok-prop">height</span>: <span class="tok-value">30cqi</span>;
+}</code></pre>
+          </div>
+
+        </div><!-- /.cq-code-section -->
+
+      </div><!-- /.content-width -->
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ACT 3 · PLAYGROUND — Resizable Container
+         ════════════════════════════════════════════════════════ -->
+    <section class="zone-playground cq-playground" aria-labelledby="playground-heading" style="--zone-color: #34d399;">
+      <div class="content-width">
+
+        <h2 id="playground-heading" class="js-reveal">Live Resize Playground</h2>
+        <p class="js-reveal">Drag the handle to resize the container and watch the card morph through its breakpoints in real time.</p>
+
+        <!-- Breakpoint indicators -->
+        <div class="cq-breakpoint-bar js-reveal" aria-label="Container breakpoints" role="list">
+          <div class="cq-bp-item cq-bp--nano" role="listitem">
+            <span class="cq-bp-swatch" aria-hidden="true"></span>
+            <span class="cq-bp-name">Nano</span>
+            <span class="cq-bp-range">&lt; 180px</span>
+          </div>
+          <div class="cq-bp-item cq-bp--compact" role="listitem">
+            <span class="cq-bp-swatch" aria-hidden="true"></span>
+            <span class="cq-bp-name">Compact</span>
+            <span class="cq-bp-range">180–380px</span>
+          </div>
+          <div class="cq-bp-item cq-bp--row" role="listitem">
+            <span class="cq-bp-swatch" aria-hidden="true"></span>
+            <span class="cq-bp-name">Row</span>
+            <span class="cq-bp-range">380–620px</span>
+          </div>
+          <div class="cq-bp-item cq-bp--hero" role="listitem">
+            <span class="cq-bp-swatch" aria-hidden="true"></span>
+            <span class="cq-bp-name">Hero</span>
+            <span class="cq-bp-range">&gt; 620px</span>
+          </div>
+        </div>
+
+        <!-- Main playground area -->
+        <div class="cq-playground-area js-reveal">
+
+          <!-- Resizable container wrapper -->
+          <div class="cq-resizable-outer" id="cq-resizable-outer">
+            <div class="cq-resizable" id="cq-resizable" style="container-type: inline-size; container-name: product-card;" aria-label="Resizable container holding the product card">
+              <article class="product-card" id="playground-card" aria-live="polite" aria-label="Product card that adapts to container width">
+                <div class="pc-image">
+                  <span class="pc-emoji" aria-hidden="true">🌿</span>
+                </div>
+                <div class="pc-body">
+                  <h2 class="pc-name">Verdant</h2>
+                  <p class="pc-tagline">Premium botanical extract — crafted from wild-harvested botanicals for a refined, lasting scent.</p>
+                  <div class="pc-price">$48 <span class="pc-price-note">free shipping</span></div>
+                  <div class="pc-actions">
+                    <button class="pc-cta" aria-label="Add Verdant to cart">Add to cart</button>
+                    <button class="pc-cta pc-cta--ghost" aria-label="View Verdant details">Details</button>
+                  </div>
+                </div>
+                <div class="pc-badge" aria-label="New product">New</div>
+              </article>
+            </div>
+
+            <!-- Resize handle -->
+            <div class="cq-resize-handle" id="cq-resize-handle" role="separator" aria-label="Drag to resize container" aria-orientation="vertical" tabindex="0">
+              <div class="cq-handle-grip" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Width display + active breakpoint -->
+          <div class="cq-width-display" id="cq-width-display" aria-live="polite" aria-label="Current container width">
+            <div class="cq-width-number">
+              <span id="cq-width-value">—</span><span class="cq-width-unit">px</span>
+            </div>
+            <div class="cq-active-bp" id="cq-active-bp">Drag the handle to begin</div>
+          </div>
+
+        </div><!-- /.cq-playground-area -->
+
+        <!-- Generated CSS output -->
+        <div class="cq-generated js-reveal" id="cq-generated-wrapper">
+          <div class="cq-generated-header">
+            <span class="cq-code-lang">Generated @container CSS</span>
+            <span class="cq-generated-note" id="cq-generated-note">Resize to see active rules</span>
+          </div>
+          <pre class="cq-generated-pre" id="cq-generated-css" aria-label="Generated container query CSS for current width" aria-live="polite"><code id="cq-generated-code">/* Drag the resize handle above
+   to see which @container rules
+   are active at the current width */</code></pre>
+        </div>
+
+      </div><!-- /.content-width -->
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         ZONE NAV
+         ════════════════════════════════════════════════════════ -->
+    <nav class="zone-nav" aria-label="Navigate between zones" style="--zone-color: #34d399;">
+      <div class="content-width">
+        <a href="css-art.html" class="zone-nav-prev" data-transition="zone-content">
+          <span class="zone-nav-label">Previous</span>
+          <span class="zone-nav-title">● CSS Art Gallery</span>
+        </a>
+        <a href="../hub.html" class="zone-nav-hub" data-transition="hub-node" aria-label="Return to Observatory">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="10" cy="10" r="3" fill="currentColor"/>
+          </svg>
+        </a>
+        <a href="view-transitions.html" class="zone-nav-next" data-transition="zone-content">
+          <span class="zone-nav-label">Next</span>
+          <span class="zone-nav-title">▲ View Transitions</span>
+        </a>
+      </div>
+    </nav>
+
+  </main><!-- /#main-content -->
+
+  <script type="module" src="../js/transitions.js"></script>
+  <script type="module" src="../js/zone-container.js"></script>
+</body>
+</html>
