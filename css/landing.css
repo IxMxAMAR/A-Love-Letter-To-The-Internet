@@ -682,3 +682,28 @@ a.platform-chip {
   0%, 100% { box-shadow: 0 0 4px #3333ff; }
   50% { box-shadow: 0 0 12px #3333ff, 0 0 20px #00ffff; }
 }
+
+/* ── Parallax (Layer 1 / Task 2) ────────── */
+.era .bg-layer,
+.era .fg-layer {
+  position: relative;
+  will-change: transform;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .era .bg-layer {
+      animation: parallax-slow linear;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+    .era .fg-layer {
+      animation: parallax-fast linear;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+
+@keyframes parallax-slow { from { transform: translateY(-30px); } to { transform: translateY(30px); } }
+@keyframes parallax-fast { from { transform: translateY(60px); } to { transform: translateY(-60px); } }
