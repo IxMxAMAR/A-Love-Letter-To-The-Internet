@@ -716,3 +716,9 @@ a.platform-chip {
 }
 .ambient-bg--orbs::before { top: -10%; left: -10%; }
 .ambient-bg--orbs::after { bottom: -10%; right: -10%; background: radial-gradient(circle, oklch(0.65 0.18 200 / 0.35), transparent 70%); animation-direction: reverse; animation-duration: 30s; }
+
+/* Scroll-snap for era wrapper (Layer 1 / Task 23) — dormant until .eras wrapper exists */
+@media (min-width: 641px) and (prefers-reduced-motion: no-preference) {
+  .eras { scroll-snap-type: y mandatory; overflow-y: auto; max-height: 100svh; }
+  .eras .era { scroll-snap-align: start; min-height: 100svh; }
+}

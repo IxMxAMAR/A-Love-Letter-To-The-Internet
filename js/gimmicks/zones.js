@@ -93,3 +93,32 @@ try {
 } catch (e) {
   console.warn('[zones] chapter numbers failed:', e);
 }
+
+// Feature 3: Touch swipe navigation between zones (Layer 1 / Task 23)
+try {
+  if (matchMedia('(pointer: coarse)').matches) {
+    const links = {
+      scroll: ['../index.html', 'popover-dialog.html'],
+      popover: ['scroll-animations.html', 'css-art.html'],
+      art: ['popover-dialog.html', 'container-queries.html'],
+      container: ['css-art.html', 'view-transitions.html'],
+      transitions: ['container-queries.html', 'houdini.html'],
+      houdini: ['view-transitions.html', 'has-selector.html'],
+      has: ['houdini.html', 'cascade-layers.html'],
+      layers: ['has-selector.html', '../index.html'],
+    };
+    const zone = document.body.dataset.zone;
+    const pair = links[zone];
+    if (pair) {
+      let startX = 0, startY = 0;
+      addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; startY = e.touches[0].clientY; }, { passive: true });
+      addEventListener('touchend', (e) => {
+        const dx = e.changedTouches[0].clientX - startX;
+        const dy = e.changedTouches[0].clientY - startY;
+        if (Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy) * 2) {
+          location.href = dx < 0 ? pair[1] : pair[0];
+        }
+      }, { passive: true });
+    }
+  }
+} catch {}
