@@ -478,3 +478,46 @@ try {
   }
 
 } catch (e) {}
+
+// 12. Text effects (Layer 1 / Task 4) — wrapLetters, scrambleText, letter-reveal init
+function wrapLetters(el) {
+  if (!el || el.dataset.wrapped) return;
+  el.dataset.wrapped = '1';
+  // Collapse whitespace so multi-line / <br>-containing headings don't
+  // wrap indentation newlines into visible nbsp-spans.
+  const text = el.textContent.replace(/\s+/g, ' ').trim();
+  el.textContent = '';
+  [...text].forEach((ch, i) => {
+    const s = document.createElement('span');
+    s.textContent = ch === ' ' ? '\u00a0' : ch;
+    s.style.setProperty('--i', i);
+    el.appendChild(s);
+  });
+}
+
+function scrambleText(el, finalText, duration = 900) {
+  const chars = '!@#$%^&*(){}[]<>?/\\|~';
+  const start = performance.now();
+  const step = (now) => {
+    const t = Math.min(1, (now - start) / duration);
+    const resolved = Math.floor(finalText.length * t);
+    let out = finalText.slice(0, resolved);
+    for (let i = resolved; i < finalText.length; i++) {
+      out += chars[(Math.random() * chars.length) | 0];
+    }
+    el.textContent = out;
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+// init letter-reveal targets
+try {
+  document.querySelectorAll('[data-text-effect="reveal"]').forEach(el => {
+    wrapLetters(el);
+    el.classList.add('letter-reveal');
+  });
+} catch {}
+
+// expose helpers
+window.__eni = Object.assign(window.__eni || {}, { wrapLetters, scrambleText });

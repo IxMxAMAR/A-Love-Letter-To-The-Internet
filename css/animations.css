@@ -258,3 +258,42 @@ input:not([type="checkbox"]):not([type="radio"]):focus-visible,
 textarea:focus-visible, select:focus-visible, [contenteditable]:focus-visible {
   box-shadow: 0 0 0 3px oklch(0.65 0.18 290 / 0.35);
 }
+
+/* ── Text Effects (Layer 1 / Task 4) ────────── */
+
+@keyframes shimmer-bg {
+  from { background-position: 0% 50%; }
+  to   { background-position: 200% 50%; }
+}
+.text-shimmer {
+  background-image: linear-gradient(90deg, currentColor 0%, oklch(0.8 0.18 290) 50%, currentColor 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer-bg 4s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) { .text-shimmer { animation: none; color: currentColor; background: none; } }
+
+/* letter reveal — applied by JS-wrapped spans */
+@keyframes letter-reveal {
+  from { opacity: 0; clip-path: inset(0 100% 0 0); }
+  to   { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+.letter-reveal > span {
+  display: inline-block;
+  animation: letter-reveal 500ms cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: calc(var(--i, 0) * 40ms);
+}
+@media (prefers-reduced-motion: reduce) { .letter-reveal > span { animation: none; opacity: 1; clip-path: none; } }
+
+/* glitch for 404 */
+@keyframes glitch-skew { 0%,100% { transform: skew(0); } 50% { transform: skew(-2deg,1deg); } }
+@keyframes glitch-clip-r { 0%,100% { clip-path: inset(0 0 0 0); } 20% { clip-path: inset(0 0 45% 0); } 40% { clip-path: inset(50% 0 0 0); } }
+.text-glitch { position: relative; animation: glitch-skew 3.2s infinite; }
+.text-glitch::before, .text-glitch::after {
+  content: attr(data-text); position: absolute; inset: 0; pointer-events: none;
+}
+.text-glitch::before { color: #ff00aa; transform: translate(-2px,0); animation: glitch-clip-r 2.4s infinite; }
+.text-glitch::after  { color: #00aaff; transform: translate(2px,0);  animation: glitch-clip-r 2.4s infinite reverse; }
+@media (prefers-reduced-motion: reduce) { .text-glitch, .text-glitch::before, .text-glitch::after { animation: none; transform: none; } }
