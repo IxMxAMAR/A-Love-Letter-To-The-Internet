@@ -1,0 +1,8 @@
+/* ── Gimmicks: Layer 1 (shared across Task 7+ modules) ────────── */
+
+.cursor-trail-canvas {
+  position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+}
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-trail-canvas { display: none; }
+}

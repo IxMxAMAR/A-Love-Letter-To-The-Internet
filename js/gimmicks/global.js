@@ -3,6 +3,8 @@
  * "A Love Letter to the Web"
  */
 
+import { initCursorTrail } from './cursor-trail.js';
+
 // Page identity
 const PAGE_SYMBOLS = {
   'index.html':             '\u25c8',
@@ -551,3 +553,57 @@ try {
 
 // expose helpers
 window.__eni = Object.assign(window.__eni || {}, { wrapLetters, scrambleText });
+
+// 13. Cursor trail canvas (Layer 1 / Task 7) — Shift+C toggles on/off
+function showToast(msg) {
+  try {
+    const existing = document.querySelector('.global-mini-toast');
+    if (existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.className = 'global-mini-toast';
+    toast.textContent = msg;
+    Object.assign(toast.style, {
+      position: 'fixed',
+      bottom: '24px',
+      left: '50%',
+      transform: 'translateX(-50%) translateY(40px)',
+      background: 'rgba(20, 20, 30, 0.92)',
+      color: '#e8e8ff',
+      padding: '10px 18px',
+      borderRadius: '8px',
+      fontSize: '13px',
+      fontFamily: 'monospace',
+      boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+      border: '1px solid rgba(140,100,255,0.3)',
+      zIndex: '99999',
+      opacity: '0',
+      transition: 'opacity 0.25s ease, transform 0.25s ease',
+      pointerEvents: 'none',
+      whiteSpace: 'nowrap',
+    });
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+    }));
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(-50%) translateY(40px)';
+      setTimeout(() => toast.remove(), 300);
+    }, 1600);
+  } catch {}
+}
+
+let __trail;
+try { __trail = initCursorTrail(); } catch {}
+
+document.addEventListener('keydown', (e) => {
+  if (!(e.shiftKey && e.key && e.key.toLowerCase() === 'c')) return;
+  const t = e.target;
+  if (t && t.closest && t.closest('input,textarea,[contenteditable]')) return;
+  e.preventDefault();
+  try {
+    const on = __trail?.toggle?.();
+    if (typeof on === 'boolean') showToast(on ? 'Cursor trail: ON' : 'Cursor trail: OFF');
+  } catch {}
+});
