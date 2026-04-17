@@ -153,3 +153,78 @@ if (!editor) {
     }
   });
 }
+
+/* ─── Editor stats + syntax warnings (Layer 1 / Task 26) ─── */
+(function editorStats() {
+  try {
+    const editor = document.querySelector('.editor, #editor, [contenteditable]');
+    const lines = document.getElementById('line-count');
+    const chars = document.getElementById('char-count');
+    const status = document.getElementById('syntax-status');
+    if (!editor || !lines || !chars || !status) return;
+    const update = () => {
+      const text = editor.textContent || '';
+      lines.textContent = `Lines: ${text.split('\n').length}`;
+      chars.textContent = `Chars: ${text.length}`;
+      const open = (text.match(/\{/g) || []).length;
+      const close = (text.match(/\}/g) || []).length;
+      const missingSemi = /[^;{}\s]\s*\n\s*[a-z-]+\s*:/i.test(text);
+      if (open !== close) { status.textContent = `⚠ Unbalanced braces (${open}/${close})`; status.style.color = '#fbbf24'; }
+      else if (missingSemi) { status.textContent = '⚠ Likely missing semicolon'; status.style.color = '#fbbf24'; }
+      else { status.textContent = '✓ OK'; status.style.color = ''; }
+    };
+    editor.addEventListener('input', update);
+    update();
+  } catch {}
+})();
+
+/* ─── CSS property auto-suggest (Layer 1 / Task 26) ─── */
+(function autoSuggest() {
+  try {
+    const editor = document.querySelector('.editor, #editor, [contenteditable]');
+    if (!editor) return;
+    const PROPS = ['align-items','background','border','border-radius','box-shadow','color','display','flex','font-family','font-size','gap','grid','height','justify-content','margin','padding','position','transform','transition','width','z-index','animation','animation-timeline','clip-path','backdrop-filter','aspect-ratio','container-type','container-name','inset','opacity','filter','overflow','cursor','outline','letter-spacing','line-height','text-align','text-transform'];
+    const box = document.createElement('div');
+    box.className = 'autosuggest-box';
+    box.style.cssText = 'position:absolute;background:oklch(0.2 0.02 280);color:white;border-radius:6px;padding:4px;z-index:9999;font-family:monospace;font-size:12px;max-height:180px;overflow:auto;display:none;border:1px solid oklch(1 0 0 / 0.15);min-width:160px;';
+    document.body.appendChild(box);
+    editor.addEventListener('input', () => {
+      const sel = getSelection();
+      if (!sel?.rangeCount) return;
+      const range = sel.getRangeAt(0);
+      const text = editor.textContent;
+      const before = text.slice(0, range.startOffset);
+      const m = before.match(/([a-z-]{2,})$/);
+      if (!m) { box.style.display = 'none'; return; }
+      const needle = m[1];
+      const matches = PROPS.filter(p => p.startsWith(needle)).slice(0, 8);
+      if (!matches.length) { box.style.display = 'none'; return; }
+      box.innerHTML = matches.map(p => `<div data-p="${p}" data-needle="${needle}" style="padding:2px 6px;cursor:pointer">${p}</div>`).join('');
+      const rect = range.getBoundingClientRect();
+      box.style.left = rect.left + 'px';
+      box.style.top = (rect.bottom + window.scrollY + 4) + 'px';
+      box.style.display = 'block';
+    });
+    box.addEventListener('mousedown', (e) => {
+      const hit = e.target.closest('[data-p]');
+      if (!hit) return;
+      e.preventDefault();
+      const toInsert = hit.dataset.p.slice(hit.dataset.needle.length) + ': ';
+      try { document.execCommand('insertText', false, toInsert); } catch {}
+      box.style.display = 'none';
+    });
+    document.addEventListener('click', (e) => { if (!box.contains(e.target) && e.target !== editor) box.style.display = 'none'; });
+  } catch {}
+})();
+
+/* ─── Reset preset (Layer 1 / Task 26) ─── */
+(function resetPreset() {
+  try {
+    const btn = document.getElementById('reset-preset');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const active = document.querySelector('.preset.active, [data-preset].active, button.preset[aria-pressed="true"]');
+      if (active) active.click(); else btn.blur();
+    });
+  } catch {}
+})();
