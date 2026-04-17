@@ -270,3 +270,17 @@ h6 {
     scroll-behavior: auto !important;
   }
 }
+
+/* ── Per-zone selection + rainbow hue (Layer 1 / Task 16) ────────── */
+
+::selection { background: oklch(0.7 0.25 290 / 0.35); color: inherit; }
+[data-zone="scroll"] ::selection,     body[data-zone="scroll"] ::selection     { background: oklch(0.7 0.22 265 / 0.4); }
+[data-zone="popover"] ::selection,    body[data-zone="popover"] ::selection    { background: oklch(0.7 0.22 305 / 0.4); }
+[data-zone="art"] ::selection,        body[data-zone="art"] ::selection        { background: oklch(0.75 0.2 340 / 0.4); }
+[data-zone="container"] ::selection,  body[data-zone="container"] ::selection  { background: oklch(0.75 0.17 160 / 0.4); }
+[data-zone="transitions"] ::selection,body[data-zone="transitions"] ::selection{ background: oklch(0.8 0.17 80 / 0.4); }
+[data-zone="houdini"] ::selection,    body[data-zone="houdini"] ::selection    { background: oklch(0.7 0.18 240 / 0.4); }
+[data-zone="has"] ::selection,        body[data-zone="has"] ::selection        { background: oklch(0.75 0.18 40 / 0.4); }
+[data-zone="layers"] ::selection,     body[data-zone="layers"] ::selection     { background: oklch(0.7 0.24 320 / 0.4); }
+
+html:not([data-theme="light"]) body { background-color: oklch(0.15 0.02 var(--hue, 280)); transition: background-color 200ms linear; }

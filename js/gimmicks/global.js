@@ -334,6 +334,23 @@ try {
   }, { passive: true });
 } catch (e) {}
 
+// 9b. Rainbow scroll hue (Layer 1 / Task 16) — --hue 0..360 across full page scroll
+(function rainbowScroll() {
+  try {
+    let raf = 0;
+    addEventListener('scroll', () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const doc = document.documentElement;
+        const max = (doc.scrollHeight - innerHeight) || 1;
+        const ratio = Math.min(1, Math.max(0, scrollY / max));
+        doc.style.setProperty('--hue', Math.floor(ratio * 360));
+      });
+    }, { passive: true });
+  } catch {}
+})();
+
 // 10. secrets()
 const PAGE_SECRETS = {
   'index.html': [
