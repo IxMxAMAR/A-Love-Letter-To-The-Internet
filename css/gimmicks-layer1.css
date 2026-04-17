@@ -64,3 +64,18 @@ body.konami-invert { filter: invert(1) hue-rotate(180deg); transition: filter 50
 .breadcrumb a { color: inherit; text-decoration: none; }
 .breadcrumb a:hover { text-decoration: underline; }
 .time-spent { font-size: 0.8rem; opacity: 0.6; text-align: center; padding: 4px; }
+
+/* Modes: focus / screenshot / pull-refresh (Layer 1 / Task 21) */
+html.mode-focus main > *:not(:focus-within):not(:hover) { opacity: 0.2; transition: opacity 200ms ease; }
+html.mode-focus main > *:hover, html.mode-focus main > *:focus-within { opacity: 1; box-shadow: 0 0 40px -10px var(--accent, oklch(0.65 0.18 290)); }
+
+html.mode-screenshot .page-header, html.mode-screenshot .scroll-progress,
+html.mode-screenshot .fingerprint-badge, html.mode-screenshot .sfx-toggle,
+html.mode-screenshot .ambient-toggle, html.mode-screenshot footer { display: none !important; }
+html.mode-screenshot body { box-shadow: inset 0 0 0 4px oklch(1 0 0 / 0.1); }
+
+.pull-refresh-toast {
+  position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
+  padding: 8px 16px; background: oklch(0.2 0.02 280 / 0.95); color: white; border-radius: 20px;
+  font-family: "JetBrains Mono", monospace; font-size: 0.85rem; z-index: 60;
+}

@@ -9,6 +9,7 @@ import { initMagnetic } from './magnetic.js';
 import { renderFingerprint } from './fingerprint.js';
 import { initDefs } from './defs.js';
 import { initSession } from './session.js';
+import { initModes } from './modes.js';
 
 // Page identity
 const PAGE_SYMBOLS = {
@@ -661,6 +662,7 @@ try { __trail = initCursorTrail(); } catch {}
 try { initMagnetic(); } catch {}
 try { renderFingerprint(); } catch {}
 try { initSession(); } catch {}
+try { initModes(); } catch {}
 
 document.addEventListener('keydown', (e) => {
   if (!(e.shiftKey && e.key && e.key.toLowerCase() === 'c')) return;
