@@ -607,3 +607,51 @@ document.addEventListener('keydown', (e) => {
     if (typeof on === 'boolean') showToast(on ? 'Cursor trail: ON' : 'Cursor trail: OFF');
   } catch {}
 });
+
+(function konami() {
+  try {
+    const seq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    let i = 0;
+    addEventListener('keydown', (e) => {
+      if (e.target.closest('input,textarea,[contenteditable]')) return;
+      const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      const want = seq[i].toLowerCase();
+      if (key === want) {
+        i++;
+        if (i === seq.length) { i = 0; trigger(); }
+      } else {
+        i = 0;
+      }
+    });
+    function trigger() {
+      document.body.classList.add('konami-invert');
+      const c = document.createElement('canvas');
+      c.className = 'konami-canvas';
+      c.setAttribute('aria-hidden', 'true');
+      c.width = innerWidth; c.height = innerHeight;
+      document.body.appendChild(c);
+      const ctx = c.getContext('2d');
+      const parts = Array.from({ length: 120 }, () => ({
+        x: Math.random() * c.width, y: -20 - Math.random() * c.height,
+        vx: (Math.random() - 0.5) * 2, vy: 2 + Math.random() * 4,
+        hue: Math.random() * 360, r: 3 + Math.random() * 5,
+      }));
+      const end = performance.now() + 10000;
+      (function tick(t) {
+        ctx.clearRect(0, 0, c.width, c.height);
+        parts.forEach(p => {
+          p.x += p.vx; p.y += p.vy;
+          ctx.fillStyle = `hsl(${p.hue} 80% 60%)`;
+          ctx.fillRect(p.x, p.y, p.r, p.r);
+        });
+        if (t < end) requestAnimationFrame(tick);
+        else {
+          c.remove();
+          document.body.classList.remove('konami-invert');
+          try { localStorage.setItem('achievement:the-code', '1'); } catch {}
+          try { if (typeof showToast === 'function') showToast('Achievement unlocked: The Code'); } catch {}
+        }
+      })(performance.now());
+    }
+  } catch {}
+})();

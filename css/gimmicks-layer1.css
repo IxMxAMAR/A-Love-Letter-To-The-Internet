@@ -6,3 +6,6 @@
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
   .cursor-trail-canvas { display: none; }
 }
+
+body.konami-invert { filter: invert(1) hue-rotate(180deg); transition: filter 500ms ease; }
+.konami-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 10000; }
