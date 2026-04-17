@@ -41,15 +41,17 @@ body.konami-invert { filter: invert(1) hue-rotate(180deg); transition: filter 50
 .fingerprint-badge.expanded { width: 240px; height: 240px; }
 @media (max-width: 640px) { .fingerprint-badge { bottom: 64px; } }
 
-/* Ambient zone toggle (Layer 1 / Task 18) */
+/* Ambient zone toggle (Layer 1 / Task 18) — fixed cluster with sfx-toggle */
 .ambient-toggle {
-  position: absolute; top: 12px; right: 60px; z-index: 20;
-  padding: 6px 12px; border-radius: 20px;
+  position: fixed; bottom: 12px; right: 64px; z-index: 50;
+  height: 44px; padding: 0 14px; border-radius: 22px;
   background: oklch(0.18 0.02 280 / 0.85); color: white; border: 1px solid oklch(1 0 0 / 0.15);
   font-size: 0.82rem; cursor: pointer; backdrop-filter: blur(6px);
+  transition: transform 150ms ease, background 150ms ease;
 }
-.ambient-toggle:hover { background: oklch(0.22 0.03 280 / 0.95); }
-@media (max-width: 640px) { .ambient-toggle { top: 60px; right: 12px; } }
+.ambient-toggle:hover { background: oklch(0.22 0.03 280 / 0.95); transform: translateY(-2px); }
+.ambient-toggle:focus-visible { outline: 2px solid oklch(0.75 0.2 290); outline-offset: 2px; }
+@media (max-width: 640px) { .ambient-toggle { bottom: 64px; right: 64px; } }
 
 /* Session gimmicks (Layer 1 / Task 19) */
 .milestone-toast {
@@ -89,9 +91,9 @@ html.mode-screenshot body { box-shadow: inset 0 0 0 4px oklch(1 0 0 / 0.1); }
 .ghost-cursor::before { content: "▲"; color: oklch(0.7 0.2 var(--ghost-hue, 290)); font-size: 14px; }
 .ghost-cursor__label { font-size: 10px; font-family: "JetBrains Mono", monospace; background: oklch(0 0 0 / 0.6); color: white; padding: 2px 4px; border-radius: 3px; }
 
-/* Back-to-top (Layer 1 / Task 25) */
+/* Back-to-top (Layer 1 / Task 25) — sits left of sfx + ambient cluster */
 .back-to-top {
-  position: fixed; bottom: 12px; right: 64px;
+  position: fixed; bottom: 12px; right: 12px;
   width: 44px; height: 44px; border-radius: 50%;
   background: oklch(0.2 0.02 280 / 0.9); color: white; border: none;
   opacity: 0; pointer-events: none; transition: opacity 200ms ease, transform 200ms ease;
@@ -100,4 +102,9 @@ html.mode-screenshot body { box-shadow: inset 0 0 0 4px oklch(1 0 0 / 0.1); }
 .back-to-top.visible { opacity: 1; pointer-events: auto; }
 .back-to-top:hover { transform: translateY(-4px); }
 .back-to-top:focus-visible { outline: 2px solid oklch(0.75 0.2 290); outline-offset: 2px; }
-@media (max-width: 640px) { .back-to-top { right: 64px; bottom: 64px; } }
+/* On zone pages where .ambient-toggle exists, slide back-to-top further left to avoid the cluster. */
+body[data-zone] .back-to-top { right: 168px; }
+@media (max-width: 640px) {
+  .back-to-top { right: 12px; bottom: 64px; }
+  body[data-zone] .back-to-top { right: 168px; bottom: 64px; }
+}

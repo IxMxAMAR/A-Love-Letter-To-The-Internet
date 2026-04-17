@@ -150,7 +150,7 @@ export function playAmbient(zoneKey) {
     ambientGain = ambientCtx.createGain();
     ambientGain.gain.value = 0.0;
     ambientGain.connect(ambientCtx.destination);
-    ambientGain.gain.linearRampToValueAtTime(0.05, ambientCtx.currentTime + 1.5);
+    ambientGain.gain.linearRampToValueAtTime(0.20, ambientCtx.currentTime + 1.5);
     const step = () => {
       if (!ambientCtx) return;
       const mult = preset.intervals[(Math.random() * preset.intervals.length) | 0];
@@ -158,7 +158,7 @@ export function playAmbient(zoneKey) {
       const g = ambientCtx.createGain();
       osc.type = preset.type; osc.frequency.value = preset.base * mult;
       g.gain.value = 0;
-      g.gain.linearRampToValueAtTime(0.4, ambientCtx.currentTime + 0.5);
+      g.gain.linearRampToValueAtTime(0.6, ambientCtx.currentTime + 0.5);
       g.gain.linearRampToValueAtTime(0, ambientCtx.currentTime + 2);
       osc.connect(g).connect(ambientGain);
       osc.start(); osc.stop(ambientCtx.currentTime + 2.2);
