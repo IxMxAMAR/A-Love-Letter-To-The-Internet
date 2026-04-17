@@ -11,3 +11,14 @@ body.konami-invert { filter: invert(1) hue-rotate(180deg); transition: filter 50
 .konami-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 10000; }
 
 .pixel-rain-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 9998; }
+
+/* SFX toggle button (Layer 1 / Task 11) */
+.sfx-toggle {
+  position: fixed; bottom: 12px; right: 12px; z-index: 50;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: oklch(0.18 0.02 280 / 0.85); color: white; border: 1px solid oklch(1 0 0 / 0.1);
+  font-size: 1.1rem; cursor: pointer; backdrop-filter: blur(6px);
+  transition: transform 150ms ease;
+}
+.sfx-toggle:hover { transform: scale(1.05); }
+.sfx-toggle:focus-visible { outline: 2px solid oklch(0.75 0.2 290); outline-offset: 2px; }

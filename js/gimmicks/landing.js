@@ -225,12 +225,14 @@ function initCardFlip() {
 
     card.addEventListener('click', () => {
       card.classList.toggle('flipped');
+      try { window.__eni?.sfx?.play?.('whoosh'); } catch {}
     });
 
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         card.classList.toggle('flipped');
+        try { window.__eni?.sfx?.play?.('whoosh'); } catch {}
       }
     });
   });

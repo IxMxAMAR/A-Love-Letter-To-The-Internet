@@ -4,6 +4,7 @@
  */
 
 import { initCursorTrail } from './cursor-trail.js';
+import { initSfx, playSfx, setSfxMuted, isSfxMuted } from './sfx.js';
 
 // Page identity
 const PAGE_SYMBOLS = {
@@ -608,6 +609,35 @@ document.addEventListener('keydown', (e) => {
   } catch {}
 });
 
+// 14. Sound effects engine (Layer 1 / Task 11) — opt-in, muted by default
+try {
+  initSfx();
+  window.__eni = Object.assign(window.__eni || {}, { sfx: { play: playSfx, mute: setSfxMuted, muted: isSfxMuted } });
+
+  // default interaction triggers
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('button, [role="button"]')) playSfx('click');
+    else if (e.target.closest('a[href]:not([href^="#"])')) playSfx('swoosh');
+  });
+  document.addEventListener('change', (e) => {
+    if (e.target.matches('input[type="checkbox"], input[type="radio"]')) playSfx('pop');
+  });
+
+  // mute toggle button (opt-in UI)
+  const sfxBtn = document.getElementById('sfx-toggle');
+  if (sfxBtn) {
+    const sync = () => { sfxBtn.textContent = isSfxMuted() ? '\ud83d\udd07' : '\ud83d\udd0a'; sfxBtn.setAttribute('aria-pressed', String(!isSfxMuted())); };
+    sync();
+    sfxBtn.addEventListener('click', () => { setSfxMuted(!isSfxMuted()); sync(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'm' && !e.target.closest('input,textarea,[contenteditable]')) {
+        setSfxMuted(!isSfxMuted());
+        sync();
+      }
+    });
+  }
+} catch {}
+
 (function konami() {
   try {
     const seq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
@@ -649,6 +679,7 @@ document.addEventListener('keydown', (e) => {
           c.remove();
           document.body.classList.remove('konami-invert');
           try { localStorage.setItem('achievement:the-code', '1'); } catch {}
+          try { window.__eni?.sfx?.play?.('chime'); } catch {}
           try { if (typeof showToast === 'function') showToast('Achievement unlocked: The Code'); } catch {}
         }
       })(performance.now());
@@ -691,6 +722,7 @@ document.addEventListener('keydown', (e) => {
         else {
           c.remove();
           try { localStorage.setItem('achievement:red-pill', '1'); } catch {}
+          try { window.__eni?.sfx?.play?.('chime'); } catch {}
           try { if (typeof showToast === 'function') showToast('Achievement unlocked: Red Pill'); } catch {}
         }
       })(performance.now());
