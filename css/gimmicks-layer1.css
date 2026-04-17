@@ -9,3 +9,5 @@
 
 body.konami-invert { filter: invert(1) hue-rotate(180deg); transition: filter 500ms ease; }
 .konami-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 10000; }
+
+.pixel-rain-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 9998; }

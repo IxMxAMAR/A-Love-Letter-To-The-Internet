@@ -655,3 +655,45 @@ document.addEventListener('keydown', (e) => {
     }
   } catch {}
 })();
+
+(function matrix() {
+  try {
+    const target = 'matrix';
+    let buf = '';
+    addEventListener('keydown', (e) => {
+      if (e.target.closest('input,textarea,[contenteditable]')) return;
+      if (e.key.length !== 1) return;
+      buf = (buf + e.key.toLowerCase()).slice(-target.length);
+      if (buf === target) { buf = ''; rain(); }
+    });
+    function rain() {
+      const c = document.createElement('canvas');
+      c.className = 'pixel-rain-canvas';
+      c.setAttribute('aria-hidden', 'true');
+      c.width = innerWidth; c.height = innerHeight;
+      document.body.appendChild(c);
+      const ctx = c.getContext('2d');
+      const words = ['margin','padding','display','grid','flex','color','content','cascade','::before','@layer','inherit','auto'];
+      const cols = Math.floor(c.width / 18);
+      const drops = Array(cols).fill(0).map(() => ({ y: Math.random() * -c.height, word: words[(Math.random() * words.length) | 0] }));
+      const end = performance.now() + 8000;
+      (function tick(t) {
+        ctx.fillStyle = 'rgba(0,0,0,0.07)';
+        ctx.fillRect(0, 0, c.width, c.height);
+        ctx.font = '14px "JetBrains Mono", monospace';
+        ctx.fillStyle = '#00ff88';
+        drops.forEach((d, i) => {
+          ctx.fillText(d.word, i * 18, d.y);
+          d.y += 16;
+          if (d.y > c.height) { d.y = -20; d.word = words[(Math.random() * words.length) | 0]; }
+        });
+        if (t < end) requestAnimationFrame(tick);
+        else {
+          c.remove();
+          try { localStorage.setItem('achievement:red-pill', '1'); } catch {}
+          try { if (typeof showToast === 'function') showToast('Achievement unlocked: Red Pill'); } catch {}
+        }
+      })(performance.now());
+    }
+  } catch {}
+})();
