@@ -97,8 +97,8 @@ try {
   link.href = faviconUrl;
 } catch (e) {}
 
-// 4. toggleTheme()
-export function toggleTheme() {
+// 4. toggleTheme() — circular reveal via View Transitions API (Layer 1 / Task 6)
+function applyThemeFlip() {
   try {
     const html = document.documentElement;
     const current = html.getAttribute('data-theme');
@@ -111,6 +111,26 @@ export function toggleTheme() {
       localStorage.setItem('theme', next);
     }
   } catch (e) {}
+}
+
+export function toggleTheme(evt) {
+  try {
+    const html = document.documentElement;
+    const x = evt && typeof evt.clientX === 'number' ? evt.clientX : window.innerWidth / 2;
+    const y = evt && typeof evt.clientY === 'number' ? evt.clientY : window.innerHeight / 2;
+    html.style.setProperty('--theme-x', x + 'px');
+    html.style.setProperty('--theme-y', y + 'px');
+
+    if (typeof document.startViewTransition !== 'function') {
+      applyThemeFlip();
+      return;
+    }
+    html.classList.add('theme-transition');
+    const t = document.startViewTransition(applyThemeFlip);
+    t.finished.finally(() => html.classList.remove('theme-transition'));
+  } catch (e) {
+    applyThemeFlip();
+  }
 }
 window.__toggleTheme = toggleTheme;
 
@@ -156,7 +176,7 @@ try {
         try { if (helpPopover.showPopover) helpPopover.showPopover(); } catch (_) {}
         break;
       case 't':
-        toggleTheme();
+        toggleTheme(null);
         break;
       case 'h':
         e.preventDefault();
@@ -252,7 +272,7 @@ try {
     } else if (action === 'surprise') {
       location.href = pathTo(ZONE_LIST[Math.floor(Math.random() * ZONE_LIST.length)]);
     } else if (action === 'toggle-theme') {
-      toggleTheme();
+      toggleTheme(e);
     }
   });
 } catch (e) {}

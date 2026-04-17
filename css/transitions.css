@@ -111,3 +111,38 @@
     animation: none !important;
   }
 }
+
+/* ── Layer 1 / Task 6 — View Transition Upgrades ────────── */
+
+.page-header { view-transition-name: site-header; }
+.page-header__logo { view-transition-name: site-logo; }
+
+.zone-node { view-transition-name: none; }
+.zone-node[data-zone="scroll"]     { view-transition-name: node-scroll; }
+.zone-node[data-zone="popover"]    { view-transition-name: node-popover; }
+.zone-node[data-zone="art"]        { view-transition-name: node-art; }
+.zone-node[data-zone="container"]  { view-transition-name: node-container; }
+.zone-node[data-zone="transitions"]{ view-transition-name: node-transitions; }
+.zone-node[data-zone="houdini"]    { view-transition-name: node-houdini; }
+.zone-node[data-zone="has"]        { view-transition-name: node-has; }
+.zone-node[data-zone="layers"]     { view-transition-name: node-layers; }
+
+/* matching target on each zone page — paired by data-zone */
+.zone-hero[data-zone="scroll"]      { view-transition-name: node-scroll; }
+.zone-hero[data-zone="popover"]     { view-transition-name: node-popover; }
+.zone-hero[data-zone="art"]         { view-transition-name: node-art; }
+.zone-hero[data-zone="container"]   { view-transition-name: node-container; }
+.zone-hero[data-zone="transitions"] { view-transition-name: node-transitions; }
+.zone-hero[data-zone="houdini"]     { view-transition-name: node-houdini; }
+.zone-hero[data-zone="has"]         { view-transition-name: node-has; }
+.zone-hero[data-zone="layers"]      { view-transition-name: node-layers; }
+
+/* Dark-mode circular reveal */
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 500ms; }
+
+html.theme-transition::view-transition-new(root) {
+  clip-path: circle(0% at var(--theme-x, 50%) var(--theme-y, 50%));
+  animation: theme-reveal 500ms ease-out forwards;
+}
+@keyframes theme-reveal { to { clip-path: circle(150% at var(--theme-x, 50%) var(--theme-y, 50%)); } }

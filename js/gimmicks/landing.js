@@ -275,10 +275,10 @@ function initDarkModeCard() {
     }
   });
 
-  darkCard.addEventListener('click', () => {
+  darkCard.addEventListener('click', (evt) => {
     // Reuse global toggleTheme if available, otherwise inline equivalent logic
     if (typeof window.__toggleTheme === 'function') {
-      window.__toggleTheme();
+      window.__toggleTheme(evt);
     } else {
       const root = document.documentElement;
       const current = root.getAttribute('data-theme');
