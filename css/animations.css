@@ -306,3 +306,26 @@ textarea:focus-visible, select:focus-visible, [contenteditable]:focus-visible {
 
 .ambient-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .ambient-bg { display: none; } }
+
+/* ── Loading States (Layer 1 / Task 8) ────────── */
+
+.skeleton {
+  background: linear-gradient(90deg, oklch(1 0 0 / 0.05), oklch(1 0 0 / 0.12), oklch(1 0 0 / 0.05));
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s linear infinite;
+  border-radius: 8px; color: transparent;
+}
+@keyframes skeleton-shimmer { from { background-position: -100% 0; } to { background-position: 100% 0; } }
+
+.spinner {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent, var(--color-accent, oklch(0.65 0.18 290)));
+  -webkit-mask: radial-gradient(circle, transparent 60%, black 62%);
+          mask: radial-gradient(circle, transparent 60%, black 62%);
+  animation: spinner-rotate 1s linear infinite;
+}
+@keyframes spinner-rotate { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton, .spinner { animation: none; }
+}
