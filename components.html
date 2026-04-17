@@ -98,12 +98,13 @@
         The grid MUST follow the radio inputs as a sibling so the
         :has() selectors in toolkit.css can control visibility.
       -->
+      <button id="reset-components" type="button" class="ripple">Reset order</button>
       <div class="components-grid" role="list">
 
         <!-- ════════════════════════════════════════════════════════
              1. POPOVER MENU (Navigation)
              ════════════════════════════════════════════════════════ -->
-        <article class="component-card" data-category="navigation" role="listitem">
+        <article class="component-card" data-category="navigation" data-comp-id="popover" draggable="true" role="listitem">
           <div class="component-demo">
             <button
               class="demo-popover-trigger ripple"
@@ -212,7 +213,7 @@
         <!-- ════════════════════════════════════════════════════════
              2. TOAST NOTIFICATION (Feedback)
              ════════════════════════════════════════════════════════ -->
-        <article class="component-card" data-category="feedback" role="listitem">
+        <article class="component-card" data-category="feedback" data-comp-id="toast" draggable="true" role="listitem">
           <div class="component-demo">
             <button
               class="demo-toast-trigger ripple"
@@ -298,7 +299,7 @@
         <!-- ════════════════════════════════════════════════════════
              3. MODAL DIALOG (Feedback)
              ════════════════════════════════════════════════════════ -->
-        <article class="component-card" data-category="feedback" role="listitem">
+        <article class="component-card" data-category="feedback" data-comp-id="dialog" draggable="true" role="listitem">
           <div class="component-demo">
             <button
               class="demo-dialog-trigger ripple"
@@ -411,7 +412,7 @@
         <!-- ════════════════════════════════════════════════════════
              4. RESPONSIVE CARD — Container Query (Layout)
              ════════════════════════════════════════════════════════ -->
-        <article class="component-card" data-category="layout" role="listitem">
+        <article class="component-card" data-category="layout" data-comp-id="container" draggable="true" role="listitem">
           <div class="component-demo" style="flex-direction: column; align-items: stretch; padding: var(--space-lg);">
             <div class="container-demo-wrapper">
               <div class="responsive-card">
@@ -486,7 +487,7 @@
         <!-- ════════════════════════════════════════════════════════
              5. ANIMATED ACCORDION (Navigation)
              ════════════════════════════════════════════════════════ -->
-        <article class="component-card" data-category="navigation" role="listitem">
+        <article class="component-card" data-category="navigation" data-comp-id="accordion" draggable="true" role="listitem">
           <div class="component-demo" style="align-items: stretch; padding: var(--space-lg);">
             <div class="accordion" style="width: 100%;">
               <details class="accordion-item">
@@ -581,7 +582,7 @@
         <!-- ════════════════════════════════════════════════════════
              6. TOGGLE SWITCH (Forms)
              ════════════════════════════════════════════════════════ -->
-        <article class="component-card" data-category="forms" role="listitem">
+        <article class="component-card" data-category="forms" data-comp-id="toggle" draggable="true" role="listitem">
           <div class="component-demo">
             <div class="toggle-group">
               <label class="toggle-label">
@@ -676,7 +677,7 @@
         <!-- ════════════════════════════════════════════════════════
              7. TAB BAR (Navigation)
              ════════════════════════════════════════════════════════ -->
-        <article class="component-card" data-category="navigation" role="listitem">
+        <article class="component-card" data-category="navigation" data-comp-id="tabs" draggable="true" role="listitem">
           <div class="component-demo" style="align-items: stretch; padding: 0;">
             <div class="tab-bar-demo" style="width: 100%;">
               <input type="radio" name="demo-tabs" id="demo-tab-preview" checked>
@@ -772,7 +773,7 @@
         <!-- ════════════════════════════════════════════════════════
              8. TOOLTIP (Feedback)
              ════════════════════════════════════════════════════════ -->
-        <article class="component-card" data-category="feedback" role="listitem">
+        <article class="component-card" data-category="feedback" data-comp-id="tooltip" draggable="true" role="listitem">
           <div class="component-demo">
             <div class="tooltip-demo">
               <!-- Popover-based tooltip -->

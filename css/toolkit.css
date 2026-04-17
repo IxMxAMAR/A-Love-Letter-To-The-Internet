@@ -1136,3 +1136,8 @@ dialog.modal-dialog[open]::backdrop {
 [data-theme="light"] .component-card pre {
   color: oklch(35% 0.06 265);
 }
+
+/* Drag-to-reorder component cards (Layer 1 / Task 20) */
+[data-comp-id] { cursor: grab; transition: transform 120ms ease, opacity 120ms ease; }
+[data-comp-id]:active { cursor: grabbing; }
+[data-comp-id].dragging { opacity: 0.5; transform: scale(0.98); }

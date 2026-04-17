@@ -152,3 +152,56 @@ try {
 } catch (e) {
   console.warn('[components-gm] escape message:', e);
 }
+
+// 5. Drag-to-reorder component cards (Layer 1 / Task 20)
+(function dragReorder() {
+  try {
+    const host = document.querySelector('.component-grid, main, .components-grid');
+    if (!host) return;
+    const KEY = 'components-order';
+    const cards = [...host.querySelectorAll('[data-comp-id]')];
+    if (!cards.length) return;
+
+    // restore saved order
+    try {
+      const order = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (Array.isArray(order)) {
+        order.forEach((id) => {
+          const c = cards.find(x => x.dataset.compId === id);
+          if (c) host.appendChild(c);
+        });
+      }
+    } catch {}
+
+    let dragging = null;
+    host.addEventListener('dragstart', (e) => {
+      const card = e.target.closest('[data-comp-id]');
+      if (!card) return;
+      dragging = card; card.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', card.dataset.compId);
+    });
+    host.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      if (!dragging) return;
+      const after = getAfter(host, e.clientY);
+      if (after == null) host.appendChild(dragging); else host.insertBefore(dragging, after);
+    });
+    host.addEventListener('dragend', () => {
+      dragging?.classList.remove('dragging');
+      dragging = null;
+      const order = [...host.querySelectorAll('[data-comp-id]')].map(x => x.dataset.compId);
+      try { localStorage.setItem(KEY, JSON.stringify(order)); } catch {}
+    });
+    function getAfter(container, y) {
+      const els = [...container.querySelectorAll('[data-comp-id]:not(.dragging)')];
+      return els.find((el) => { const r = el.getBoundingClientRect(); return y < r.top + r.height / 2; }) || null;
+    }
+
+    const resetBtn = document.getElementById('reset-components');
+    resetBtn?.addEventListener('click', () => {
+      try { localStorage.removeItem(KEY); } catch {}
+      location.reload();
+    });
+  } catch {}
+})();
