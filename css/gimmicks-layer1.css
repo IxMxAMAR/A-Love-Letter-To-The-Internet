@@ -28,3 +28,15 @@ body.konami-invert { filter: invert(1) hue-rotate(180deg); transition: filter 50
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
   .magnetic { transform: none !important; transition: none; }
 }
+
+/* Fingerprint badge (Layer 1 / Task 15) */
+.fingerprint-badge {
+  position: fixed; bottom: 12px; left: 12px; z-index: 40;
+  width: 40px; height: 40px; cursor: pointer;
+  border: 1px solid oklch(1 0 0 / 0.15);
+  backdrop-filter: blur(6px);
+  transition: transform 200ms ease, width 200ms ease, height 200ms ease;
+}
+.fingerprint-badge:hover { transform: scale(1.05); }
+.fingerprint-badge.expanded { width: 240px; height: 240px; }
+@media (max-width: 640px) { .fingerprint-badge { bottom: 64px; } }
