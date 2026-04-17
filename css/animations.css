@@ -209,3 +209,52 @@ dialog[open] {
     animation: none !important;
   }
 }
+
+/* Layer 1 / Task 3 — micro-interactions */
+/* NOTE: .zone-node is intentionally omitted from the card-lift rule because
+   hub.css defines .zone-node:hover with a translate(-50%,-50%) scale(1.15)
+   transform that would fight a translateY(-4px). .component-demo is also
+   omitted — it's an inner demo frame inside .component-card (already has
+   its own hover), not a card itself. */
+
+/* Button hover + press */
+button:not(.no-micro), [role="button"]:not(.no-micro) {
+  transition: transform 150ms cubic-bezier(.2,.8,.2,1), box-shadow 200ms ease;
+}
+button:not(.no-micro):hover, [role="button"]:not(.no-micro):hover { transform: scale(1.02); }
+button:not(.no-micro):active, [role="button"]:not(.no-micro):active { transform: scale(0.98); }
+
+/* Button ripple */
+button.ripple { position: relative; overflow: hidden; }
+button.ripple::after {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.45) 0%, transparent 60%);
+  opacity: 0; pointer-events: none; transition: opacity 400ms ease;
+}
+button.ripple.ripple-active::after { opacity: 1; animation: ripple-expand 500ms ease-out both; }
+@keyframes ripple-expand { from { background-size: 0% 0%; } to { background-size: 240% 240%; } }
+
+/* Link underline */
+a.anim-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 250ms cubic-bezier(.2,.8,.2,1);
+}
+a.anim-underline:hover, a.anim-underline:focus-visible { background-size: 100% 1px; }
+
+/* Card lift */
+.card {
+  transition: transform 200ms cubic-bezier(.2,.8,.2,1), box-shadow 200ms ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px -12px oklch(0 0 0 / 0.4);
+}
+
+/* Input focus glow */
+input:not([type="checkbox"]):not([type="radio"]):focus-visible,
+textarea:focus-visible, select:focus-visible, [contenteditable]:focus-visible {
+  box-shadow: 0 0 0 3px oklch(from var(--accent, oklch(0.65 0.18 290)) l c h / 0.35);
+}

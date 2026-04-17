@@ -178,6 +178,21 @@ try {
   });
 } catch (e) {}
 
+// 5b. Ripple effect for buttons tagged with .ripple (Layer 1 / Task 3)
+try {
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('button.ripple');
+    if (!btn) return;
+    const rect = btn.getBoundingClientRect();
+    btn.style.setProperty('--x', ((e.clientX - rect.left) / rect.width) * 100 + '%');
+    btn.style.setProperty('--y', ((e.clientY - rect.top) / rect.height) * 100 + '%');
+    btn.classList.remove('ripple-active');
+    void btn.offsetWidth; // force reflow to restart animation
+    btn.classList.add('ripple-active');
+    setTimeout(() => btn.classList.remove('ripple-active'), 500);
+  });
+} catch (e) {}
+
 // 6. Custom context menu
 try {
   const ctxMenu = document.createElement('div');

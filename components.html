@@ -30,10 +30,10 @@
   <header class="page-header" role="banner" data-enter="header">
     <a href="index.html" class="page-header__logo" data-transition="root">✦ Web Letter</a>
     <nav class="page-header__nav" aria-label="Site navigation">
-      <a href="index.html" data-transition="root">Timeline</a>
-      <a href="hub.html" data-transition="hub-node">Observatory</a>
-      <a href="playground.html" data-transition="root">Playground</a>
-      <a href="components.html" aria-current="page">Components</a>
+      <a href="index.html" class="anim-underline" data-transition="root">Timeline</a>
+      <a href="hub.html" class="anim-underline" data-transition="hub-node">Observatory</a>
+      <a href="playground.html" class="anim-underline" data-transition="root">Playground</a>
+      <a href="components.html" class="anim-underline" aria-current="page">Components</a>
     </nav>
   </header>
 
@@ -88,7 +88,7 @@
         <article class="component-card" data-category="navigation" role="listitem">
           <div class="component-demo">
             <button
-              class="demo-popover-trigger"
+              class="demo-popover-trigger ripple"
               popovertarget="popover-menu-demo"
               aria-haspopup="true"
               aria-expanded="false"
@@ -197,7 +197,7 @@
         <article class="component-card" data-category="feedback" role="listitem">
           <div class="component-demo">
             <button
-              class="demo-toast-trigger"
+              class="demo-toast-trigger ripple"
               popovertarget="toast-demo"
               popovertargetaction="show"
             >
@@ -283,7 +283,7 @@
         <article class="component-card" data-category="feedback" role="listitem">
           <div class="component-demo">
             <button
-              class="demo-dialog-trigger"
+              class="demo-dialog-trigger ripple"
               onclick="document.getElementById('modal-demo').showModal()"
             >
               Open Modal
@@ -313,7 +313,7 @@
                   onclick="this.closest('dialog').close()"
                 >Cancel</button>
                 <button
-                  class="btn btn-primary"
+                  class="btn btn-primary ripple"
                   onclick="this.closest('dialog').close()"
                   style="background: oklch(55% 0.15 330);"
                 >Confirm</button>
