@@ -27,7 +27,7 @@
   <a href="#main-content" class="visually-hidden">Skip to main content</a>
 
   <!-- ── Page Header ──────────────────────────────────────────── -->
-  <header class="page-header" role="banner">
+  <header class="page-header" role="banner" data-enter="header">
     <a href="index.html" class="page-header__logo" data-transition="root">✦ Web Letter</a>
     <nav class="page-header__nav" aria-label="Site navigation">
       <a href="index.html" data-transition="root">Timeline</a>
@@ -41,7 +41,7 @@
   <main id="main-content" class="playground-page">
 
     <!-- ── Lab Header ─────────────────────────────────────────── -->
-    <div class="lab-header animate-fade-in-up">
+    <div class="lab-header" data-enter="hero">
       <div class="lab-header__left">
         <span class="lab-badge" aria-hidden="true">◈</span>
         <div>
@@ -58,8 +58,8 @@
     </div>
 
     <!-- ── Toolbar ────────────────────────────────────────────── -->
-    <div class="toolbar" role="toolbar" aria-label="Editor tools">
-      <div class="toolbar__presets" role="group" aria-label="CSS presets">
+    <div class="toolbar" role="toolbar" aria-label="Editor tools" data-enter="stagger">
+      <div class="toolbar__presets" role="group" aria-label="CSS presets" style="--stagger: 0;">
         <span class="toolbar__label">Presets</span>
         <button
           class="preset-pill"
@@ -103,7 +103,7 @@
         </button>
       </div>
 
-      <div class="toolbar__actions" role="group" aria-label="Editor actions">
+      <div class="toolbar__actions" role="group" aria-label="Editor actions" style="--stagger: 1;">
         <button class="action-btn action-btn--share" id="btn-share" title="Share — encode to URL hash">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
             <circle cx="11" cy="3" r="2" stroke="currentColor" stroke-width="1.5"/>

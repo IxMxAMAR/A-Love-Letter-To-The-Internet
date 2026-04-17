@@ -25,9 +25,9 @@
 </head>
 <body class="toolkit-page">
   <a href="#main-content" class="visually-hidden">Skip to main content</a>
-  <div class="scroll-progress" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true" data-enter="accent"></div>
 
-  <header class="page-header" role="banner">
+  <header class="page-header" role="banner" data-enter="header">
     <a href="index.html" class="page-header__logo" data-transition="root">✦ Web Letter</a>
     <nav class="page-header__nav" aria-label="Site navigation">
       <a href="index.html" data-transition="root">Timeline</a>
@@ -41,7 +41,7 @@
     <div class="page-content">
 
       <!-- ── Page Header ────────────────────────────────────────── -->
-      <header class="toolkit-header">
+      <header class="toolkit-header" data-enter="hero">
         <span class="label">Component Toolkit</span>
         <h1>Production-Ready Components</h1>
         <p class="subtitle">
@@ -56,23 +56,23 @@
         combinators can reach .components-grid. The filter-bar wraps both
         the radios and their visible labels.
       -->
-      <div class="filter-bar" role="group" aria-label="Filter components by category">
-        <span class="filter-bar__label-text" aria-hidden="true">Filter</span>
+      <div class="filter-bar" role="group" aria-label="Filter components by category" data-enter="stagger">
+        <span class="filter-bar__label-text" aria-hidden="true" style="--stagger: 0;">Filter</span>
 
         <input type="radio" name="component-filter" id="filter-all"      checked>
-        <label class="filter-pill" for="filter-all">All</label>
+        <label class="filter-pill" for="filter-all" style="--stagger: 1;">All</label>
 
         <input type="radio" name="component-filter" id="filter-nav">
-        <label class="filter-pill" for="filter-nav">Navigation</label>
+        <label class="filter-pill" for="filter-nav" style="--stagger: 2;">Navigation</label>
 
         <input type="radio" name="component-filter" id="filter-feedback">
-        <label class="filter-pill" for="filter-feedback">Feedback</label>
+        <label class="filter-pill" for="filter-feedback" style="--stagger: 3;">Feedback</label>
 
         <input type="radio" name="component-filter" id="filter-forms">
-        <label class="filter-pill" for="filter-forms">Forms</label>
+        <label class="filter-pill" for="filter-forms" style="--stagger: 4;">Forms</label>
 
         <input type="radio" name="component-filter" id="filter-layout">
-        <label class="filter-pill" for="filter-layout">Layout</label>
+        <label class="filter-pill" for="filter-layout" style="--stagger: 5;">Layout</label>
       </div>
 
       <!-- ── Components Grid ─────────────────────────────────────── -->
