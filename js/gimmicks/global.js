@@ -366,12 +366,37 @@ const ZONE_SECRETS = [
 
 Object.keys(PAGE_ZONES).forEach(k => { PAGE_SECRETS[k] = ZONE_SECRETS; });
 
-window.secrets = function secrets() {
-  const file = getPageFile();
-  const data = PAGE_SECRETS[file] || PAGE_SECRETS['index.html'];
-  console.log('%c\ud83d\udd2e Easter Egg Hints for this page:', 'color:#7c6af7;font-weight:bold;font-size:14px;');
-  console.table(data);
-  return '\u2726 Found ' + data.length + ' secrets on this page.';
+async function typeLine(line, delay = 30) {
+  for (let i = 0; i < line.length; i++) {
+    try { window.__eni?.sfx?.play?.('type'); } catch {}
+    await new Promise(r => setTimeout(r, delay));
+  }
+  console.log('%c' + line, 'color:#00ff88;font-family:"JetBrains Mono",monospace;font-size:12px;');
+}
+
+async function secretsImpl() {
+  const lines = [
+    '\u25c8 A Love Letter to the Web',
+    'Built with curiosity, oklch(), and a deep love for the platform.',
+    '> SECRETS.TXT',
+    '> ---------------------------------',
+    '> You found the console. Well done.',
+    '> Try: help()',
+    '> Try: ghosts.on() / ghosts.off()  (Task 22 \u2014 future)',
+    '> Try: fingerprint()',
+    '> Konami: \u2191\u2191\u2193\u2193\u2190\u2192\u2190\u2192BA',
+    '> Matrix: type "matrix" anywhere',
+  ];
+  for (const l of lines) await typeLine(l, 18);
+}
+window.secrets = secretsImpl;
+
+window.help = () => {
+  console.log('%cConsole commands:', 'color:#a78bfa;font-weight:bold;font-size:13px;');
+  console.log('  secrets()     \u2014 show the secrets');
+  console.log('  help()        \u2014 this list');
+  console.log('  fingerprint() \u2014 regenerate your page fingerprint');
+  console.log('  (more commands appear as features unlock)');
 };
 
 // 11. Seasonal effects
