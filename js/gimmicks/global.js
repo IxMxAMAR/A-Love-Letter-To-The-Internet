@@ -482,20 +482,27 @@ try {
 // 12. Text effects (Layer 1 / Task 4) — wrapLetters, scrambleText, letter-reveal init
 function wrapLetters(el) {
   if (!el || el.dataset.wrapped) return;
-  if (el.children.length > 0) {
-    // Element has child nodes (e.g. <br>, <em>) — don't flatten them.
-    el.dataset.wrapped = '1';
-    return;
-  }
   el.dataset.wrapped = '1';
-  const text = el.textContent.replace(/\s+/g, ' ').trim();
-  el.textContent = '';
-  [...text].forEach((ch, i) => {
-    const s = document.createElement('span');
-    s.textContent = ch === ' ' ? '\u00a0' : ch;
-    s.style.setProperty('--i', i);
-    el.appendChild(s);
-  });
+  let counter = 0;
+  const walk = (node) => {
+    [...node.childNodes].forEach((child) => {
+      if (child.nodeType === 3) {
+        const text = child.textContent.replace(/\s+/g, ' ');
+        if (!text.trim() && node === el) return;
+        const frag = document.createDocumentFragment();
+        [...text].forEach((ch) => {
+          const s = document.createElement('span');
+          s.textContent = ch === ' ' ? '\u00a0' : ch;
+          s.style.setProperty('--i', counter++);
+          frag.appendChild(s);
+        });
+        child.replaceWith(frag);
+      } else if (child.nodeType === 1 && child.tagName !== 'BR') {
+        walk(child);
+      }
+    });
+  };
+  walk(el);
 }
 
 function scrambleText(el, finalText, duration = 900) {
