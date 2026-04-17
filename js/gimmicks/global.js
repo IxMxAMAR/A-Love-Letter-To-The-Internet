@@ -482,9 +482,12 @@ try {
 // 12. Text effects (Layer 1 / Task 4) — wrapLetters, scrambleText, letter-reveal init
 function wrapLetters(el) {
   if (!el || el.dataset.wrapped) return;
+  if (el.children.length > 0) {
+    // Element has child nodes (e.g. <br>, <em>) — don't flatten them.
+    el.dataset.wrapped = '1';
+    return;
+  }
   el.dataset.wrapped = '1';
-  // Collapse whitespace so multi-line / <br>-containing headings don't
-  // wrap indentation newlines into visible nbsp-spans.
   const text = el.textContent.replace(/\s+/g, ' ').trim();
   el.textContent = '';
   [...text].forEach((ch, i) => {
