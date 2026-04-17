@@ -116,8 +116,8 @@ function applyThemeFlip() {
 export function toggleTheme(evt) {
   try {
     const html = document.documentElement;
-    const x = evt && typeof evt.clientX === 'number' ? evt.clientX : window.innerWidth / 2;
-    const y = evt && typeof evt.clientY === 'number' ? evt.clientY : window.innerHeight / 2;
+    const x = (evt && evt.clientX) || innerWidth / 2;
+    const y = (evt && evt.clientY) || innerHeight / 2;
     html.style.setProperty('--theme-x', x + 'px');
     html.style.setProperty('--theme-y', y + 'px');
 
