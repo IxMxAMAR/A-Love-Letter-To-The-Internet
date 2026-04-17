@@ -1,7 +1,25 @@
 /**
  * zones.js — Shared zone gimmicks for "A Love Letter to the Web"
  * Task 7: Zone-Colored Scroll Progress + Chapter Numbers
+ * Task 18: Ambient zone audio toggle
  */
+
+import { playAmbient, stopAmbient } from './chiptune.js';
+
+try {
+  const zoneKey = document.body.dataset.zone;
+  const btn = document.querySelector('.ambient-toggle');
+  if (btn && zoneKey) {
+    let on = false;
+    btn.addEventListener('click', () => {
+      on = !on;
+      btn.textContent = on ? '\ud83d\udd0a Ambient' : '\ud83d\udd08 Ambient';
+      btn.setAttribute('aria-pressed', String(on));
+      if (on) playAmbient(zoneKey); else stopAmbient();
+    });
+  }
+  addEventListener('beforeunload', stopAmbient);
+} catch {}
 
 // Feature 1: Zone-Colored Scroll Progress
 try {

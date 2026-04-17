@@ -128,3 +128,55 @@ export async function toggleMusic() {
     return true;
   }
 }
+
+// Per-zone ambient atmospheres (Layer 1 / Task 18)
+const AMBIENT = {
+  scroll:     { base: 220, intervals: [1, 1.5, 2], rate: 0.25, type: 'sine' },
+  popover:    { base: 260, intervals: [1, 1.25, 1.66], rate: 0.4, type: 'triangle' },
+  art:        { base: 330, intervals: [1, 1.26, 1.5, 2], rate: 0.6, type: 'sine' },
+  container:  { base: 180, intervals: [1, 1.12, 1.33], rate: 0.35, type: 'triangle' },
+  transitions:{ base: 300, intervals: [1, 1.5, 2.25], rate: 0.5, type: 'sawtooth' },
+  houdini:    { base: 160, intervals: [1, 1.5, 1.78, 2.67], rate: 0.3, type: 'square' },
+  has:        { base: 240, intervals: [1, 1.2, 1.6], rate: 0.45, type: 'triangle' },
+  layers:     { base: 200, intervals: [1, 1.33, 1.66, 2], rate: 0.5, type: 'sine' },
+};
+let ambientCtx = null, ambientTimer = null, ambientGain = null;
+
+export function playAmbient(zoneKey) {
+  const preset = AMBIENT[zoneKey]; if (!preset) return;
+  stopAmbient();
+  try {
+    ambientCtx = new (window.AudioContext || window.webkitAudioContext)();
+    ambientGain = ambientCtx.createGain();
+    ambientGain.gain.value = 0.0;
+    ambientGain.connect(ambientCtx.destination);
+    ambientGain.gain.linearRampToValueAtTime(0.05, ambientCtx.currentTime + 1.5);
+    const step = () => {
+      if (!ambientCtx) return;
+      const mult = preset.intervals[(Math.random() * preset.intervals.length) | 0];
+      const osc = ambientCtx.createOscillator();
+      const g = ambientCtx.createGain();
+      osc.type = preset.type; osc.frequency.value = preset.base * mult;
+      g.gain.value = 0;
+      g.gain.linearRampToValueAtTime(0.4, ambientCtx.currentTime + 0.5);
+      g.gain.linearRampToValueAtTime(0, ambientCtx.currentTime + 2);
+      osc.connect(g).connect(ambientGain);
+      osc.start(); osc.stop(ambientCtx.currentTime + 2.2);
+      ambientTimer = setTimeout(step, (1 / preset.rate) * 1000);
+    };
+    step();
+  } catch {}
+}
+
+export function stopAmbient() {
+  if (ambientTimer) { clearTimeout(ambientTimer); ambientTimer = null; }
+  if (ambientGain && ambientCtx) {
+    try {
+      ambientGain.gain.linearRampToValueAtTime(0, ambientCtx.currentTime + 0.6);
+    } catch {}
+    setTimeout(() => {
+      try { ambientCtx && ambientCtx.close(); } catch {}
+      ambientCtx = null; ambientGain = null;
+    }, 800);
+  }
+}
