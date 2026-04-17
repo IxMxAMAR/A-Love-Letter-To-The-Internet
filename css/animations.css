@@ -256,5 +256,5 @@ a.anim-underline:hover, a.anim-underline:focus-visible { background-size: 100% 1
 /* Input focus glow */
 input:not([type="checkbox"]):not([type="radio"]):focus-visible,
 textarea:focus-visible, select:focus-visible, [contenteditable]:focus-visible {
-  box-shadow: 0 0 0 3px oklch(from var(--accent, oklch(0.65 0.18 290)) l c h / 0.35);
+  box-shadow: 0 0 0 3px oklch(0.65 0.18 290 / 0.35);
 }
