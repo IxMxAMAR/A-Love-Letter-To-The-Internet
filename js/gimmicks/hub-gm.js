@@ -273,3 +273,18 @@ try {
     }
   }
 } catch (e) { console.warn('[hub-gm] stars:', e); }
+
+// ─────────────────────────────────────────────
+// 8. Visited-zone checkmarks (Layer 1 / Task 19)
+// ─────────────────────────────────────────────
+try {
+  const visited = new Set(JSON.parse(sessionStorage.getItem('visited-zones') || '[]'));
+  document.querySelectorAll('.zone-node').forEach((n) => {
+    if (visited.has(n.dataset.zone)) {
+      n.classList.add('zone-node--visited');
+      const m = document.createElement('span');
+      m.className = 'zone-check'; m.textContent = '\u2713'; m.setAttribute('aria-hidden', 'true');
+      n.appendChild(m);
+    }
+  });
+} catch {}

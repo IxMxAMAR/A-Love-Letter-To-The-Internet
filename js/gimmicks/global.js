@@ -8,6 +8,7 @@ import { initSfx, playSfx, setSfxMuted, isSfxMuted } from './sfx.js';
 import { initMagnetic } from './magnetic.js';
 import { renderFingerprint } from './fingerprint.js';
 import { initDefs } from './defs.js';
+import { initSession } from './session.js';
 
 // Page identity
 const PAGE_SYMBOLS = {
@@ -659,6 +660,7 @@ let __trail;
 try { __trail = initCursorTrail(); } catch {}
 try { initMagnetic(); } catch {}
 try { renderFingerprint(); } catch {}
+try { initSession(); } catch {}
 
 document.addEventListener('keydown', (e) => {
   if (!(e.shiftKey && e.key && e.key.toLowerCase() === 'c')) return;
