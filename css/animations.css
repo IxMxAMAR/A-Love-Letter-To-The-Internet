@@ -297,3 +297,12 @@ textarea:focus-visible, select:focus-visible, [contenteditable]:focus-visible {
 .text-glitch::before { color: #ff00aa; transform: translate(-2px,0); animation: glitch-clip-r 2.4s infinite; }
 .text-glitch::after  { color: #00aaff; transform: translate(2px,0);  animation: glitch-clip-r 2.4s infinite reverse; }
 @media (prefers-reduced-motion: reduce) { .text-glitch, .text-glitch::before, .text-glitch::after { animation: none; transform: none; } }
+
+/* ── Ambient Backgrounds (Layer 1 / Task 5) ────────── */
+@keyframes ambient-drift { 0%,100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(3%, -4%, 0); } }
+@keyframes ambient-twinkle { 0%,100% { opacity: 0.2; } 50% { opacity: 0.9; } }
+@keyframes ambient-pulse { 0%,100% { background-size: 40px 40px; } 50% { background-size: 44px 44px; } }
+@keyframes ambient-aurora { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.ambient-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+@media (prefers-reduced-motion: reduce) { .ambient-bg { display: none; } }

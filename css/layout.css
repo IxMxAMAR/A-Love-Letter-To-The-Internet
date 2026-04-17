@@ -221,3 +221,13 @@
     font-size: var(--text-xs);
   }
 }
+
+/* ── Main-content stacking (Layer 1 / Task 5) ────────────────
+   The .ambient-bg uses position: fixed with z-index: 0, creating
+   its own stacking context. Positioned elements with z-index 0
+   paint above non-positioned in-flow content, so we must bump
+   main content into its own positioned stacking layer above it. */
+#main-content {
+  position: relative;
+  z-index: 1;
+}

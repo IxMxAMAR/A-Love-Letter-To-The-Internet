@@ -161,3 +161,10 @@
     opacity: 1;
   }
 }
+
+/* ── Ambient Stars (Layer 1 / Task 5) ─────────────────── */
+.ambient-bg--stars { background: transparent; }
+.ambient-bg--stars .star {
+  position: absolute; width: 2px; height: 2px; background: white; border-radius: 50%;
+  animation: ambient-twinkle 3s ease-in-out infinite;
+}

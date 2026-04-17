@@ -255,3 +255,21 @@ try {
     });
   }
 } catch (e) { console.warn('[hub-gm] stat-counter:', e); }
+
+// ─────────────────────────────────────────────
+// 7. Ambient Star Field (Layer 1 / Task 5)
+// ─────────────────────────────────────────────
+try {
+  const host = document.querySelector('.ambient-bg--stars');
+  if (host) {
+    for (let i = 0; i < 60; i++) {
+      const s = document.createElement('span');
+      s.className = 'star';
+      s.style.top = Math.random() * 100 + '%';
+      s.style.left = Math.random() * 100 + '%';
+      s.style.animationDelay = Math.random() * 3 + 's';
+      s.style.opacity = 0.2 + Math.random() * 0.6;
+      host.appendChild(s);
+    }
+  }
+} catch (e) { console.warn('[hub-gm] stars:', e); }

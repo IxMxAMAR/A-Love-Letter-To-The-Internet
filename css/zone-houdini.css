@@ -900,3 +900,11 @@
   .scroll-indicator   { animation: none; }
   .playground-canvas  { transition: none; }
 }
+
+/* ── Ambient Aurora (Layer 1 / Task 5) ─────────────────── */
+.ambient-bg--aurora::before {
+  content: ""; position: absolute; inset: -50%;
+  background: conic-gradient(from 0deg, transparent, var(--zone-color, oklch(0.65 0.18 290)) 30%, transparent 60%);
+  animation: ambient-aurora 60s linear infinite;
+  opacity: 0.12;
+}
