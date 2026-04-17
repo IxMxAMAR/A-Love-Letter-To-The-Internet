@@ -1141,3 +1141,16 @@ dialog.modal-dialog[open]::backdrop {
 [data-comp-id] { cursor: grab; transition: transform 120ms ease, opacity 120ms ease; }
 [data-comp-id]:active { cursor: grabbing; }
 [data-comp-id].dragging { opacity: 0.5; transform: scale(0.98); }
+
+/* Components search (Layer 1 / Task 27) */
+.components-search { display: flex; align-items: center; gap: 8px; margin: 16px 0; max-width: 600px; }
+.components-search input {
+  flex: 1; padding: 10px 12px; font-size: 1rem; border-radius: 8px;
+  border: 1px solid oklch(1 0 0 / 0.15); background: oklch(0.2 0.02 280); color: inherit;
+}
+.components-search input:focus-visible { outline: 2px solid oklch(0.75 0.2 290); outline-offset: 2px; }
+.components-search kbd {
+  font-family: "JetBrains Mono", monospace; padding: 2px 6px;
+  border: 1px solid oklch(1 0 0 / 0.2); border-radius: 4px; font-size: 0.8rem; opacity: 0.7;
+}
+.components-empty { padding: 24px; text-align: center; opacity: 0.6; }

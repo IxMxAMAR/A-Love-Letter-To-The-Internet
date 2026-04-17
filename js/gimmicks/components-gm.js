@@ -205,3 +205,38 @@ try {
     });
   } catch {}
 })();
+
+/* ─── Components page search (Layer 1 / Task 27) ─── */
+(function search() {
+  try {
+    const input = document.getElementById('components-filter');
+    const cards = document.querySelectorAll('[data-comp-id]');
+    if (!input || !cards.length) return;
+    const host = input.closest('main') || document.body;
+    const empty = document.createElement('div');
+    empty.className = 'components-empty';
+    empty.textContent = 'No components match — try a different term';
+    empty.style.display = 'none';
+    input.parentElement?.insertAdjacentElement('afterend', empty);
+
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      let visible = 0;
+      cards.forEach((c) => {
+        const text = (c.textContent || '').toLowerCase();
+        const show = !q || text.includes(q);
+        c.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      empty.style.display = visible ? 'none' : '';
+    });
+
+    addEventListener('keydown', (e) => {
+      if (e.key === '/' && !e.target.closest('input,textarea,[contenteditable]')) {
+        e.preventDefault();
+        input.focus();
+        input.select();
+      }
+    });
+  } catch {}
+})();
