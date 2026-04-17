@@ -7,6 +7,7 @@ import { initCursorTrail } from './cursor-trail.js';
 import { initSfx, playSfx, setSfxMuted, isSfxMuted } from './sfx.js';
 import { initMagnetic } from './magnetic.js';
 import { renderFingerprint } from './fingerprint.js';
+import { initDefs } from './defs.js';
 
 // Page identity
 const PAGE_SYMBOLS = {
@@ -350,6 +351,21 @@ try {
     }, { passive: true });
   } catch {}
 })();
+
+// 9c. Copy-paste watermark (Layer 1 / Task 17) — append attribution to plain-text copies
+document.addEventListener('copy', (e) => {
+  try {
+    if (e.target.closest('code, pre, .editor, [contenteditable]')) return;
+    const sel = getSelection()?.toString();
+    if (!sel || sel.length < 8) return;
+    const watermark = `\n\n/* Copied from A Love Letter to the Web — ${location.origin || ''}${location.pathname} */`;
+    e.clipboardData?.setData('text/plain', sel + watermark);
+    e.preventDefault();
+  } catch {}
+});
+
+// 9d. Double-click CSS term definitions (Layer 1 / Task 17)
+try { initDefs(); } catch {}
 
 // 10. secrets()
 const PAGE_SECRETS = {

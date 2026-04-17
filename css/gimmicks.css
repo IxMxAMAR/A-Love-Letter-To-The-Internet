@@ -232,29 +232,16 @@ body {
 
 /* ── Print stylesheet ─────────────────────────────────────── */
 @media print {
-  nav,
-  .page-header,
-  .scroll-progress,
-  .reduced-motion-badge,
-  .shortcut-help,
-  .custom-context-menu,
-  [aria-hidden="true"] {
-    display: none !important;
+  * { background: white !important; color: black !important; box-shadow: none !important; filter: none !important; }
+  .page-header, .hub-stats, .scroll-progress, .cursor-trail-canvas, .konami-canvas, .pixel-rain-canvas,
+  .fingerprint-badge, .sfx-toggle, .ambient-bg, nav, footer, button[popover], [popover] { display: none !important; }
+  .print-only { display: block !important; margin: 2rem 0; }
+  .print-only::before {
+    content: "You printed the internet. You absolute legend."; display: block; font-weight: bold; font-size: 1.2rem; margin-bottom: 1rem;
   }
-
-  body {
-    background: #fff !important;
-    color: #000 !important;
+  .print-only::after {
+    content: "Source: https://github.com/IxMxAMAR/HTML"; display: block; font-family: monospace;
   }
-
-  a[href]::after {
-    content: " (" attr(href) ")";
-    font-size: 0.75em;
-    color: #666;
-  }
-
-  a[href^="#"]::after,
-  a[href^="javascript:"]::after {
-    content: "";
-  }
+  section, article { page-break-inside: avoid; }
 }
+.print-only { display: none; }
