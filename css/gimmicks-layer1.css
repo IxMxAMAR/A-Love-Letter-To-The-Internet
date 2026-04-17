@@ -22,3 +22,9 @@ body.konami-invert { filter: invert(1) hue-rotate(180deg); transition: filter 50
 }
 .sfx-toggle:hover { transform: scale(1.05); }
 .sfx-toggle:focus-visible { outline: 2px solid oklch(0.75 0.2 290); outline-offset: 2px; }
+
+/* Magnetic elements (Layer 1 / Task 13) */
+.magnetic { transition: transform 150ms ease-out; will-change: transform; display: inline-block; }
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .magnetic { transform: none !important; transition: none; }
+}

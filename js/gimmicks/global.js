@@ -5,6 +5,7 @@
 
 import { initCursorTrail } from './cursor-trail.js';
 import { initSfx, playSfx, setSfxMuted, isSfxMuted } from './sfx.js';
+import { initMagnetic } from './magnetic.js';
 
 // Page identity
 const PAGE_SYMBOLS = {
@@ -597,6 +598,7 @@ function showToast(msg) {
 
 let __trail;
 try { __trail = initCursorTrail(); } catch {}
+try { initMagnetic(); } catch {}
 
 document.addEventListener('keydown', (e) => {
   if (!(e.shiftKey && e.key && e.key.toLowerCase() === 'c')) return;
