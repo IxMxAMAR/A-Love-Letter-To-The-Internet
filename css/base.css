@@ -296,3 +296,7 @@ html:not([data-theme="light"]) body { background-color: oklch(0.15 0.02 var(--hu
 :where(button, [role="button"]):disabled, :where(button, [role="button"])[aria-disabled="true"] {
   cursor: not-allowed; opacity: 0.5;
 }
+
+html { scroll-behavior: smooth; }
+:target { scroll-margin-top: 80px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

@@ -800,3 +800,35 @@ try {
     }
   } catch {}
 })();
+
+/* Back-to-top button (Layer 1 / Task 25) */
+(function backToTop() {
+  try {
+    const btn = document.createElement('button');
+    btn.className = 'back-to-top no-micro';
+    btn.setAttribute('aria-label', 'Back to top');
+    btn.innerHTML = '↑';
+    document.body.appendChild(btn);
+    btn.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+    addEventListener('scroll', () => btn.classList.toggle('visible', scrollY > innerHeight), { passive: true });
+  } catch {}
+})();
+
+/* Mobile long-press context menu (Layer 1 / Task 25) */
+(function longPress() {
+  try {
+    if (!matchMedia('(pointer: coarse)').matches) return;
+    let timer = null;
+    addEventListener('touchstart', (e) => {
+      timer = setTimeout(() => {
+        const menu = document.getElementById('context-menu') || document.querySelector('[popover="context-menu"]');
+        if (!menu) return;
+        menu.style.left = e.touches[0].clientX + 'px';
+        menu.style.top = e.touches[0].clientY + 'px';
+        try { menu.showPopover?.(); } catch {}
+      }, 500);
+    }, { passive: true });
+    addEventListener('touchmove', () => { if (timer) { clearTimeout(timer); timer = null; } }, { passive: true });
+    addEventListener('touchend', () => { if (timer) { clearTimeout(timer); timer = null; } }, { passive: true });
+  } catch {}
+})();
