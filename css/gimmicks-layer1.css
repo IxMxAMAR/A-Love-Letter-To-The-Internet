@@ -79,3 +79,12 @@ html.mode-screenshot body { box-shadow: inset 0 0 0 4px oklch(1 0 0 / 0.1); }
   padding: 8px 16px; background: oklch(0.2 0.02 280 / 0.95); color: white; border-radius: 20px;
   font-family: "JetBrains Mono", monospace; font-size: 0.85rem; z-index: 60;
 }
+
+/* Cursor ghosts (Layer 1 / Task 22) */
+.ghost-cursor {
+  position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9997;
+  display: flex; align-items: center; gap: 4px;
+  opacity: 0.3; transition: transform 80ms linear, opacity 300ms ease;
+}
+.ghost-cursor::before { content: "▲"; color: oklch(0.7 0.2 var(--ghost-hue, 290)); font-size: 14px; }
+.ghost-cursor__label { font-size: 10px; font-family: "JetBrains Mono", monospace; background: oklch(0 0 0 / 0.6); color: white; padding: 2px 4px; border-radius: 3px; }

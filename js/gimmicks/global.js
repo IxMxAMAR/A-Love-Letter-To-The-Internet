@@ -10,6 +10,7 @@ import { renderFingerprint } from './fingerprint.js';
 import { initDefs } from './defs.js';
 import { initSession } from './session.js';
 import { initModes } from './modes.js';
+import { startGhosts, stopGhosts } from './cursor-ghosts.js';
 
 // Page identity
 const PAGE_SYMBOLS = {
@@ -663,6 +664,10 @@ try { initMagnetic(); } catch {}
 try { renderFingerprint(); } catch {}
 try { initSession(); } catch {}
 try { initModes(); } catch {}
+try {
+  window.__eni = Object.assign(window.__eni || {}, { ghosts: { on: startGhosts, off: stopGhosts } });
+  window.ghosts = window.__eni.ghosts;
+} catch {}
 
 document.addEventListener('keydown', (e) => {
   if (!(e.shiftKey && e.key && e.key.toLowerCase() === 'c')) return;
