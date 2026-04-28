@@ -138,8 +138,8 @@
 .zone-hero[data-zone="layers"]      { view-transition-name: node-layers; }
 
 /* Dark-mode circular reveal */
-::view-transition-old(root),
-::view-transition-new(root) { animation-duration: 500ms; }
+html.theme-transition::view-transition-old(root),
+html.theme-transition::view-transition-new(root) { animation-duration: 500ms; }
 
 html.theme-transition::view-transition-new(root) {
   clip-path: circle(0% at var(--theme-x, 50%) var(--theme-y, 50%));

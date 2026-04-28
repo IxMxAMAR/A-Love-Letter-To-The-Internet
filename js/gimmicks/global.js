@@ -592,9 +592,12 @@ function wrapLetters(el) {
 }
 
 function scrambleText(el, finalText, duration = 900) {
+  if (!el) return;
+  if (el._scrambleRaf) cancelAnimationFrame(el._scrambleRaf);
   const chars = '!@#$%^&*(){}[]<>?/\\|~';
   const start = performance.now();
   const step = (now) => {
+    if (!el.isConnected) { el._scrambleRaf = 0; return; }
     const t = Math.min(1, (now - start) / duration);
     const resolved = Math.floor(finalText.length * t);
     let out = finalText.slice(0, resolved);
@@ -602,9 +605,9 @@ function scrambleText(el, finalText, duration = 900) {
       out += chars[(Math.random() * chars.length) | 0];
     }
     el.textContent = out;
-    if (t < 1) requestAnimationFrame(step);
+    el._scrambleRaf = t < 1 ? requestAnimationFrame(step) : 0;
   };
-  requestAnimationFrame(step);
+  el._scrambleRaf = requestAnimationFrame(step);
 }
 
 // init letter-reveal targets
