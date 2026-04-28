@@ -704,21 +704,28 @@ try {
   // default interaction triggers
   document.addEventListener('click', (e) => {
     if (e.target.closest('button, [role="button"]')) playSfx('click');
-    else if (e.target.closest('a[href]:not([href^="#"])')) playSfx('swoosh');
+    else if (e.target.closest('a[href]:not([href^="#"])')) playSfx('whoosh');
   });
   document.addEventListener('change', (e) => {
     if (e.target.matches('input[type="checkbox"], input[type="radio"]')) playSfx('pop');
   });
 
-  // mute toggle button (opt-in UI)
+  // mute toggle button \u2014 reads/writes state.get('audio.muted') via the audio engine
   const sfxBtn = document.getElementById('sfx-toggle');
   if (sfxBtn) {
-    const sync = () => { sfxBtn.textContent = isSfxMuted() ? '\ud83d\udd07' : '\ud83d\udd0a'; sfxBtn.setAttribute('aria-pressed', String(!isSfxMuted())); };
+    const isMutedNow = () => !!state.get('audio.muted');
+    const toggleMute = () => {
+      try {
+        if (window.__audio && typeof window.__audio.mute === 'function') window.__audio.mute();
+        else setSfxMuted(!isMutedNow());
+      } catch { setSfxMuted(!isMutedNow()); }
+    };
+    const sync = () => { sfxBtn.textContent = isMutedNow() ? '\ud83d\udd07' : '\ud83d\udd0a'; sfxBtn.setAttribute('aria-pressed', String(!isMutedNow())); };
     sync();
-    sfxBtn.addEventListener('click', () => { setSfxMuted(!isSfxMuted()); sync(); });
+    sfxBtn.addEventListener('click', () => { toggleMute(); sync(); });
     document.addEventListener('keydown', (e) => {
       if (e.key === 'm' && !e.target.closest('input,textarea,[contenteditable]')) {
-        setSfxMuted(!isSfxMuted());
+        toggleMute();
         sync();
       }
     });
