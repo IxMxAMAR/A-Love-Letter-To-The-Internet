@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--
+    ┌────────────────────────────────────────────────────────────────┐
+    │                                                                │
+    │   ██       ██████  ██    ██ ███████     ██      ███████       │
+    │   ██      ██    ██ ██    ██ ██          ██      ██            │
+    │   ██      ██    ██ ██    ██ █████       ██      █████         │
+    │   ██      ██    ██  ██  ██  ██          ██      ██            │
+    │   ███████  ██████    ████   ███████     ███████ ███████       │
+    │                                                                │
+    │        A Love Letter to the Web — Achievements                 │
+    │                                                                │
+    │   If you're reading this, you're my kind of person.            │
+    │   View-source is a love language.                              │
+    │                                                                │
+    └────────────────────────────────────────────────────────────────┘
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Achievements — A Love Letter to the Web</title>
+  <meta name="description" content="Trophy room — 50 achievements across 6 categories. Track progress and export your card.">
+
+  <meta property="og:title" content="Achievements — A Love Letter to the Web">
+  <meta property="og:description" content="Trophy room — 50 achievements across 6 categories.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/transitions.css">
+  <link rel="stylesheet" href="css/achievements.css">
+<script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+  <link rel="stylesheet" href="css/gimmicks.css">
+  <link rel="stylesheet" href="css/gimmicks-layer1.css">
+</head>
+<body>
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
+  <header class="page-header" role="banner" data-enter="header">
+    <a href="index.html" class="page-header__logo magnetic" data-transition="root">✦ Web Letter</a>
+    <nav class="page-header__nav" aria-label="Site navigation">
+      <a href="index.html" class="anim-underline magnetic" data-transition="root">Timeline</a>
+      <a href="hub.html" class="anim-underline magnetic" data-transition="root">Observatory</a>
+      <a href="playground.html" class="anim-underline magnetic" data-transition="root">Playground</a>
+      <a href="components.html" class="anim-underline magnetic" data-transition="root">Components</a>
+    </nav>
+  </header>
+
+  <main id="main-content" class="achievements-page" data-enter="hero">
+    <header class="ach-header">
+      <h1 data-text-effect="reveal">Achievements</h1>
+      <div class="ach-progress-wrap">
+        <div class="ach-progress-ring" id="ach-ring" aria-hidden="true"></div>
+        <span class="ach-progress-pct" id="ach-pct">0%</span>
+      </div>
+      <p class="ach-stats" id="ach-stats">0 / 50 unlocked</p>
+    </header>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb"></nav>
+
+    <section class="ach-categories" id="ach-categories"></section>
+
+    <div class="ach-share">
+      <button id="export-card" class="ripple">Export Achievement Card</button>
+    </div>
+
+    <div class="time-spent"></div>
+  </main>
+
+  <script type="module" src="js/transitions.js"></script>
+  <script type="module" src="js/gimmicks/global.js"></script>
+  <script type="module" src="js/gimmicks/hub-gm.js"></script>
+  <script type="module" src="js/achievements-page.js"></script>
+  <button id="sfx-toggle" class="sfx-toggle no-micro" aria-label="Toggle sound effects" aria-pressed="false" title="Toggle SFX (M)">&#128263;</button>
+<!--
+  Made with love, sweat, and far too much coffee.
+  Zero dependencies. Just HTML, CSS, and JavaScript.
+  https://github.com/IxMxAMAR/HTML
+-->
+<div id="fingerprint-badge" aria-hidden="true"></div>
+</body>
+</html>
