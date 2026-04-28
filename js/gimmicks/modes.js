@@ -1,7 +1,9 @@
 /**
- * modes.js — Layer 1 / Task 21
+ * modes.js — Layer 1 / Task 21 (Layer 2 / Task 3 wiring)
  * Focus / Screenshot / Gravity modes + landing pull-refresh easter egg
  */
+
+import { state } from '../state.js';
 
 export function initModes() {
   let focusOn = false, screenshotOn = false, gravityOn = false;
@@ -13,7 +15,10 @@ export function initModes() {
         e.preventDefault();
         focusOn = !focusOn;
         document.documentElement.classList.toggle('mode-focus', focusOn);
-        if (focusOn) unlockAchievement('in-the-zone');
+        if (focusOn) {
+          unlockAchievement('in-the-zone');
+          try { state.emit('gimmick:trigger', { name: 'focus' }); } catch {}
+        }
         showToast(focusOn ? 'Focus mode \u2014 ESC exits' : 'Focus mode off');
       }
     }
@@ -21,6 +26,7 @@ export function initModes() {
       e.preventDefault();
       screenshotOn = !screenshotOn;
       document.documentElement.classList.toggle('mode-screenshot', screenshotOn);
+      if (screenshotOn) { try { state.emit('gimmick:trigger', { name: 'screenshot' }); } catch {} }
       showToast(screenshotOn ? 'Screenshot mode \u2014 Shift+S exits' : 'Screenshot mode off');
     }
     if (e.key === 'g' || e.key === 'G') {
@@ -65,6 +71,7 @@ export function initModes() {
     };
     tick();
     unlockAchievement('newtons-revenge');
+    try { state.emit('gimmick:trigger', { name: 'gravity' }); } catch {}
     setTimeout(() => { if (gravityOn) { stopGravity(); gravityOn = false; } }, 5000);
   }
   function stopGravity() {

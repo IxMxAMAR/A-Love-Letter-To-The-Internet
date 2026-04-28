@@ -1,7 +1,11 @@
 /**
  * session.js — Session-state gimmicks (Layer 1 / Task 19)
  * Visit milestones, time-spent counter, visited-zone tracking, breadcrumb trail.
+ * Layer 2 / Task 3: emits session:tick so the achievement engine can evaluate
+ * time-based unlocks (deep-diver).
  */
+
+import { state } from '../state.js';
 
 const KEY = { visits: 'visits', visited: 'visited-zones', start: 'session-start' };
 
@@ -28,6 +32,16 @@ export function initSession() {
     start = parseInt(sessionStorage.getItem(KEY.start) || '0', 10);
     if (!start) { start = Date.now(); sessionStorage.setItem(KEY.start, String(start)); }
   } catch { start = Date.now(); }
+
+  // Seed state.session.startTime so achievement engine can evaluate time-based unlocks.
+  try {
+    const sess = state.get('session') || {};
+    if (!sess.startTime) {
+      sess.startTime = start;
+      state.set('session', sess);
+    }
+  } catch {}
+
   const host = document.querySelector('.time-spent');
   if (host) {
     const tick = () => {
@@ -39,6 +53,12 @@ export function initSession() {
     tick();
     setInterval(tick, 1000);
   }
+
+  // Periodic session:tick — every 30s the achievement engine checks the delta
+  // and unlocks deep-diver once (Date.now() - session.startTime) > 30 minutes.
+  try {
+    setInterval(() => { try { state.emit('session:tick', {}); } catch {} }, 30000);
+  } catch {}
 
   const bc = document.querySelector('.breadcrumb');
   if (bc) {

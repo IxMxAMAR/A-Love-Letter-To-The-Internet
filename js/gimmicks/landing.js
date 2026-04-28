@@ -1,7 +1,10 @@
 /**
  * landing.js — Gimmicks for "A Love Letter to the Web"
  * Tasks: typewriter, visitor counter, guestbook, easter eggs, card flip, tilt, dark mode, centering popover
+ * Layer 2 / Task 3: emit gimmick:trigger events for achievement engine.
  */
+
+import { state } from '../state.js';
 
 // ─── 1. Typewriter Effect (1991 era, first visit only) ────────────────────────
 function initTypewriter() {
@@ -122,6 +125,7 @@ function initGuestbook() {
 
   form?.addEventListener('submit', e => {
     e.preventDefault();
+    try { state.emit('gimmick:trigger', { name: 'guestbook' }); } catch {}
     form.hidden = true;
     thanks.hidden = false;
     // Reset after 4s
@@ -148,6 +152,7 @@ function initHampsterDance() {
 
     if (clickCount >= 3) {
       clickCount = 0;
+      try { state.emit('gimmick:trigger', { name: 'hampster' }); } catch {}
       // Bounce all text elements for 5s
       document.querySelectorAll('p, h1, h2, h3, address, .construction').forEach(el => {
         el.classList.add('hampster-bounce');

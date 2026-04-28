@@ -12,6 +12,7 @@ import { initSession } from './session.js';
 import { initModes } from './modes.js';
 import { startGhosts, stopGhosts } from './cursor-ghosts.js';
 import { state } from '../state.js';
+import { achievements } from '../achievements.js';
 
 // Layer 2 / Task 1 — track visit on every page load
 try {
@@ -132,6 +133,14 @@ function applyThemeFlip() {
       html.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
     }
+    // Layer 2 / Task 3 — emit theme toggle for achievement engine
+    try {
+      const prefs = state.get('preferences') || {};
+      prefs.themeToggleCount = (prefs.themeToggleCount || 0) + 1;
+      state.set('preferences', prefs);
+      state.set('theme', next);
+      state.emit('theme:toggle', { theme: next });
+    } catch {}
   } catch (e) {}
 }
 
@@ -286,6 +295,7 @@ try {
     const action = btn.dataset.action;
     try { if (ctxMenu.hidePopover) ctxMenu.hidePopover(); } catch (_) {}
     if (action === 'view-source') {
+      try { state.emit('gimmick:trigger', { name: 'view-source' }); } catch {}
       window.open('view-source:' + location.href);
     } else if (action === 'inspect') {
       console.info('Tip: Press F12 or Cmd+Option+I to open DevTools.');
@@ -306,7 +316,10 @@ try {
   const resetIdle = () => {
     clearTimeout(idleTimer);
     document.documentElement.classList.remove('idle-mode');
-    idleTimer = setTimeout(() => document.documentElement.classList.add('idle-mode'), IDLE_MS);
+    idleTimer = setTimeout(() => {
+      document.documentElement.classList.add('idle-mode');
+      try { state.emit('gimmick:trigger', { name: 'idle' }); } catch {}
+    }, IDLE_MS);
   };
   ['mousemove', 'keydown', 'scroll', 'touchstart', 'click'].forEach(ev => {
     document.addEventListener(ev, resetIdle, { passive: true });
@@ -425,6 +438,7 @@ async function typeLine(line, delay = 30) {
 }
 
 async function secretsImpl() {
+  try { state.emit('gimmick:trigger', { name: 'secrets' }); } catch {}
   const lines = [
     '\u25c8 A Love Letter to the Web',
     'Built with curiosity, oklch(), and a deep love for the platform.',
@@ -457,6 +471,7 @@ try {
 
   // --- December Snowfall (month === 11) ---
   if (_month === 11 && !sessionStorage.getItem('snow-dismissed')) {
+    try { state.emit('gimmick:trigger', { name: 'seasonal' }); } catch {}
     // Keyframes
     const _snowStyle = document.createElement('style');
     _snowStyle.textContent = '@keyframes snowfall{'
@@ -518,6 +533,7 @@ try {
 
   // --- April Fools (month === 3, day === 1) ---
   if (_month === 3 && _day === 1) {
+    try { state.emit('gimmick:trigger', { name: 'seasonal' }); } catch {}
     document.documentElement.style.fontFamily = "'Comic Sans MS', cursive";
     const _logo = document.querySelector('.site-title, .logo, h1');
     if (_logo) _logo.textContent = '\u2726 Web Letter (Professional Edition\u2122)';
@@ -530,6 +546,7 @@ try {
   // --- New Year (month === 0, day === 1) ---
   if (_month === 0 && _day === 1 && !sessionStorage.getItem('ny-burst-done')) {
     sessionStorage.setItem('ny-burst-done', '1');
+    try { state.emit('gimmick:trigger', { name: 'seasonal' }); } catch {}
 
     const _nyStyle = document.createElement('style');
     _nyStyle.textContent = '@keyframes ny-burst{'
@@ -773,8 +790,7 @@ try {
           c.remove();
           document.body.classList.remove('konami-invert');
           try { localStorage.setItem('achievement:the-code', '1'); } catch {}
-          try { window.__eni?.sfx?.play?.('chime'); } catch {}
-          try { if (typeof showToast === 'function') showToast('Achievement unlocked: The Code'); } catch {}
+          try { state.emit('gimmick:trigger', { name: 'konami' }); } catch {}
         }
       })(performance.now());
     }
@@ -816,8 +832,7 @@ try {
         else {
           c.remove();
           try { localStorage.setItem('achievement:red-pill', '1'); } catch {}
-          try { window.__eni?.sfx?.play?.('chime'); } catch {}
-          try { if (typeof showToast === 'function') showToast('Achievement unlocked: Red Pill'); } catch {}
+          try { state.emit('gimmick:trigger', { name: 'matrix' }); } catch {}
         }
       })(performance.now());
     }
@@ -836,6 +851,13 @@ try {
     addEventListener('scroll', () => btn.classList.toggle('visible', scrollY > innerHeight), { passive: true });
   } catch {}
 })();
+
+/* Layer 2 / Task 3 — print listener (print-legend achievement) */
+try {
+  window.addEventListener('beforeprint', () => {
+    try { state.emit('gimmick:trigger', { name: 'print' }); } catch {}
+  });
+} catch {}
 
 /* Mobile long-press context menu (Layer 1 / Task 25) */
 (function longPress() {
