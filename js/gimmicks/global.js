@@ -11,6 +11,19 @@ import { initDefs } from './defs.js';
 import { initSession } from './session.js';
 import { initModes } from './modes.js';
 import { startGhosts, stopGhosts } from './cursor-ghosts.js';
+import { state } from '../state.js';
+
+// Layer 2 / Task 1 — track visit on every page load
+try {
+  const path = location.pathname;
+  const visits = state.get('visits') || { count: 0, pages: {}, firstVisit: null, lastVisit: null };
+  visits.count = (visits.count || 0) + 1;
+  visits.pages[path] = (visits.pages[path] || 0) + 1;
+  visits.firstVisit = visits.firstVisit || Date.now();
+  visits.lastVisit = Date.now();
+  state.set('visits', visits);
+  state.emit('page:visit', { path, visits });
+} catch {}
 
 // Page identity
 const PAGE_SYMBOLS = {
