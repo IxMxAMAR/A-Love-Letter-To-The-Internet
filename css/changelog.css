@@ -1,0 +1,271 @@
+/* =============================================================
+   changelog.css — Changelog page (Layer 2 / Task 8)
+   Vertical timeline + era-switching "time travel" overrides.
+   ============================================================= */
+
+/* ── Page shell ──────────────────────────────────────────────── */
+.changelog {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-lg);
+}
+
+.changelog-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+.changelog-header h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  margin: 0 0 var(--space-sm);
+  letter-spacing: -0.01em;
+  background: linear-gradient(120deg, var(--color-gradient-start), var(--color-gradient-end));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.changelog-header p {
+  color: var(--color-muted);
+  font-size: var(--text-md);
+  margin: 0;
+}
+
+/* ── Era pills (sticky toolbar) ──────────────────────────────── */
+.time-travel-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 90px;
+  z-index: 5;
+  margin-bottom: var(--space-xl);
+  padding: 12px;
+  background: oklch(0.10 0.02 280 / 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid oklch(1 0 0 / 0.08);
+  border-radius: 999px;
+}
+.time-travel-controls button {
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: oklch(0.18 0.02 280);
+  color: white;
+  border: 1px solid oklch(1 0 0 / 0.15);
+  cursor: pointer;
+  font: 600 var(--text-sm) var(--font-mono);
+  letter-spacing: 0.04em;
+  transition: background 200ms var(--ease-out), border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out), color 200ms var(--ease-out);
+}
+.time-travel-controls button:hover {
+  background: oklch(0.24 0.03 280);
+  border-color: oklch(1 0 0 / 0.3);
+}
+.time-travel-controls button.active {
+  background: oklch(0.28 0.10 290);
+  border-color: var(--color-accent);
+  color: white;
+  box-shadow:
+    0 0 0 1px var(--color-accent),
+    0 0 16px oklch(0.7 0.18 290 / 0.45);
+}
+.time-travel-controls button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* ── Timeline ────────────────────────────────────────────────── */
+.changelog-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding-left: 28px;
+}
+.changelog-timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    var(--color-gradient-start),
+    var(--color-gradient-mid),
+    var(--color-gradient-end)
+  );
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+/* ── Entry card ──────────────────────────────────────────────── */
+.changelog-entry {
+  position: relative;
+  padding: 20px 24px;
+  background: oklch(0.10 0.02 280);
+  border: 1px solid oklch(1 0 0 / 0.08);
+  border-left: 3px solid var(--era-color, var(--color-accent));
+  border-radius: 10px;
+  transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
+}
+.changelog-entry::before {
+  content: '';
+  position: absolute;
+  left: -28px;
+  top: 24px;
+  width: 14px;
+  height: 14px;
+  background: var(--era-color, var(--color-accent));
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px oklch(0.10 0.02 280), 0 0 12px var(--era-color, var(--color-accent));
+}
+.changelog-entry:hover {
+  transform: translateX(2px);
+  box-shadow: 0 8px 24px oklch(0 0 0 / 0.3);
+}
+
+.changelog-entry:nth-child(1) { --era-color: oklch(0.65 0.22 290); }
+.changelog-entry:nth-child(2) { --era-color: oklch(0.70 0.18 200); }
+.changelog-entry:nth-child(3) { --era-color: oklch(0.75 0.16 80);  }
+.changelog-entry:nth-child(4) { --era-color: oklch(0.65 0.10 30);  }
+
+.changelog-entry h2 {
+  margin: 0 0 4px;
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--era-color, white);
+  letter-spacing: 0.01em;
+}
+.changelog-date {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  margin-bottom: 12px;
+}
+.changelog-entry ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.changelog-entry li {
+  color: oklch(0.85 0.02 280);
+  font-size: var(--text-base);
+  line-height: 1.55;
+}
+
+/* ── Smooth body transitions for era swaps ───────────────────── */
+body {
+  transition: background-color 350ms var(--ease-out), color 350ms var(--ease-out);
+}
+
+/* ── Time travel: v0.1 (1991-ish, plain HTML) ────────────────── */
+body[data-era="v0.1"] {
+  background: #fff !important;
+  color: #000 !important;
+  font-family: "Times New Roman", Times, serif !important;
+}
+body[data-era="v0.1"] a {
+  color: #00f !important;
+  text-decoration: underline !important;
+}
+body[data-era="v0.1"] a:visited { color: #551a8b !important; }
+body[data-era="v0.1"] *,
+body[data-era="v0.1"] *::before,
+body[data-era="v0.1"] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+body[data-era="v0.1"] .ambient-bg,
+body[data-era="v0.1"] .fingerprint-badge,
+body[data-era="v0.1"] .sfx-toggle {
+  display: none !important;
+}
+body[data-era="v0.1"] .changelog-header h1,
+body[data-era="v0.1"] .changelog-entry h2,
+body[data-era="v0.1"] .changelog-date {
+  color: #000 !important;
+  background: none !important;
+  -webkit-text-fill-color: initial !important;
+}
+body[data-era="v0.1"] .changelog-entry {
+  background: #fff !important;
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+body[data-era="v0.1"] .changelog-entry::before { display: none !important; }
+body[data-era="v0.1"] .changelog-timeline::before { display: none !important; }
+body[data-era="v0.1"] .changelog-timeline { padding-left: 0 !important; }
+body[data-era="v0.1"] .time-travel-controls {
+  background: #fff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+}
+body[data-era="v0.1"] .time-travel-controls button {
+  background: #c0c0c0 !important;
+  color: #000 !important;
+  border: 2px outset #c0c0c0 !important;
+  border-radius: 0 !important;
+  font-family: "Times New Roman", Times, serif !important;
+  box-shadow: none !important;
+}
+body[data-era="v0.1"] .time-travel-controls button.active {
+  border-style: inset !important;
+}
+body[data-era="v0.1"] .page-header {
+  background: #fff !important;
+  border-bottom: 1px solid #000 !important;
+}
+body[data-era="v0.1"] .page-header__logo,
+body[data-era="v0.1"] .page-header__nav a {
+  color: #00f !important;
+}
+
+/* ── Time travel: v0.5 (2010-ish, table-y vibes) ─────────────── */
+body[data-era="v0.5"] {
+  background: linear-gradient(#cce, #ecc) !important;
+  color: #000 !important;
+  font-family: "Comic Sans MS", "Marker Felt", "Chalkboard SE", cursive !important;
+}
+body[data-era="v0.5"] a       { color: #f0f !important; }
+body[data-era="v0.5"] .ambient-bg { display: none !important; }
+body[data-era="v0.5"] .changelog-header h1,
+body[data-era="v0.5"] .changelog-entry h2 {
+  color: #c0f !important;
+  background: none !important;
+  -webkit-text-fill-color: initial !important;
+  text-shadow: 2px 2px 0 #fff;
+}
+body[data-era="v0.5"] .changelog-entry {
+  background: #ffe !important;
+  border: 3px ridge #f0f !important;
+  border-radius: 0 !important;
+}
+body[data-era="v0.5"] .time-travel-controls {
+  background: #ffc !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 3px ridge #f0f !important;
+  border-radius: 0 !important;
+}
+body[data-era="v0.5"] .time-travel-controls button {
+  background: linear-gradient(#fcf, #cff) !important;
+  color: #000 !important;
+  border: 2px outset #f0f !important;
+  border-radius: 0 !important;
+  font-family: "Comic Sans MS", "Marker Felt", cursive !important;
+}
+body[data-era="v0.5"] .time-travel-controls button.active {
+  background: linear-gradient(#cff, #fcf) !important;
+  border-style: inset !important;
+}
+
+/* ── Time travel: v1.0 (current modern, no override) ─────────── */
+/* default — relies on existing tokens; intentionally empty */

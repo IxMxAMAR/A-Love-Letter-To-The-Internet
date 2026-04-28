@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<!--
+    ┌────────────────────────────────────────────────────────────────┐
+    │                                                                │
+    │   ██       ██████  ██    ██ ███████     ██      ███████       │
+    │   ██      ██    ██ ██    ██ ██          ██      ██            │
+    │   ██      ██    ██ ██    ██ █████       ██      █████         │
+    │   ██      ██    ██  ██  ██  ██          ██      ██            │
+    │   ███████  ██████    ████   ███████     ███████ ███████       │
+    │                                                                │
+    │        A Love Letter to the Web — Changelog                    │
+    │                                                                │
+    │   If you're reading this, you're my kind of person.            │
+    │   View-source is a love language.                              │
+    │                                                                │
+    └────────────────────────────────────────────────────────────────┘
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Changelog — A Love Letter to the Web</title>
+  <meta name="description" content="The site's own version history. Click a version to time travel.">
+
+  <meta property="og:title" content="Changelog — A Love Letter to the Web">
+  <meta property="og:description" content="The site's own version history. Time-travel through eras of the web.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/transitions.css">
+  <link rel="stylesheet" href="css/changelog.css">
+<script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+  <link rel="stylesheet" href="css/gimmicks.css">
+  <link rel="stylesheet" href="css/gimmicks-layer1.css">
+</head>
+<body>
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
+  <header class="page-header" role="banner" data-enter="header">
+    <a href="index.html" class="page-header__logo magnetic" data-transition="root">✦ Web Letter</a>
+    <nav class="page-header__nav" aria-label="Site navigation">
+      <a href="index.html" class="anim-underline magnetic" data-transition="root">Timeline</a>
+      <a href="hub.html" class="anim-underline magnetic" data-transition="root">Observatory</a>
+      <a href="playground.html" class="anim-underline magnetic" data-transition="root">Playground</a>
+      <a href="components.html" class="anim-underline magnetic" data-transition="root">Components</a>
+    </nav>
+  </header>
+
+  <main id="main-content" class="changelog" data-enter="hero">
+    <nav class="breadcrumb" aria-label="Breadcrumb"></nav>
+
+    <header class="changelog-header">
+      <h1 data-text-effect="reveal">Changelog</h1>
+      <p>The site's own version history. Click a version to time travel.</p>
+    </header>
+
+    <div class="time-travel-controls" role="radiogroup" aria-label="Site era">
+      <button data-era="v0.1" class="no-micro" role="radio" aria-checked="false">v0.1</button>
+      <button data-era="v0.5" class="no-micro" role="radio" aria-checked="false">v0.5</button>
+      <button data-era="v1.0" class="no-micro" role="radio" aria-checked="false">v1.0</button>
+      <button data-era="v2.0" class="no-micro active" role="radio" aria-checked="true">v2.0 (now)</button>
+    </div>
+
+    <div class="changelog-timeline">
+      <article class="changelog-entry">
+        <h2>v2.0 — Mega Expansion</h2>
+        <span class="changelog-date">2026-04-17</span>
+        <ul>
+          <li>Layer 1: 27 animation/gimmick tasks (fingerprint, cursor trail, ambient bg, 50+ achievements scaffolding...)</li>
+          <li>Layer 2: arcade hub, lab, achievements, glossary, this page</li>
+          <li>Audio + state + achievement engines</li>
+          <li>Build a Shape v2 in CSS Art zone</li>
+        </ul>
+      </article>
+
+      <article class="changelog-entry">
+        <h2>v1.0 — Modern Design</h2>
+        <span class="changelog-date">2026-04-13</span>
+        <ul>
+          <li>Cinematic 5-era landing page</li>
+          <li>Observatory hub with 8 zone deep-dives</li>
+          <li>Playground lab with live CSS editor</li>
+          <li>Component toolkit (8 production components)</li>
+          <li>oklch color system, scroll-driven animations, View Transitions, container queries, :has(), Houdini Paint</li>
+        </ul>
+      </article>
+
+      <article class="changelog-entry">
+        <h2>v0.5 — Table Layouts</h2>
+        <span class="changelog-date">2010-ish (in spirit)</span>
+        <ul>
+          <li>First CSS rules</li>
+          <li>Tables for layout, divs for things tables couldn't do</li>
+          <li>Comic Sans considered a feature</li>
+          <li>Fixed centering. Again.</li>
+        </ul>
+      </article>
+
+      <article class="changelog-entry">
+        <h2>v0.1 — Hello, World</h2>
+        <span class="changelog-date">1991-ish (in spirit)</span>
+        <ul>
+          <li>HTML in Times New Roman</li>
+          <li>Blue underlined links</li>
+          <li>Marquee tag because why not</li>
+          <li>Uphill both ways</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="time-spent"></div>
+  </main>
+
+  <script type="module" src="js/transitions.js"></script>
+  <script type="module" src="js/gimmicks/global.js"></script>
+  <script type="module" src="js/gimmicks/hub-gm.js"></script>
+  <script type="module" src="js/changelog.js"></script>
+  <button id="sfx-toggle" class="sfx-toggle no-micro" aria-label="Toggle sound effects" aria-pressed="false" title="Toggle SFX (M)">&#128263;</button>
+<!--
+  Made with love, sweat, and far too much coffee.
+  Zero dependencies. Just HTML, CSS, and JavaScript.
+  https://github.com/IxMxAMAR/HTML
+-->
+<div id="fingerprint-badge" aria-hidden="true"></div>
+</body>
+</html>
