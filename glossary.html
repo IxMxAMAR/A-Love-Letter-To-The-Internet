@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--
+    ┌────────────────────────────────────────────────────────────────┐
+    │                                                                │
+    │   ██       ██████  ██    ██ ███████     ██      ███████       │
+    │   ██      ██    ██ ██    ██ ██          ██      ██            │
+    │   ██      ██    ██ ██    ██ █████       ██      █████         │
+    │   ██      ██    ██  ██  ██  ██          ██      ██            │
+    │   ███████  ██████    ████   ███████     ███████ ███████       │
+    │                                                                │
+    │        A Love Letter to the Web — Glossary                     │
+    │                                                                │
+    │   If you're reading this, you're my kind of person.            │
+    │   View-source is a love language.                              │
+    │                                                                │
+    └────────────────────────────────────────────────────────────────┘
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glossary — A Love Letter to the Web</title>
+  <meta name="description" content="A searchable dictionary of CSS terms demonstrated across the site.">
+
+  <meta property="og:title" content="Glossary — A Love Letter to the Web">
+  <meta property="og:description" content="80 CSS terms, definitions, and links to where they live in action.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/transitions.css">
+  <link rel="stylesheet" href="css/glossary.css">
+<script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+  <link rel="stylesheet" href="css/gimmicks.css">
+  <link rel="stylesheet" href="css/gimmicks-layer1.css">
+</head>
+<body>
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
+  <header class="page-header" role="banner" data-enter="header">
+    <a href="index.html" class="page-header__logo magnetic" data-transition="root">✦ Web Letter</a>
+    <nav class="page-header__nav" aria-label="Site navigation">
+      <a href="index.html" class="anim-underline magnetic" data-transition="root">Timeline</a>
+      <a href="hub.html" class="anim-underline magnetic" data-transition="root">Observatory</a>
+      <a href="playground.html" class="anim-underline magnetic" data-transition="root">Playground</a>
+      <a href="components.html" class="anim-underline magnetic" data-transition="root">Components</a>
+    </nav>
+  </header>
+
+  <main id="main-content" class="glossary" data-enter="hero">
+    <header class="glossary-header">
+      <h1 data-text-effect="reveal">Glossary</h1>
+      <div class="glossary-controls">
+        <input id="glossary-search" type="search" placeholder="Filter terms…" aria-label="Filter terms">
+        <kbd title="Focus filter">/</kbd>
+        <button id="random-term" class="ripple" type="button">🎲 Random</button>
+      </div>
+    </header>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb"></nav>
+
+    <div id="glossary-content"></div>
+
+    <div class="time-spent"></div>
+  </main>
+
+  <script type="module" src="js/transitions.js"></script>
+  <script type="module" src="js/gimmicks/global.js"></script>
+  <script type="module" src="js/gimmicks/hub-gm.js"></script>
+  <script type="module" src="js/glossary.js"></script>
+  <button id="sfx-toggle" class="sfx-toggle no-micro" aria-label="Toggle sound effects" aria-pressed="false" title="Toggle SFX (M)">&#128263;</button>
+<!--
+  Made with love, sweat, and far too much coffee.
+  Zero dependencies. Just HTML, CSS, and JavaScript.
+  https://github.com/IxMxAMAR/HTML
+-->
+<div id="fingerprint-badge" aria-hidden="true"></div>
+</body>
+</html>
