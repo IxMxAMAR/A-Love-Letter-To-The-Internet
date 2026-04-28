@@ -1,0 +1,351 @@
+/**
+ * lab.css — Lab page (Layer 2 / Task 5)
+ * Advanced CSS shape builder: split-pane controls + live preview + dialogs.
+ */
+
+.lab {
+  padding: var(--space-2xl) var(--space-lg);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.lab-header {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.lab-header h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: var(--space-sm);
+}
+
+.lab-header p {
+  color: oklch(0.7 0.04 280);
+  font-size: 1.05rem;
+}
+
+.lab-pane {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: var(--space-lg);
+  margin-top: var(--space-lg);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .lab-pane {
+    grid-template-columns: 1fr;
+  }
+  .lab-controls {
+    position: static !important;
+    max-height: none !important;
+  }
+}
+
+.lab-controls {
+  background: oklch(0.18 0.02 280 / 0.7);
+  border: 1px solid oklch(1 0 0 / 0.08);
+  border-radius: 12px;
+  padding: 16px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: sticky;
+  top: 100px;
+}
+
+.lab-toolbar-top {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.lab-toolbar-top button,
+.lab-toolbar-bottom button {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: oklch(0.22 0.04 280);
+  color: white;
+  border: 1px solid oklch(1 0 0 / 0.1);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.lab-toolbar-top button:hover,
+.lab-toolbar-bottom button:hover {
+  background: oklch(0.28 0.06 280);
+}
+
+.lab-toolbar-top button:active,
+.lab-toolbar-bottom button:active {
+  transform: translateY(1px);
+}
+
+.lab-section {
+  margin: 8px 0;
+  padding: 10px;
+  background: oklch(1 0 0 / 0.03);
+  border-radius: 8px;
+}
+
+.lab-section[open] {
+  background: oklch(1 0 0 / 0.05);
+}
+
+.lab-section summary {
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+  user-select: none;
+  list-style: revert;
+}
+
+.lab-section label {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  gap: 8px;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 0.85rem;
+}
+
+.lab-section input[type="range"] {
+  width: 100%;
+}
+
+.lab-section input[type="color"] {
+  width: 100%;
+  height: 28px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  padding: 0;
+}
+
+.lab-section select {
+  padding: 4px 8px;
+  background: oklch(0.2 0.02 280);
+  color: white;
+  border: 1px solid oklch(1 0 0 / 0.1);
+  border-radius: 4px;
+  font: inherit;
+  font-size: 0.85rem;
+}
+
+.ctl-val {
+  font-family: var(--font-code, monospace);
+  font-size: 0.8rem;
+  color: oklch(0.7 0.18 290);
+  min-width: 40px;
+  text-align: right;
+}
+
+.lab-preview-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.lab-preview {
+  background-image:
+    linear-gradient(45deg, oklch(0.15 0.02 280) 25%, transparent 25%),
+    linear-gradient(-45deg, oklch(0.15 0.02 280) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, oklch(0.15 0.02 280) 75%),
+    linear-gradient(-45deg, transparent 75%, oklch(0.15 0.02 280) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, 10px 0px;
+  min-height: 500px;
+  border: 1px solid oklch(1 0 0 / 0.08);
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  overflow: hidden;
+}
+
+.lab-canvas {
+  transition: all 200ms ease;
+}
+
+.lab-toolbar-bottom {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.lab-css-output {
+  background: oklch(0.12 0.02 280);
+  border: 1px solid oklch(1 0 0 / 0.08);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.lab-css-output summary {
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+  user-select: none;
+}
+
+.lab-css-output pre {
+  background: oklch(0.1 0.02 280);
+  color: oklch(0.7 0.18 200);
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  margin: 8px 0 0 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Dialogs */
+.lab-dialog {
+  padding: 24px;
+  border-radius: 16px;
+  background: oklch(0.18 0.02 280);
+  color: white;
+  border: 1px solid oklch(1 0 0 / 0.1);
+  max-width: 720px;
+  width: 90vw;
+}
+
+.lab-dialog::backdrop {
+  background: oklch(0 0 0 / 0.7);
+  backdrop-filter: blur(4px);
+}
+
+.lab-dialog__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.lab-dialog__head h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.lab-dialog__head button[data-close] {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 4px 12px;
+  line-height: 1;
+}
+
+.lab-thumb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.lab-thumb {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  padding: 8px;
+  background: oklch(1 0 0 / 0.05);
+  border: 1px solid oklch(1 0 0 / 0.08);
+  transition: transform 200ms ease;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.lab-thumb:hover {
+  transform: scale(1.05);
+}
+
+.lab-thumb:focus-visible {
+  outline: 2px solid oklch(0.7 0.18 290);
+  outline-offset: 2px;
+}
+
+.lab-thumb__name {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  right: 4px;
+  font-size: 0.75rem;
+  background: oklch(0 0 0 / 0.6);
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.lab-dialog--small {
+  max-width: 400px;
+}
+
+.lab-dialog--small input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  background: oklch(0.22 0.04 280);
+  color: white;
+  border: 1px solid oklch(1 0 0 / 0.1);
+  margin: 12px 0;
+  font: inherit;
+}
+
+.lab-dialog--small h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.lab-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.lab-dialog__actions button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: oklch(0.22 0.04 280);
+  color: white;
+  border: 1px solid oklch(1 0 0 / 0.1);
+  cursor: pointer;
+  font: inherit;
+}
+
+.lab-dialog__actions button:hover {
+  background: oklch(0.28 0.06 280);
+}
+
+/* Animation presets used by canvas */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -20px; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(3deg); }
+  75% { transform: rotate(-3deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-canvas {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<!--
+    ┌────────────────────────────────────────────────────────────────┐
+    │                                                                │
+    │   ██       ██████  ██    ██ ███████     ██      ███████       │
+    │   ██      ██    ██ ██    ██ ██          ██      ██            │
+    │   ██      ██    ██ ██    ██ █████       ██      █████         │
+    │   ██      ██    ██  ██  ██  ██          ██      ██            │
+    │   ███████  ██████    ████   ███████     ███████ ███████       │
+    │                                                                │
+    │        A Love Letter to the Web — Lab                          │
+    │                                                                │
+    │   If you're reading this, you're my kind of person.            │
+    │   View-source is a love language.                              │
+    │                                                                │
+    └────────────────────────────────────────────────────────────────┘
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab — A Love Letter to the Web</title>
+  <meta name="description" content="An advanced CSS shape builder. Sculpt, save, export, and share.">
+
+  <meta property="og:title" content="Lab — A Love Letter to the Web">
+  <meta property="og:description" content="Sculpt CSS shapes by hand. 25+ controls, 20 presets, save/export/share.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/transitions.css">
+  <link rel="stylesheet" href="css/lab.css">
+<script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+  <link rel="stylesheet" href="css/gimmicks.css">
+  <link rel="stylesheet" href="css/gimmicks-layer1.css">
+</head>
+<body>
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
+  <header class="page-header" role="banner" data-enter="header">
+    <a href="index.html" class="page-header__logo magnetic" data-transition="root">✦ Web Letter</a>
+    <nav class="page-header__nav" aria-label="Site navigation">
+      <a href="index.html" class="anim-underline magnetic" data-transition="root">Timeline</a>
+      <a href="hub.html" class="anim-underline magnetic" data-transition="root">Observatory</a>
+      <a href="playground.html" class="anim-underline magnetic" data-transition="root">Playground</a>
+      <a href="components.html" class="anim-underline magnetic" data-transition="root">Components</a>
+    </nav>
+  </header>
+
+  <main id="main-content" class="lab" data-enter="hero">
+    <header class="lab-header">
+      <h1 data-text-effect="reveal">The Lab</h1>
+      <p>Sculpt CSS shapes by hand. Save, export, share.</p>
+    </header>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb"></nav>
+
+    <div class="lab-pane">
+      <aside class="lab-controls">
+        <div class="lab-toolbar-top">
+          <button id="lab-presets" class="ripple" type="button">Presets</button>
+          <button id="lab-randomize" class="ripple" type="button">Randomize</button>
+        </div>
+
+        <details open class="lab-section">
+          <summary>Shape</summary>
+          <label>Width <input type="range" id="ctl-width" min="50" max="600" value="300"><span class="ctl-val" data-for="ctl-width">300</span>px</label>
+          <label>Height <input type="range" id="ctl-height" min="50" max="600" value="300"><span class="ctl-val" data-for="ctl-height">300</span>px</label>
+          <label>Border radius <input type="range" id="ctl-radius" min="0" max="50" value="20"><span class="ctl-val" data-for="ctl-radius">20</span>%</label>
+          <label>Clip-path
+            <select id="ctl-clip">
+              <option value="none">None</option>
+              <option value="circle(50%)">Circle</option>
+              <option value="polygon(50% 0%, 0% 100%, 100% 100%)">Triangle</option>
+              <option value="polygon(20% 0%, 80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%)">Hexagon</option>
+              <option value="polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%)">Decagon</option>
+              <option value="polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)">Star</option>
+            </select>
+          </label>
+        </details>
+
+        <details class="lab-section">
+          <summary>Color</summary>
+          <label>Type
+            <select id="ctl-bg-type">
+              <option value="solid">Solid</option>
+              <option value="linear" selected>Linear gradient</option>
+              <option value="radial">Radial gradient</option>
+              <option value="conic">Conic gradient</option>
+            </select>
+          </label>
+          <label>Color 1 <input type="color" id="ctl-color1" value="#a78bfa"></label>
+          <label>Color 2 <input type="color" id="ctl-color2" value="#f472b6"></label>
+          <label>Angle <input type="range" id="ctl-angle" min="0" max="360" value="135"><span class="ctl-val" data-for="ctl-angle">135</span>°</label>
+        </details>
+
+        <details class="lab-section">
+          <summary>Effects</summary>
+          <label>Box shadow X <input type="range" id="ctl-sh-x" min="-50" max="50" value="0"><span class="ctl-val" data-for="ctl-sh-x">0</span>px</label>
+          <label>Box shadow Y <input type="range" id="ctl-sh-y" min="-50" max="50" value="20"><span class="ctl-val" data-for="ctl-sh-y">20</span>px</label>
+          <label>Blur <input type="range" id="ctl-sh-blur" min="0" max="100" value="40"><span class="ctl-val" data-for="ctl-sh-blur">40</span>px</label>
+          <label>Spread <input type="range" id="ctl-sh-spread" min="-50" max="50" value="-10"><span class="ctl-val" data-for="ctl-sh-spread">-10</span>px</label>
+          <label>Shadow color <input type="color" id="ctl-sh-color" value="#a78bfa"></label>
+          <label>Filter blur <input type="range" id="ctl-blur" min="0" max="20" value="0"><span class="ctl-val" data-for="ctl-blur">0</span>px</label>
+          <label>Brightness <input type="range" id="ctl-brightness" min="0" max="200" value="100"><span class="ctl-val" data-for="ctl-brightness">100</span>%</label>
+          <label>Contrast <input type="range" id="ctl-contrast" min="0" max="200" value="100"><span class="ctl-val" data-for="ctl-contrast">100</span>%</label>
+          <label>Hue rotate <input type="range" id="ctl-hue" min="0" max="360" value="0"><span class="ctl-val" data-for="ctl-hue">0</span>°</label>
+          <label>Saturate <input type="range" id="ctl-sat" min="0" max="300" value="100"><span class="ctl-val" data-for="ctl-sat">100</span>%</label>
+        </details>
+
+        <details class="lab-section">
+          <summary>Transform</summary>
+          <label>Rotate <input type="range" id="ctl-rotate" min="-180" max="180" value="0"><span class="ctl-val" data-for="ctl-rotate">0</span>°</label>
+          <label>Scale <input type="range" id="ctl-scale" min="50" max="200" value="100"><span class="ctl-val" data-for="ctl-scale">100</span>%</label>
+          <label>Skew X <input type="range" id="ctl-skew-x" min="-45" max="45" value="0"><span class="ctl-val" data-for="ctl-skew-x">0</span>°</label>
+          <label>Skew Y <input type="range" id="ctl-skew-y" min="-45" max="45" value="0"><span class="ctl-val" data-for="ctl-skew-y">0</span>°</label>
+        </details>
+
+        <details class="lab-section">
+          <summary>Animation</summary>
+          <label>Preset
+            <select id="ctl-anim">
+              <option value="none">None</option>
+              <option value="spin 3s linear infinite">Spin</option>
+              <option value="float 4s ease-in-out infinite">Float</option>
+              <option value="pulse 2s ease-in-out infinite">Pulse</option>
+              <option value="wobble 5s ease-in-out infinite">Wobble</option>
+            </select>
+          </label>
+        </details>
+
+        <details class="lab-section">
+          <summary>Blend</summary>
+          <label>Mix-blend-mode
+            <select id="ctl-blend">
+              <option value="normal">Normal</option>
+              <option value="multiply">Multiply</option>
+              <option value="screen">Screen</option>
+              <option value="overlay">Overlay</option>
+              <option value="difference">Difference</option>
+              <option value="exclusion">Exclusion</option>
+              <option value="hue">Hue</option>
+              <option value="luminosity">Luminosity</option>
+            </select>
+          </label>
+          <label>Opacity <input type="range" id="ctl-opacity" min="0" max="100" value="100"><span class="ctl-val" data-for="ctl-opacity">100</span>%</label>
+        </details>
+      </aside>
+
+      <section class="lab-preview-wrap">
+        <div class="lab-preview" id="lab-preview" aria-label="Live preview">
+          <div class="lab-canvas" id="lab-canvas"></div>
+        </div>
+
+        <div class="lab-toolbar-bottom">
+          <button id="lab-save" class="ripple" type="button">Save</button>
+          <button id="lab-gallery" class="ripple" type="button">Gallery</button>
+          <button id="lab-export" class="ripple" type="button">Export PNG</button>
+          <button id="lab-share" class="ripple" type="button">Share URL</button>
+          <button id="lab-copy-css" class="ripple" type="button">Copy CSS</button>
+          <button id="lab-reset" class="no-micro" type="button">Reset</button>
+        </div>
+
+        <details class="lab-css-output">
+          <summary>Generated CSS</summary>
+          <pre id="lab-css"></pre>
+        </details>
+      </section>
+    </div>
+
+    <!-- Modals -->
+    <dialog id="presets-dialog" class="lab-dialog" aria-label="Presets gallery">
+      <div class="lab-dialog__head">
+        <h2>Presets</h2>
+        <button data-close class="no-micro">×</button>
+      </div>
+      <div id="presets-grid" class="lab-thumb-grid"></div>
+    </dialog>
+
+    <dialog id="gallery-dialog" class="lab-dialog" aria-label="Saved creations">
+      <div class="lab-dialog__head">
+        <h2>Your Saved Creations</h2>
+        <button data-close class="no-micro">×</button>
+      </div>
+      <div id="gallery-grid" class="lab-thumb-grid"></div>
+    </dialog>
+
+    <dialog id="save-dialog" class="lab-dialog lab-dialog--small" aria-label="Save creation">
+      <h2>Name your creation</h2>
+      <input id="save-name" type="text" placeholder="My masterpiece">
+      <div class="lab-dialog__actions">
+        <button data-close class="no-micro">Cancel</button>
+        <button id="save-confirm" class="ripple">Save</button>
+      </div>
+    </dialog>
+
+    <div class="time-spent"></div>
+  </main>
+
+  <script type="module" src="js/transitions.js"></script>
+  <script type="module" src="js/gimmicks/global.js"></script>
+  <script type="module" src="js/gimmicks/hub-gm.js"></script>
+  <script type="module" src="js/lab.js"></script>
+  <button id="sfx-toggle" class="sfx-toggle no-micro" aria-label="Toggle sound effects" aria-pressed="false" title="Toggle SFX (M)">&#128263;</button>
+<!--
+  Made with love, sweat, and far too much coffee.
+  Zero dependencies. Just HTML, CSS, and JavaScript.
+  https://github.com/IxMxAMAR/HTML
+-->
+<div id="fingerprint-badge" aria-hidden="true"></div>
+</body>
+</html>
