@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--
+    ┌────────────────────────────────────────────────────────────────┐
+    │                                                                │
+    │   ██       ██████  ██    ██ ███████     ██      ███████       │
+    │   ██      ██    ██ ██    ██ ██          ██      ██            │
+    │   ██      ██    ██ ██    ██ █████       ██      █████         │
+    │   ██      ██    ██  ██  ██  ██          ██      ██            │
+    │   ███████  ██████    ████   ███████     ███████ ███████       │
+    │                                                                │
+    │        A Love Letter to the Web — Arcade                       │
+    │                                                                │
+    │   If you're reading this, you're my kind of person.            │
+    │   View-source is a love language.                              │
+    │                                                                │
+    └────────────────────────────────────────────────────────────────┘
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arcade — A Love Letter to the Web</title>
+  <meta name="description" content="15 browser-native games — pick one and play. Snake, Breakout, Pong, and more.">
+
+  <meta property="og:title" content="Arcade — A Love Letter to the Web">
+  <meta property="og:description" content="15 games, zero dependencies. Insert coin.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/transitions.css">
+  <link rel="stylesheet" href="css/arcade.css">
+<script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+  <link rel="stylesheet" href="css/gimmicks.css">
+  <link rel="stylesheet" href="css/gimmicks-layer1.css">
+</head>
+<body>
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
+  <header class="page-header" role="banner" data-enter="header">
+    <a href="index.html" class="page-header__logo magnetic" data-transition="root">✦ Web Letter</a>
+    <nav class="page-header__nav" aria-label="Site navigation">
+      <a href="index.html" class="anim-underline magnetic" data-transition="root">Timeline</a>
+      <a href="hub.html" class="anim-underline magnetic" data-transition="root">Observatory</a>
+      <a href="playground.html" class="anim-underline magnetic" data-transition="root">Playground</a>
+      <a href="components.html" class="anim-underline magnetic" data-transition="root">Components</a>
+    </nav>
+  </header>
+
+  <main id="main-content" class="arcade" data-enter="hero">
+    <div class="ambient-bg ambient-bg--crt" aria-hidden="true"></div>
+    <h1 class="arcade-title text-shimmer">INSERT COIN</h1>
+    <p class="arcade-subtitle">15 games — pick one and play.</p>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb"></nav>
+
+    <div class="arcade-filters" role="tablist" data-enter="stagger">
+      <button class="arcade-filter active no-micro" data-cat="all" role="tab" aria-selected="true" style="--stagger:0">All</button>
+      <button class="arcade-filter no-micro" data-cat="retro" role="tab" aria-selected="false" style="--stagger:1">Retro</button>
+      <button class="arcade-filter no-micro" data-cat="puzzle" role="tab" aria-selected="false" style="--stagger:2">Puzzles</button>
+      <button class="arcade-filter no-micro" data-cat="wild" role="tab" aria-selected="false" style="--stagger:3">Wild</button>
+    </div>
+
+    <div class="arcade-layout">
+      <div class="arcade-grid" id="arcade-grid"></div>
+      <aside class="arcade-leaderboard">
+        <h2>High Scores</h2>
+        <ul id="leaderboard-list"></ul>
+        <button id="reset-scores" type="button" class="ripple">Reset Scores</button>
+      </aside>
+    </div>
+
+    <div class="time-spent"></div>
+  </main>
+
+  <script type="module" src="js/transitions.js"></script>
+  <script type="module" src="js/gimmicks/global.js"></script>
+  <script type="module" src="js/gimmicks/hub-gm.js"></script>
+  <script type="module" src="js/arcade.js"></script>
+  <!-- Letter 12/12: R — "We are not users. We are makers, dreamers, and builders." -->
+  <button id="sfx-toggle" class="sfx-toggle no-micro" aria-label="Toggle sound effects" aria-pressed="false" title="Toggle SFX (M)">&#128263;</button>
+<!--
+  Made with love, sweat, and far too much coffee.
+  Zero dependencies. Just HTML, CSS, and JavaScript.
+  https://github.com/IxMxAMAR/HTML
+-->
+<div id="fingerprint-badge" aria-hidden="true"></div>
+</body>
+</html>
