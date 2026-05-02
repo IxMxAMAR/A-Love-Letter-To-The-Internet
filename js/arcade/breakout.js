@@ -118,14 +118,10 @@ function step(dt) {
 function gameOver(won) {
   const newHigh = setHighScore(GAME_ID, score);
   if (newHigh) setHudHigh(score);
-  recordPlay(GAME_ID);
+  recordPlay(GAME_ID, { allLevels: !!won, score });
   overlay.show(`<div><h2>${won ? 'All Levels Cleared!' : 'Game Over'}</h2><p>Score: ${score}</p>${newHigh ? '<p>🏆 New high score!</p>' : ''}<div class="game-overlay__buttons"><button id="restart">Play again</button><a href="../arcade.html"><button class="secondary">Back</button></a></div></div>`);
   document.getElementById('restart')?.addEventListener('click', () => { overlay.hide(); reset(); loop.resume(); });
   loop.pause();
-  if (won) {
-    // Emit complete with allLevels flag for achievement engine
-    try { window.__state?.emit?.('game:complete', { game: GAME_ID, allLevels: true, score }); } catch {}
-  }
 }
 
 function draw() {

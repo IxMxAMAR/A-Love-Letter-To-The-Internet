@@ -293,8 +293,7 @@ function nextLevel() {
   levelIdx++;
   if (levelIdx >= LEVELS.length) {
     setHighScore(GAME_ID, solved * 100);
-    recordPlay(GAME_ID);
-    try { state.emit('game:complete', { game: GAME_ID, allLevels: solved === LEVELS.length, score: solved }); } catch {}
+    recordPlay(GAME_ID, { allLevels: solved === LEVELS.length, score: solved });
     overlay.show(`<div><h2>Cascade Mastered!</h2><p>Solved: ${solved}/${LEVELS.length}</p><div class="game-overlay__buttons"><button id="restart">Try again</button><a href="../arcade.html"><button class="secondary">Back</button></a></div></div>`);
     document.getElementById('restart')?.addEventListener('click', () => { overlay.hide(); levelIdx = 0; solved = 0; document.getElementById('hud-solved').textContent = '0'; loadLevel(); });
     return;

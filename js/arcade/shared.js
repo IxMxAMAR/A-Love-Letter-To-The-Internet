@@ -17,11 +17,11 @@ export function getHighScore(gameId) {
   return scores[gameId] || 0;
 }
 
-export function recordPlay(gameId) {
+export function recordPlay(gameId, extra = {}) {
   const played = state.get('games.played') || {};
   played[gameId] = (played[gameId] || 0) + 1;
   state.set('games.played', played);
-  state.emit('game:complete', { game: gameId });
+  state.emit('game:complete', { game: gameId, ...extra });
 }
 
 export function createHUD(opts = {}) {

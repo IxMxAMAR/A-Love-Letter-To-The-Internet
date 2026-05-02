@@ -12,9 +12,21 @@ import { audio } from './audio.js';
 export const ACHIEVEMENTS = [
   // Explorer
   { id: 'first-steps',     category: 'Explorer',    title: 'First Steps',     desc: 'Visit any page',                                trigger: 'page:visit',   check: () => true },
-  { id: 'tourist',         category: 'Explorer',    title: 'Tourist',         desc: 'Visit all 5 main pages',                        trigger: 'page:visit',   check: (s) => ['/index.html','/hub.html','/playground.html','/components.html','/arcade.html'].every(p => s.visits.pages[p] > 0 || s.visits.pages[p.replace('.html','')] > 0 || s.visits.pages[p.replace('/', '/')] > 0) },
-  { id: 'cartographer',    category: 'Explorer',    title: 'Cartographer',    desc: 'Visit all 8 zones',                             trigger: 'page:visit',   check: (s) => ['scroll-animations','popover-dialog','css-art','container-queries','view-transitions','houdini','has-selector','cascade-layers'].every(z => Object.keys(s.visits.pages).some(p => p.includes(z))) },
-  { id: 'completionist',   category: 'Explorer',    title: 'Completionist',   desc: 'Visit all pages including arcade',              trigger: 'page:visit',   check: () => false /* updated when arcade ships */ },
+  { id: 'tourist',         category: 'Explorer',    title: 'Tourist',         desc: 'Visit all 5 main pages',                        trigger: 'page:visit',   check: (s) => {
+    const targets = ['index.html','hub.html','playground.html','components.html','arcade.html'];
+    const visited = Object.keys(s.visits.pages || {});
+    return targets.every(t => visited.some(p => p.endsWith('/' + t) || p.endsWith(t)));
+  } },
+  { id: 'cartographer',    category: 'Explorer',    title: 'Cartographer',    desc: 'Visit all 8 zones',                             trigger: 'page:visit',   check: (s) => {
+    const targets = ['scroll-animations','popover-dialog','css-art','container-queries','view-transitions','houdini','has-selector','cascade-layers'];
+    const visited = Object.keys(s.visits.pages || {});
+    return targets.every(z => visited.some(p => p.includes(z)));
+  } },
+  { id: 'completionist',   category: 'Explorer',    title: 'Completionist',   desc: 'Visit all pages including arcade',              trigger: 'page:visit',   check: (s) => {
+    const required = ['index','hub','playground','components','arcade','lab','achievements','glossary','changelog','scroll-animations','popover-dialog','css-art','container-queries','view-transitions','houdini','has-selector','cascade-layers'];
+    const visited = Object.keys(s.visits.pages || {});
+    return required.every(name => visited.some(p => p.includes(name)));
+  } },
   { id: 'night-owl',       category: 'Explorer',    title: 'Night Owl',       desc: 'Visit between 2-5 AM',                          trigger: 'page:visit',   check: () => { const h = new Date().getHours(); return h >= 2 && h < 5; } },
   { id: 'deep-diver',      category: 'Explorer',    title: 'Deep Diver',      desc: 'Spend 30+ minutes on the site',                 trigger: 'session:tick', check: (s) => (Date.now() - (s.session.startTime || Date.now())) > 1800000 },
   { id: 'regular',         category: 'Explorer',    title: 'Regular',         desc: '10th visit',                                    trigger: 'page:visit',   check: (s) => s.visits.count >= 10 },
@@ -57,7 +69,7 @@ export const ACHIEVEMENTS = [
   // Special
   { id: 'hampster-fan',    category: 'Special',     title: 'Hampster Fan',    desc: 'Trigger hampster dance',                        trigger: 'gimmick:trigger', check: (_, e) => e?.name === 'hampster' },
   { id: 'newtons-revenge', category: 'Special',     title: "Newton's Revenge",desc: 'Use gravity mode',                              trigger: 'gimmick:trigger', check: (_, e) => e?.name === 'gravity' },
-  { id: 'in-the-zone',     category: 'Special',     title: 'In the Zone',     desc: 'Use focus mode for 5+ minutes',                 trigger: 'gimmick:trigger', check: (_, e) => e?.name === 'focus' },
+  { id: 'in-the-zone',     category: 'Special',     title: 'In the Zone',     desc: 'Use focus mode for 5+ minutes',                 trigger: 'gimmick:trigger', check: (_, e) => e?.name === 'focus-5min' },
   { id: 'dj',              category: 'Special',     title: 'DJ',              desc: 'Play chiptune for 2+ minutes',                  trigger: 'gimmick:trigger', check: (_, e) => e?.name === 'chiptune-2min' },
   { id: 'print-legend',    category: 'Special',     title: 'Print Legend',    desc: 'Print a page',                                  trigger: 'gimmick:trigger', check: (_, e) => e?.name === 'print' },
   { id: 'gesture-master',  category: 'Special',     title: 'Gesture Master',  desc: 'Use all touch gestures on mobile',              trigger: 'gimmick:trigger', check: (_, e) => e?.name === 'gestures' },
@@ -65,6 +77,7 @@ export const ACHIEVEMENTS = [
   { id: 'guestbook-signer',category: 'Special',     title: 'Guestbook Signer',desc: 'Submit a guestbook entry',                      trigger: 'gimmick:trigger', check: (_, e) => e?.name === 'guestbook' },
   { id: 'screenshot-pro',  category: 'Special',     title: 'Screenshot Pro',  desc: 'Use screenshot mode',                           trigger: 'gimmick:trigger', check: (_, e) => e?.name === 'screenshot' },
   { id: 'patience',        category: 'Special',     title: 'Patience',        desc: 'Trigger idle mode',                             trigger: 'gimmick:trigger', check: (_, e) => e?.name === 'idle' },
+  { id: 'long-time-no-see',category: 'Special',     title: 'Long Time, No See',desc: 'Visit 7+ days after first visit',              trigger: 'page:visit',      check: (s) => s.visits.firstVisit && (Date.now() - s.visits.firstVisit) > 604800000 },
 ];
 
 class AchievementEngine {

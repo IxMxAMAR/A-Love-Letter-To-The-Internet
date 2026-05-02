@@ -364,6 +364,7 @@ try {
   const chipBtn = document.getElementById('chiptune-toggle');
   if (chipBtn) {
     let chipBusy = false; // guard against rapid clicks during import
+    let djTimer = null;
     // Dynamic import so it does not block page load
     chipBtn.addEventListener('click', async () => {
       if (chipBusy) return;
@@ -373,6 +374,13 @@ try {
         const playing = await toggleMusic();
         chipBtn.textContent = playing ? '⏸ Pause Music' : '🎵 Play Music';
         chipBtn.classList.toggle('playing', playing);
+        // Layer 2 / Task 3 — DJ achievement: 2+ minutes of chiptune playback
+        if (playing) {
+          if (djTimer) clearTimeout(djTimer);
+          djTimer = setTimeout(() => { try { window.__state?.emit?.('gimmick:trigger', { name: 'chiptune-2min' }); } catch {} }, 120000);
+        } else {
+          if (djTimer) { clearTimeout(djTimer); djTimer = null; }
+        }
       } finally {
         chipBusy = false;
       }

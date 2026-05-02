@@ -7,6 +7,7 @@ import { state } from '../state.js';
 
 export function initModes() {
   let focusOn = false, screenshotOn = false, gravityOn = false;
+  let focusTimer = null;
 
   document.addEventListener('keydown', (e) => {
     if (e.target.closest('input,textarea,[contenteditable]')) return;
@@ -16,8 +17,16 @@ export function initModes() {
         focusOn = !focusOn;
         document.documentElement.classList.toggle('mode-focus', focusOn);
         if (focusOn) {
-          unlockAchievement('in-the-zone');
           try { state.emit('gimmick:trigger', { name: 'focus' }); } catch {}
+          try {
+            const prefs = state.get('preferences') || {};
+            prefs.focusStartedAt = Date.now();
+            state.set('preferences', prefs);
+          } catch {}
+          if (focusTimer) clearTimeout(focusTimer);
+          focusTimer = setTimeout(() => { try { state.emit('gimmick:trigger', { name: 'focus-5min' }); } catch {} }, 300000);
+        } else {
+          if (focusTimer) { clearTimeout(focusTimer); focusTimer = null; }
         }
         showToast(focusOn ? 'Focus mode \u2014 ESC exits' : 'Focus mode off');
       }
@@ -37,7 +46,11 @@ export function initModes() {
       }
     }
     if (e.key === 'Escape') {
-      if (focusOn) { focusOn = false; document.documentElement.classList.remove('mode-focus'); }
+      if (focusOn) {
+        focusOn = false;
+        document.documentElement.classList.remove('mode-focus');
+        if (focusTimer) { clearTimeout(focusTimer); focusTimer = null; }
+      }
       if (screenshotOn) { screenshotOn = false; document.documentElement.classList.remove('mode-screenshot'); }
       if (gravityOn) { gravityOn = false; stopGravity(); }
     }
@@ -70,7 +83,6 @@ export function initModes() {
       rafId = requestAnimationFrame(tick);
     };
     tick();
-    unlockAchievement('newtons-revenge');
     try { state.emit('gimmick:trigger', { name: 'gravity' }); } catch {}
     setTimeout(() => { if (gravityOn) { stopGravity(); gravityOn = false; } }, 5000);
   }
@@ -100,10 +112,6 @@ export function initModes() {
       }
     }, { passive: true });
   }
-}
-
-function unlockAchievement(id) {
-  try { localStorage.setItem(`achievement:${id}`, '1'); window.__eni?.sfx?.play?.('chime'); } catch {}
 }
 
 function showToast(msg) {

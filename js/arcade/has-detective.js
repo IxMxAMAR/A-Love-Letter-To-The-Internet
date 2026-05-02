@@ -123,8 +123,7 @@ function nextLevel() {
 
 function win() {
   setHighScore(GAME_ID, solved * 100);
-  recordPlay(GAME_ID);
-  try { state.emit('game:complete', { game: GAME_ID, allLevels: solved === LEVELS.length, score: solved }); } catch {}
+  recordPlay(GAME_ID, { allLevels: solved === LEVELS.length, score: solved });
   overlay.show(`<div><h2>Case Closed!</h2><p>Solved ${solved} of ${LEVELS.length}.</p><div class="game-overlay__buttons"><button id="restart">Reopen file</button><a href="../arcade.html"><button class="secondary">Back</button></a></div></div>`);
   document.getElementById('restart')?.addEventListener('click', () => { overlay.hide(); levelIdx = 0; solved = 0; livesLeft = 3; document.getElementById('hud-solved').textContent = '0'; loadLevel(); });
 }

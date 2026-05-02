@@ -127,8 +127,7 @@ function nextLevel() {
   levelIdx++;
   if (levelIdx >= LEVELS.length) {
     setHighScore(GAME_ID, fixed * 100);
-    recordPlay(GAME_ID);
-    try { state.emit('game:complete', { game: GAME_ID, allBugs: fixed === LEVELS.length, score: fixed }); } catch {}
+    recordPlay(GAME_ID, { allBugs: fixed === LEVELS.length, score: fixed });
     overlay.show(`<div><h2>All Bugs Squashed</h2><p>Fixed ${fixed}/${LEVELS.length}</p>${fixed === LEVELS.length ? '<p>🐛 Bug Squasher achievement!</p>' : ''}<div class="game-overlay__buttons"><button id="restart">Try again</button><a href="../arcade.html"><button class="secondary">Back</button></a></div></div>`);
     document.getElementById('restart')?.addEventListener('click', () => { overlay.hide(); levelIdx = 0; fixed = 0; document.getElementById('hud-fixed').textContent = '0'; loadLevel(); });
     return;

@@ -116,6 +116,15 @@ try {
         const dx = e.changedTouches[0].clientX - startX;
         const dy = e.changedTouches[0].clientY - startY;
         if (Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy) * 2) {
+          // Layer 2 / Task 3 — gesture-master achievement: track swipe gestures
+          try {
+            const used = window.__state?.get?.('preferences.usedGestures') || {};
+            used.swipe = true;
+            window.__state?.set?.('preferences.usedGestures', used);
+            if (Object.keys(used).length >= 2) {
+              window.__state?.emit?.('gimmick:trigger', { name: 'gestures' });
+            }
+          } catch {}
           location.href = dx < 0 ? pair[1] : pair[0];
         }
       }, { passive: true });

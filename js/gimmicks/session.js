@@ -48,7 +48,7 @@ export function initSession() {
       const s = Math.floor((Date.now() - start) / 1000);
       const m = Math.floor(s / 60), sec = s % 60;
       host.textContent = `Exploring for ${m}m ${sec}s`;
-      if (s === 1800) unlockAchievement('deep-diver');
+      if (s === 1800) { try { state.emit('session:tick', {}); } catch {} }
     };
     tick();
     setInterval(tick, 1000);
@@ -77,6 +77,3 @@ function showMilestone(msg, visits) {
   setTimeout(() => { t.classList.remove('visible'); setTimeout(() => t.remove(), 400); }, 4500);
 }
 
-function unlockAchievement(id) {
-  try { localStorage.setItem(`achievement:${id}`, '1'); window.__eni?.sfx?.play?.('chime'); } catch {}
-}

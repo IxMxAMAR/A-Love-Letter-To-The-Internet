@@ -149,8 +149,7 @@ function nextQ() {
 
 function victory() {
   setHighScore(GAME_ID, totalRight * 100);
-  recordPlay(GAME_ID);
-  try { state.emit('game:complete', { game: GAME_ID, allBosses: true, score: totalRight }); } catch {}
+  recordPlay(GAME_ID, { allBosses: true, score: totalRight });
   overlay.show(`<div><h2>🏆 All Bosses Defeated!</h2><p>Right answers: ${totalRight} / 25</p><div class="game-overlay__buttons"><button id="restart">Run again</button><a href="../arcade.html"><button class="secondary">Back</button></a></div></div>`);
   document.getElementById('restart')?.addEventListener('click', () => { location.reload(); });
 }

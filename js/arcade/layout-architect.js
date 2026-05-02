@@ -170,8 +170,7 @@ function nextLevel(stars) {
     const totalStars = levelStars.reduce((a, b) => a + b, 0);
     const allThreeStar = levelStars.every(s => s === 3);
     setHighScore(GAME_ID, totalStars * 100);
-    if (totalStars > 0) recordPlay(GAME_ID);
-    try { state.emit('game:complete', { game: GAME_ID, allThreeStar, score: totalStars }); } catch {}
+    if (totalStars > 0) recordPlay(GAME_ID, { allThreeStar, score: totalStars });
     overlay.show(`<div><h2>Architecture Complete</h2><p>Stars: ${totalStars}/${LEVELS.length * 3}</p>${allThreeStar ? '<p>🌟 Perfect run!</p>' : ''}<div class="game-overlay__buttons"><button id="restart">Try again</button><a href="../arcade.html"><button class="secondary">Back</button></a></div></div>`);
     document.getElementById('restart')?.addEventListener('click', () => { overlay.hide(); levelIdx = 0; levelStars = []; document.getElementById('hud-stars').textContent = '0'; loadLevel(); });
     return;

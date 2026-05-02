@@ -242,6 +242,15 @@ try {
           location.href = pathTo(ZONE_PATHS[parseInt(e.key, 10) - 1]);
         }
     }
+    // Layer 2 / Task 3 — track unique keyboard shortcuts for keyboard-warrior achievement
+    try {
+      const used = state.get('preferences.shortcutsUsed') || {};
+      if (!used[e.key] && /^[a-z]$/i.test(e.key)) {
+        used[e.key] = true;
+        state.set('preferences.shortcutsUsed', used);
+        state.emit('gimmick:trigger', { name: 'shortcut-used' });
+      }
+    } catch {}
   });
 } catch (e) {}
 
@@ -805,7 +814,6 @@ try {
         else {
           c.remove();
           document.body.classList.remove('konami-invert');
-          try { localStorage.setItem('achievement:the-code', '1'); } catch {}
           try { state.emit('gimmick:trigger', { name: 'konami' }); } catch {}
         }
       })(performance.now());
@@ -847,7 +855,6 @@ try {
         if (t < end) requestAnimationFrame(tick);
         else {
           c.remove();
-          try { localStorage.setItem('achievement:red-pill', '1'); } catch {}
           try { state.emit('gimmick:trigger', { name: 'matrix' }); } catch {}
         }
       })(performance.now());
@@ -882,6 +889,15 @@ try {
     let timer = null;
     addEventListener('touchstart', (e) => {
       timer = setTimeout(() => {
+        // Layer 2 / Task 3 — gesture-master achievement: track long-press
+        try {
+          const used = state.get('preferences.usedGestures') || {};
+          used.longpress = true;
+          state.set('preferences.usedGestures', used);
+          if (Object.keys(used).length >= 2) {
+            state.emit('gimmick:trigger', { name: 'gestures' });
+          }
+        } catch {}
         const menu = document.getElementById('context-menu') || document.querySelector('[popover="context-menu"]');
         if (!menu) return;
         menu.style.left = e.touches[0].clientX + 'px';
@@ -891,5 +907,21 @@ try {
     }, { passive: true });
     addEventListener('touchmove', () => { if (timer) { clearTimeout(timer); timer = null; } }, { passive: true });
     addEventListener('touchend', () => { if (timer) { clearTimeout(timer); timer = null; } }, { passive: true });
+  } catch {}
+})();
+
+/* Layer 2 / Task 3 — DevTools detection (inspector achievement) */
+(function devtoolsDetect() {
+  try {
+    let devtoolsOpen = false;
+    setInterval(() => {
+      const w = window.outerWidth - window.innerWidth;
+      const h = window.outerHeight - window.innerHeight;
+      const open = w > 200 || h > 200;
+      if (open && !devtoolsOpen) {
+        devtoolsOpen = true;
+        try { state.emit('gimmick:trigger', { name: 'devtools' }); } catch {}
+      }
+    }, 2000);
   } catch {}
 })();

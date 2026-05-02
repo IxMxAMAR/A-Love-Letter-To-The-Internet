@@ -104,8 +104,7 @@ document.getElementById('zg-tool-sand').addEventListener('click', () => {
 document.getElementById('zg-clear').addEventListener('click', () => { stones = []; drawAll._ripples = []; document.getElementById('hud-stones').textContent = '0'; drawAll(); });
 document.getElementById('zg-end').addEventListener('click', () => {
   setHighScore(GAME_ID, stones.length);
-  recordPlay(GAME_ID);
-  try { state.emit('game:complete', { game: GAME_ID, score: stones.length }); } catch {}
+  recordPlay(GAME_ID, { score: stones.length });
   overlay.show(`<div><h2>Garden Tended</h2><p>${stones.length} stone${stones.length === 1 ? '' : 's'} placed.</p><div class="game-overlay__buttons"><button id="restart">Begin again</button><a href="../arcade.html"><button class="secondary">Back</button></a></div></div>`);
   document.getElementById('restart')?.addEventListener('click', () => { overlay.hide(); stones = []; drawAll._ripples = []; document.getElementById('hud-stones').textContent = '0'; drawAll(); });
 });

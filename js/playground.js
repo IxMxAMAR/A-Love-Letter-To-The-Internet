@@ -578,7 +578,16 @@ function init() {
   presetBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       const key = btn.dataset.preset;
-      if (key) loadPreset(key);
+      if (key) {
+        loadPreset(key);
+        // Layer 2 / Task 3 — track unique presets for playground-regular achievement
+        try {
+          const used = window.__state?.get?.('preferences.presetsUsed') || {};
+          used[key] = true;
+          window.__state?.set?.('preferences.presetsUsed', used);
+          window.__state?.emit?.('gimmick:trigger', { name: 'preset-used' });
+        } catch {}
+      }
     });
   });
 

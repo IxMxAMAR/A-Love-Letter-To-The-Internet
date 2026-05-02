@@ -140,8 +140,7 @@ function nextLevel() {
   levelIdx++;
   if (levelIdx >= LEVELS.length) {
     setHighScore(GAME_ID, stats.passed * 100);
-    recordPlay(GAME_ID);
-    try { state.emit('game:complete', { game: GAME_ID, allLevels: stats.passed === LEVELS.length, score: stats.passed }); } catch {}
+    recordPlay(GAME_ID, { allLevels: stats.passed === LEVELS.length, score: stats.passed });
     overlay.show(`<div><h2>All ${LEVELS.length} Levels Done</h2><p>Passed: ${stats.passed}/${LEVELS.length}</p><div class="game-overlay__buttons"><button id="restart">Try again</button><a href="../arcade.html"><button class="secondary">Back</button></a></div></div>`);
     document.getElementById('restart')?.addEventListener('click', () => { overlay.hide(); levelIdx = 0; stats = { passed: 0, attempts: 0 }; document.getElementById('hud-passed').textContent = '0'; loadLevel(); });
     return;

@@ -90,8 +90,7 @@ function save() {
 
 function end() {
   setHighScore(GAME_ID, saved.length * 100);
-  recordPlay(GAME_ID);
-  try { state.emit('game:complete', { game: GAME_ID, score: saved.length }); } catch {}
+  recordPlay(GAME_ID, { score: saved.length });
   overlay.show(`<div><h2>Gallery Curated</h2><p>Saved ${saved.length} piece${saved.length === 1 ? '' : 's'}.</p><div class="game-overlay__buttons"><button id="restart">Spin again</button><a href="../arcade.html"><button class="secondary">Back</button></a></div></div>`);
   document.getElementById('restart')?.addEventListener('click', () => { overlay.hide(); spins = 5; saved = []; current = null; document.getElementById('hud-spins').textContent = '5'; document.getElementById('hud-saved').textContent = '0'; document.getElementById('rl-gallery').innerHTML = ''; document.getElementById('rl-spin').disabled = false; document.getElementById('rl-art').removeAttribute('style'); });
 }
