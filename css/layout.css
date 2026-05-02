@@ -50,6 +50,24 @@
   color: var(--color-text);
 }
 
+/* ── Trophy icon (Layer 2 / Task 9) ─────────────────────────── */
+.trophy-icon {
+  font-size: 1rem;
+  text-decoration: none;
+  margin-left: 4px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 200ms ease, transform 150ms ease;
+}
+.trophy-icon:hover { background: oklch(1 0 0 / 0.08); transform: translateY(-2px); }
+.trophy-icon:focus-visible { outline: 2px solid oklch(0.75 0.2 290); outline-offset: 2px; }
+/* Suppress underline animation that .anim-underline carries (trophy is icon-only). */
+.page-header__nav .trophy-icon::after,
+.zone-nav-top .trophy-icon::after,
+.zone-nav-bar .trophy-icon::after {
+  content: none !important;
+}
+
 /* ── Sections ───────────────────────────────────────────────── */
 .section-full {
   min-height: 100dvh;

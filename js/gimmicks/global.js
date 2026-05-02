@@ -179,6 +179,9 @@ try {
     + '<li><kbd>h</kbd><span class="shortcut-desc">Go to Hub</span></li>'
     + '<li><kbd>p</kbd><span class="shortcut-desc">Go to Playground</span></li>'
     + '<li><kbd>c</kbd><span class="shortcut-desc">Go to Components</span></li>'
+    + '<li><kbd>a</kbd><span class="shortcut-desc">Go to Arcade</span></li>'
+    + '<li><kbd>l</kbd><span class="shortcut-desc">Go to Lab</span></li>'
+    + '<li><kbd>g</kbd><span class="shortcut-desc">Go to Glossary</span></li>'
     + '<li><kbd>1</kbd><span class="shortcut-desc">Scroll Animations zone</span></li>'
     + '<li><kbd>2</kbd><span class="shortcut-desc">Popover &amp; Dialog zone</span></li>'
     + '<li><kbd>3</kbd><span class="shortcut-desc">CSS Art zone</span></li>'
@@ -220,6 +223,18 @@ try {
       case 'c':
         e.preventDefault();
         location.href = pathTo('components.html');
+        break;
+      case 'a':
+        e.preventDefault();
+        location.href = pathTo('arcade.html');
+        break;
+      case 'l':
+        e.preventDefault();
+        location.href = pathTo('lab.html');
+        break;
+      case 'g':
+        e.preventDefault();
+        location.href = pathTo('glossary.html');
         break;
       default:
         if (e.key >= '1' && e.key <= '8') {
