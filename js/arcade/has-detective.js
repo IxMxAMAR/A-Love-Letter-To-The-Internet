@@ -71,9 +71,10 @@ document.head.appendChild(styleTag);
 const overlay = createOverlay(root);
 
 function loadLevel() {
+  livesLeft = 3;
+  document.getElementById('hud-guesses').textContent = '3';
   const lvl = LEVELS[levelIdx];
   document.getElementById('hud-level').textContent = levelIdx + 1;
-  document.getElementById('hud-guesses').textContent = livesLeft;
   document.getElementById('hd-q').textContent = lvl.q;
   const prev = document.getElementById('hd-preview');
   prev.innerHTML = lvl.dom;
@@ -86,9 +87,13 @@ function loadLevel() {
 
 function clickTarget(el) {
   const lvl = LEVELS[levelIdx];
-  const targets = document.getElementById('hd-preview').querySelectorAll(lvl.target);
-  if ([...targets].includes(el)) {
-    el.classList.add('hd-correct');
+  const prev = document.getElementById('hd-preview');
+  const targets = [...prev.querySelectorAll(lvl.target)];
+  // Walk up from clicked element to find a target ancestor (within preview)
+  let match = el;
+  while (match && match !== prev && !targets.includes(match)) match = match.parentElement;
+  if (match && targets.includes(match)) {
+    match.classList.add('hd-correct');
     solved++;
     document.getElementById('hud-solved').textContent = solved;
     playSound('chime');

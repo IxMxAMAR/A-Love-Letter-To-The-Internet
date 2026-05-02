@@ -35,6 +35,7 @@ function reset() {
   alive = true;
   tickAcc = 0;
   tickRate = 0.12; // seconds per cell move
+  if (typeof loop !== 'undefined') loop.resume();
 }
 
 function placeFood() {
@@ -81,6 +82,7 @@ function die() {
   const newHigh = setHighScore(GAME_ID, score);
   if (newHigh) setHudHigh(score);
   recordPlay(GAME_ID);
+  loop.pause();
   overlay.show(`<div><h2>Game Over</h2><p>Score: ${score}</p>${newHigh ? '<p>🏆 New high score!</p>' : ''}<div class="game-overlay__buttons"><button id="restart">Play again</button><a href="../arcade.html"><button class="secondary">Back</button></a></div></div>`);
   document.getElementById('restart')?.addEventListener('click', () => { overlay.hide(); reset(); });
 }

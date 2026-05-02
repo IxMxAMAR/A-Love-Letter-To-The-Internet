@@ -281,4 +281,6 @@ document.getElementById('at-test').addEventListener('click', () => {
 });
 document.getElementById('at-skip').addEventListener('click', () => { playSound('click'); nextLevel(); });
 
+addEventListener('beforeunload', () => { if (loadLevel._tInt) clearInterval(loadLevel._tInt); });
+
 loadLevel();

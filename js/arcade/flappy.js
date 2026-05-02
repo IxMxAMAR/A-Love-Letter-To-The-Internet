@@ -50,12 +50,14 @@ function step(dt) {
   pipes = pipes.filter(p => p.x > -PIPE_W);
 
   // collisions
-  pipes.forEach(p => {
+  for (let i = 0; i < pipes.length; i++) {
+    const p = pipes[i];
     if (bird.x + 18 > p.x && bird.x - 18 < p.x + PIPE_W) {
-      if (bird.y - 18 < p.gap_y || bird.y + 18 > p.gap_y + GAP) return die();
+      if (bird.y - 18 < p.gap_y || bird.y + 18 > p.gap_y + GAP) { die(); break; }
     }
     if (!p.passed && p.x + PIPE_W < bird.x) { p.passed = true; score++; setHudScore(score); playSound('chime'); }
-  });
+  }
+  if (!alive) return;
 
   draw();
 }

@@ -20,7 +20,7 @@ const LEVELS = [
   { dom: '<form><label></label><input><label></label><input></form>', target: 'label + input', hint: 'Select inputs immediately after labels', accepts: ['label + input', 'label+input'] },
   { dom: '<section><article></article><div></div><article></article></section>', target: 'section > article', hint: 'Select articles that are direct children of section', accepts: ['section > article', 'section>article'] },
   { dom: '<a href="x.pdf"></a><a href="x.html"></a><a href="y.pdf"></a>', target: '[href$=".pdf"]', hint: 'Select pdf links', accepts: ['[href$=".pdf"]', 'a[href$=".pdf"]'] },
-  { dom: '<p>contains foo</p><p>has bar</p><p>contains foo too</p>', target: '[class*="x"]', hint: 'No matches expected — but try p[data-x]', accepts: ['p[data-x]', '[data-x]', 'p:not([data-x])'], allowAny: true },
+  { dom: '<p class="text">A</p><p class="info xtra">B</p><p class="text xreg">C</p>', target: '[class*="x"]', hint: 'Select elements whose class contains "x"', accepts: ['[class*="x"]', 'p[class*="x"]'] },
   { dom: '<div><div><span></span></div></div>', target: 'div div span', hint: 'Select the deeply nested span', accepts: ['div div span', 'span'] },
   { dom: '<ul><li><a></a></li><li><a></a></li></ul>', target: 'li:not(:first-child) a', hint: 'Select link in all but first li', accepts: ['li:not(:first-child) a', 'li ~ li a'] },
   { dom: '<input required><input><input required>', target: '[required]', hint: 'Select required inputs', accepts: ['[required]', 'input[required]', 'input:required'] },

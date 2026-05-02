@@ -74,7 +74,7 @@ styleTag.textContent = `
 .la-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .la-frame h4 { margin: 0 0 8px; font-size: 0.85rem; opacity: 0.7; }
 .la-target, .la-current { padding: 16px; min-height: 120px; background: oklch(0.05 0.01 280); border: 1px solid oklch(1 0 0 / 0.1); border-radius: 8px; }
-.la-target .la-item, .la-current .la-item { width: 24px; height: 24px; border-radius: 4px; }
+.la-target .la-item, .la-current .la-item { width: 56px; height: 56px; border-radius: 4px; }
 .la-controls { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 12px; background: oklch(0.18 0.02 280); border-radius: 8px; }
 .la-controls label { display: grid; grid-template-columns: 110px 1fr auto; gap: 8px; align-items: center; font-size: 0.85rem; }
 .la-controls select, .la-controls input { padding: 4px 8px; background: oklch(0.22 0.04 280); color: white; border: 1px solid oklch(1 0 0 / 0.1); border-radius: 4px; }
@@ -170,7 +170,7 @@ function nextLevel(stars) {
     const totalStars = levelStars.reduce((a, b) => a + b, 0);
     const allThreeStar = levelStars.every(s => s === 3);
     setHighScore(GAME_ID, totalStars * 100);
-    recordPlay(GAME_ID);
+    if (totalStars > 0) recordPlay(GAME_ID);
     try { state.emit('game:complete', { game: GAME_ID, allThreeStar, score: totalStars }); } catch {}
     overlay.show(`<div><h2>Architecture Complete</h2><p>Stars: ${totalStars}/${LEVELS.length * 3}</p>${allThreeStar ? '<p>🌟 Perfect run!</p>' : ''}<div class="game-overlay__buttons"><button id="restart">Try again</button><a href="../arcade.html"><button class="secondary">Back</button></a></div></div>`);
     document.getElementById('restart')?.addEventListener('click', () => { overlay.hide(); levelIdx = 0; levelStars = []; document.getElementById('hud-stars').textContent = '0'; loadLevel(); });

@@ -74,9 +74,10 @@ function resetBall(dir) {
 function checkWin() {
   if (p1Score >= 5 || p2Score >= 5) {
     const won = p1Score > p2Score;
-    if (won) { setHighScore(GAME_ID, p1Score * 100); recordPlay(GAME_ID); }
+    if (won) { setHighScore(GAME_ID, p1Score * 100); }
+    recordPlay(GAME_ID);
     overlay.show(`<div><h2>${won ? 'You Win!' : 'CPU Wins'}</h2><p>Final: ${p1Score} - ${p2Score}</p><div class="game-overlay__buttons"><button id="restart">Play again</button><a href="../arcade.html"><button class="secondary">Back</button></a></div></div>`);
-    document.getElementById('restart')?.addEventListener('click', () => { overlay.hide(); reset(); });
+    document.getElementById('restart')?.addEventListener('click', () => { overlay.hide(); reset(); loop.resume(); });
     loop.pause();
   }
 }

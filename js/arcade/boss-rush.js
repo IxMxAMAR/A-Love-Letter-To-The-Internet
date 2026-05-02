@@ -124,8 +124,6 @@ function answer(btn, picked, correct) {
     playSound('error');
     if (hp <= 0) return defeat();
     setFeedback('bad', `Miss! ${hp} HP left.`);
-    // Re-enable other options
-    [...document.getElementById('br-options').children].forEach(b => { if (b !== btn && !b.classList.contains('wrong')) { /* already active */ } });
   }
 }
 
