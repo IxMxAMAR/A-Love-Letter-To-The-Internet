@@ -58,8 +58,16 @@ function getCurrentPageKey() {
 }
 
 function safeParseJSON(raw, fallback) {
+  // sessionStorage.getItem returns null for missing keys, and JSON.parse(null)
+  // happily returns null (the literal) instead of throwing. Treat null/undefined
+  // input — and any non-matching shape — as the fallback so callers can rely on
+  // the returned type matching the fallback type.
+  if (raw == null) return fallback;
   try {
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(fallback) && !Array.isArray(parsed)) return fallback;
+    if (parsed == null) return fallback;
+    return parsed;
   } catch {
     return fallback;
   }
