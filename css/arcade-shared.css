@@ -1,0 +1,74 @@
+/* ── Arcade Shared (Layer 3 foundation) ────────── */
+
+.game-page {
+  min-height: 100vh; padding: var(--space-xl) var(--space-lg);
+  display: grid; place-items: center; gap: var(--space-md);
+}
+
+.game-shell {
+  width: 100%; max-width: 800px;
+  background: oklch(0.12 0.02 280); border: 1px solid oklch(0.65 0.22 290 / 0.3);
+  border-radius: 16px; padding: var(--space-lg);
+  box-shadow: 0 0 60px -20px oklch(0.65 0.22 290 / 0.4);
+  position: relative;
+}
+
+.game-hud {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--font-code, monospace); font-size: 0.95rem;
+  padding: 8px 12px; background: oklch(0.18 0.03 280);
+  border-radius: 8px; margin-bottom: var(--space-md);
+}
+.game-hud__score, .game-hud__highscore, .game-hud__lives {
+  display: flex; gap: 8px; align-items: center;
+}
+.game-hud__score strong, .game-hud__highscore strong, .game-hud__lives strong {
+  color: oklch(0.85 0.18 290); font-size: 1.1rem;
+}
+
+.game-canvas-wrap {
+  position: relative; width: 100%; aspect-ratio: 4 / 3;
+  background: oklch(0.05 0.01 280); border-radius: 12px; overflow: hidden;
+}
+.game-canvas-wrap canvas, .game-canvas-wrap > .game-board {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+}
+
+.game-overlay {
+  position: absolute; inset: 0;
+  background: oklch(0 0 0 / 0.75); backdrop-filter: blur(6px);
+  display: grid; place-items: center; padding: var(--space-lg);
+  text-align: center; z-index: 5;
+  opacity: 0; pointer-events: none; transition: opacity 200ms ease;
+}
+.game-overlay.visible { opacity: 1; pointer-events: auto; }
+.game-overlay h2 { font-size: 2rem; margin: 0 0 var(--space-md); color: oklch(0.85 0.18 290); }
+.game-overlay__buttons { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: var(--space-md); }
+.game-overlay button {
+  padding: 10px 20px; font-size: 1rem; cursor: pointer;
+  background: oklch(0.65 0.22 290); color: white; border: none; border-radius: 8px;
+  transition: transform 150ms ease;
+}
+.game-overlay button:hover { transform: scale(1.05); }
+.game-overlay button.secondary { background: oklch(0.22 0.04 280); }
+
+.game-controls {
+  margin-top: var(--space-md); font-size: 0.85rem; color: var(--color-text-muted, oklch(0.7 0 0));
+  text-align: center;
+}
+.game-controls kbd {
+  font-family: var(--font-code); padding: 2px 6px;
+  border: 1px solid oklch(1 0 0 / 0.2); border-radius: 4px;
+  background: oklch(0.18 0.02 280); margin: 0 2px;
+}
+
+.game-back {
+  display: inline-block; margin-top: var(--space-md);
+  color: var(--color-text-muted); text-decoration: none;
+  font-size: 0.9rem;
+}
+.game-back:hover { color: oklch(0.85 0.18 290); }
+
+@media (prefers-reduced-motion: reduce) {
+  .game-overlay { transition: none; }
+}
