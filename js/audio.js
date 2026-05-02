@@ -73,7 +73,10 @@ class AudioEngine {
     } catch {}
   }
   loop(name, opts = {}) {
-    // For ambient zone music (delegates to existing chiptune.js for now)
+    // TODO: Future hook for sustained audio (zone ambience, music beds).
+    // Layer 3 currently delegates ambience to chiptune.js / sfx.js, so this
+    // method is intentionally a no-op stub. When implementing, store the
+    // returned handle in this._loops so stop(name) can cancel it.
     return null;
   }
   stop(name) {

@@ -8,14 +8,14 @@ const root = document.getElementById('game-root');
 const LEVELS = [
   {
     rules: [
-      'div { background: red; }',
+      '.box { background: red; }',
       '.box { background: green; }',
-      '#item { background: rgb(167, 139, 250); }',
-      'div.box { background: blue; }',
+      '.box { background: rgb(167, 139, 250); }',
+      '.box { background: blue; }',
     ],
     correctOrder: [0, 1, 3, 2],
-    domHtml: '<div class="box" id="item">Box</div>',
-    hint: 'Make the box purple (#a78bfa). The most specific rule wins regardless of order.',
+    domHtml: '<div class="box">Box</div>',
+    hint: 'Make the box purple (#a78bfa). Equal specificity — last rule wins.',
   },
   {
     rules: [

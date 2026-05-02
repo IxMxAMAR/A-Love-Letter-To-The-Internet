@@ -25,6 +25,7 @@ const COLS = canvas.width / CELL;
 const ROWS = canvas.height / CELL;
 
 let snake, dir, nextDir, food, score, alive, tickAcc, tickRate;
+let loop = null;
 
 function reset() {
   snake = [{ x: Math.floor(COLS / 2), y: Math.floor(ROWS / 2) }];
@@ -35,7 +36,7 @@ function reset() {
   alive = true;
   tickAcc = 0;
   tickRate = 0.12; // seconds per cell move
-  if (typeof loop !== 'undefined') loop.resume();
+  if (loop) loop.resume();
 }
 
 function placeFood() {
@@ -102,4 +103,4 @@ addEventListener('keydown', (e) => {
 });
 
 reset();
-const loop = gameLoop(step);
+loop = gameLoop(step);

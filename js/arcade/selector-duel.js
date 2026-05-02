@@ -118,7 +118,7 @@ function testSelector() {
   const targets = lvl.target ? prev.querySelectorAll(lvl.target) : [];
   match.forEach(m => m.classList.add('duel-match'));
   const sameSet = targets.length === match.length && Array.from(targets).every(t => Array.from(match).includes(t));
-  if (sameSet || (lvl.allowAny && match.length > 0)) {
+  if (sameSet) {
     stats.passed++;
     document.getElementById('hud-passed').textContent = stats.passed;
     playSound('chime');

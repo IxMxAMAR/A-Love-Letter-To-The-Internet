@@ -8,9 +8,9 @@ import { state } from './state.js';
 
 const GAMES = [
   { id: 'snake',             title: 'CSS Snake',             cat: 'retro'  },
-  { id: 'breakout',          title: 'Breakout: Cascade',     cat: 'retro'  },
-  { id: 'pong',              title: 'Pong: Specificity',     cat: 'retro'  },
-  { id: 'asteroids',         title: 'Asteroids: !important', cat: 'retro'  },
+  { id: 'breakout',          title: 'Breakout (The Cascade)', cat: 'retro' },
+  { id: 'pong',              title: 'Pong (Specificity Wars)', cat: 'retro' },
+  { id: 'asteroids',         title: 'Asteroids (!important)', cat: 'retro' },
   { id: 'flappy',            title: 'Flappy Div',            cat: 'retro'  },
   { id: 'selector-duel',     title: 'Selector Duel',         cat: 'puzzle' },
   { id: 'layout-architect',  title: 'Layout Architect',      cat: 'puzzle' },
@@ -90,3 +90,9 @@ resetBtn?.addEventListener('click', () => {
 /* ── Initial paint ──────────────────────────────────────────── */
 renderCards();
 renderLeaderboard();
+
+/* ── Reactive: re-render when high scores change ────────────── */
+state.subscribe('games.highScores', () => {
+  renderCards(document.querySelector('.arcade-filter.active')?.dataset.cat || 'all');
+  renderLeaderboard();
+});

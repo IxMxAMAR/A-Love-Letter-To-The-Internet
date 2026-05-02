@@ -119,6 +119,11 @@ class AchievementEngine {
     t.className = 'achievement-toast';
     t.setAttribute('role', 'status');
     t.innerHTML = `<strong>Achievement unlocked:</strong> ${def.title}<br><small>${def.desc}</small>`;
+    // Stack newer toasts below existing ones (each ~80px tall + 8px gap).
+    // Count all live toasts (including ones still in their pre-visible rAF tick),
+    // not just `.visible`, so two unlocks fired in the same frame still stack.
+    const existing = document.querySelectorAll('.achievement-toast').length;
+    t.style.top = `${20 + existing * 88}px`;
     document.body.appendChild(t);
     requestAnimationFrame(() => t.classList.add('visible'));
     setTimeout(() => { t.classList.remove('visible'); setTimeout(() => t.remove(), 400); }, 4500);

@@ -910,6 +910,17 @@ try {
   } catch {}
 })();
 
+/* Layer 2 / Task 3 — Ctrl+U / Cmd+U fires view-source achievement (most browsers
+   block window.open('view-source:...'), so this is the reliable trigger). Don't
+   preventDefault — let the browser open the source view. */
+try {
+  addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key && e.key.toLowerCase() === 'u') {
+      try { state.emit('gimmick:trigger', { name: 'view-source' }); } catch {}
+    }
+  });
+} catch {}
+
 /* Layer 2 / Task 3 — DevTools detection (inspector achievement) */
 (function devtoolsDetect() {
   try {

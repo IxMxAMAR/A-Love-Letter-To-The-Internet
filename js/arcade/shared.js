@@ -75,9 +75,18 @@ export function gameLoop(stepFn) {
   };
 }
 
+// Audio context unlock — must run inside a user gesture (browser autoplay policy).
+// Canvas-only games don't trigger sounds via DOM clicks, so we bridge from keydown.
+let audioUnlocked = false;
+export function unlockAudio() {
+  if (audioUnlocked) return;
+  audioUnlocked = true;
+  try { audio._ensure?.(); } catch {}
+}
+
 export function createInput() {
   const keys = new Set();
-  const onDown = (e) => keys.add(e.key);
+  const onDown = (e) => { unlockAudio(); keys.add(e.key); };
   const onUp = (e) => keys.delete(e.key);
   addEventListener('keydown', onDown);
   addEventListener('keyup', onUp);
