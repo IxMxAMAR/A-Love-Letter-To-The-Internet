@@ -402,100 +402,64 @@
     </section>
 
     <!-- ═══════════════════════════════════════════════════
-         ACT 3 — PLAYGROUND: Step-by-step builder
+         ACT 3 — BUILD A SHAPE v2 (Layer 2 / Task 10)
     ════════════════════════════════════════════════════ -->
-    <section class="act act-playground" aria-labelledby="playground-title">
+    <section class="act act-playground bas-v2" id="build-a-shape" aria-label="Build a Shape v2">
       <div class="content-width">
         <span class="label act-label">Interactive</span>
-        <h2 id="playground-title">Build a shape, live</h2>
-        <p class="subtitle">
-          Toggle CSS properties one by one and watch a blank div become art.
-          Each checkbox adds exactly one technique.
-        </p>
-
-        <div class="playground-layout">
-
-          <!-- Controls -->
-          <div class="playground-controls" role="group" aria-label="CSS property toggles">
-            <label class="toggle-row" for="toggle-gradient">
-              <input type="checkbox" id="toggle-gradient" class="toggle-input" name="toggle-gradient">
-              <div class="toggle-track">
-                <div class="toggle-thumb"></div>
-              </div>
-              <div class="toggle-info">
-                <span class="toggle-step">01</span>
-                <span class="toggle-name">background gradient</span>
-                <code class="toggle-code">background: linear-gradient(…)</code>
-              </div>
-            </label>
-
-            <label class="toggle-row" for="toggle-clip">
-              <input type="checkbox" id="toggle-clip" class="toggle-input" name="toggle-clip">
-              <div class="toggle-track">
-                <div class="toggle-thumb"></div>
-              </div>
-              <div class="toggle-info">
-                <span class="toggle-step">02</span>
-                <span class="toggle-name">clip-path shape</span>
-                <code class="toggle-code">clip-path: polygon(…)</code>
-              </div>
-            </label>
-
-            <label class="toggle-row" for="toggle-shadow">
-              <input type="checkbox" id="toggle-shadow" class="toggle-input" name="toggle-shadow">
-              <div class="toggle-track">
-                <div class="toggle-thumb"></div>
-              </div>
-              <div class="toggle-info">
-                <span class="toggle-step">03</span>
-                <span class="toggle-name">box-shadow depth</span>
-                <code class="toggle-code">box-shadow: 0 20px 60px …</code>
-              </div>
-            </label>
-
-            <label class="toggle-row" for="toggle-radius">
-              <input type="checkbox" id="toggle-radius" class="toggle-input" name="toggle-radius">
-              <div class="toggle-track">
-                <div class="toggle-thumb"></div>
-              </div>
-              <div class="toggle-info">
-                <span class="toggle-step">04</span>
-                <span class="toggle-name">border-radius curves</span>
-                <code class="toggle-code">border-radius: 60% 40% …</code>
-              </div>
-            </label>
-
-            <label class="toggle-row" for="toggle-animation">
-              <input type="checkbox" id="toggle-animation" class="toggle-input" name="toggle-animation">
-              <div class="toggle-track">
-                <div class="toggle-thumb"></div>
-              </div>
-              <div class="toggle-info">
-                <span class="toggle-step">05</span>
-                <span class="toggle-name">animation pulse</span>
-                <code class="toggle-code">animation: breathe 3s ease-in-out …</code>
-              </div>
-            </label>
-          </div>
-
-          <!-- Preview -->
-          <div class="playground-stage">
-            <div class="playground-viewport">
-              <div class="playground-container">
-                <div class="playground-div" aria-label="Live CSS preview"></div>
-              </div>
-              <div class="playground-label-strip">
-                <span class="playground-label-text">Live Preview</span>
-              </div>
+        <h2>Build a Shape — v2</h2>
+        <p class="subtitle">Sculpt with 25+ properties. Try Challenge Mode for a target-matching game.</p>
+        <div class="bas-pane">
+          <aside class="bas-controls">
+            <details open class="lab-section">
+              <summary>Shape</summary>
+              <label>Width <input type="range" id="bas-width" min="50" max="500" value="240"><span class="ctl-val" data-for="bas-width">240</span>px</label>
+              <label>Height <input type="range" id="bas-height" min="50" max="500" value="240"><span class="ctl-val" data-for="bas-height">240</span>px</label>
+              <label>Border radius <input type="range" id="bas-radius" min="0" max="50" value="20"><span class="ctl-val" data-for="bas-radius">20</span>%</label>
+            </details>
+            <details class="lab-section">
+              <summary>Color</summary>
+              <label>Type <select id="bas-bg-type"><option value="solid">Solid</option><option value="linear" selected>Linear</option><option value="radial">Radial</option><option value="conic">Conic</option></select></label>
+              <label>Color 1 <input type="color" id="bas-color1" value="#a78bfa"></label>
+              <label>Color 2 <input type="color" id="bas-color2" value="#f472b6"></label>
+              <label>Angle <input type="range" id="bas-angle" min="0" max="360" value="135"><span class="ctl-val" data-for="bas-angle">135</span>&deg;</label>
+            </details>
+            <details class="lab-section">
+              <summary>Effects</summary>
+              <label>Blur <input type="range" id="bas-blur" min="0" max="20" value="0"><span class="ctl-val" data-for="bas-blur">0</span>px</label>
+              <label>Brightness <input type="range" id="bas-brightness" min="50" max="200" value="100"><span class="ctl-val" data-for="bas-brightness">100</span>%</label>
+              <label>Hue rotate <input type="range" id="bas-hue" min="0" max="360" value="0"><span class="ctl-val" data-for="bas-hue">0</span>&deg;</label>
+              <label>Saturate <input type="range" id="bas-sat" min="0" max="200" value="100"><span class="ctl-val" data-for="bas-sat">100</span>%</label>
+            </details>
+            <details class="lab-section">
+              <summary>Transform</summary>
+              <label>Rotate <input type="range" id="bas-rotate" min="-180" max="180" value="0"><span class="ctl-val" data-for="bas-rotate">0</span>&deg;</label>
+              <label>Scale <input type="range" id="bas-scale" min="50" max="150" value="100"><span class="ctl-val" data-for="bas-scale">100</span>%</label>
+            </details>
+            <details class="lab-section">
+              <summary>Animation</summary>
+              <label>Preset <select id="bas-anim"><option value="none">None</option><option value="spin 4s linear infinite">Spin</option><option value="float 4s ease-in-out infinite">Float</option><option value="pulse 2s ease-in-out infinite">Pulse</option></select></label>
+            </details>
+            <div class="bas-actions">
+              <button id="bas-randomize" class="ripple" type="button">Randomize</button>
+              <button id="bas-copy" class="ripple" type="button">Copy CSS</button>
+              <button id="bas-challenge" class="ripple" type="button">Challenge Mode</button>
+              <button id="bas-undo" type="button">Undo</button>
+              <button id="bas-redo" type="button">Redo</button>
             </div>
-            <div class="playground-css-readout" aria-live="polite" aria-label="Active CSS properties">
-              <div class="readout-line" id="readout-1">
-                <span class="readout-prop">/* toggle properties above */</span>
-              </div>
+          </aside>
+          <div class="bas-preview-wrap">
+            <div class="bas-preview" id="bas-preview"><div id="bas-canvas"></div></div>
+            <div class="bas-challenge-hud" id="bas-challenge-hud" hidden>
+              <div class="bas-target-shape" id="bas-target"></div>
+              <div class="bas-match-score">Match: <span id="bas-match-pct">0</span>%</div>
+              <div class="bas-stars" id="bas-stars">&#9734;&#9734;&#9734;</div>
+              <button id="bas-next-challenge" type="button">Next &rarr;</button>
+              <button id="bas-exit-challenge" type="button">Exit</button>
             </div>
+            <pre class="bas-css-output" id="bas-css-output"></pre>
           </div>
-
-        </div><!-- /playground-layout -->
+        </div>
       </div>
     </section>
 
@@ -534,43 +498,10 @@
         });
       });
     });
-
-    // Playground readout
-    const toggleIds = ['toggle-gradient', 'toggle-clip', 'toggle-shadow', 'toggle-radius', 'toggle-animation'];
-    const propLabels = {
-      'toggle-gradient':  'background: linear-gradient(135deg, #f472b6 0%, #a78bfa 50%, #38bdf8 100%);',
-      'toggle-clip':      'clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);',
-      'toggle-shadow':    'box-shadow: 0 20px 60px oklch(0.64 0.3 330 / 0.5), 0 0 0 2px oklch(0.64 0.3 330 / 0.2);',
-      'toggle-radius':    'border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;',
-      'toggle-animation': 'animation: breathe 3s ease-in-out infinite;'
-    };
-    const readout = document.querySelector('.playground-css-readout');
-
-    function updateReadout() {
-      const active = toggleIds.filter(id => document.getElementById(id).checked);
-      if (active.length === 0) {
-        readout.innerHTML = '<div class="readout-line"><span class="readout-prop">/* toggle properties above */</span></div>';
-        return;
-      }
-      const clipChecked = document.getElementById('toggle-clip').checked;
-      const radiusChecked = document.getElementById('toggle-radius').checked;
-      readout.innerHTML = active.map(id => {
-        // When both clip-path and border-radius are active, border-radius wins
-        if (id === 'toggle-clip' && radiusChecked) {
-          const parts = 'clip-path: none; /* overridden by border-radius */'.split(':');
-          return `<div class="readout-line readout-line--overridden"><span class="readout-prop-name">${parts[0]}</span><span class="readout-colon">:</span><span class="readout-prop-val">${parts.slice(1).join(':')}</span></div>`;
-        }
-        const parts = propLabels[id].split(':');
-        return `<div class="readout-line"><span class="readout-prop-name">${parts[0]}</span><span class="readout-colon">:</span><span class="readout-prop-val">${parts.slice(1).join(':')}</span></div>`;
-      }).join('');
-    }
-
-    toggleIds.forEach(id => {
-      document.getElementById(id).addEventListener('change', updateReadout);
-    });
   </script>
   <script type="module" src="../js/gimmicks/global.js"></script>
 <script type="module" src="../js/gimmicks/zones.js"></script>
+<script type="module" src="../js/zone-art-v2.js"></script>
 <!-- Letter 5/12: O — "Anyone who has lost track of time when using a computer knows the propensity to dream." -->
   <button id="sfx-toggle" class="sfx-toggle no-micro" aria-label="Toggle sound effects" aria-pressed="false" title="Toggle SFX (M)">&#128263;</button>
 <!--
