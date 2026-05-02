@@ -43,7 +43,7 @@ const LEVELS = [
       '.box { border-radius: 8px; }',
     ],
     correctOrder: [0, 2, 1],
-    domHtml: '<div class="box" style="width:60px;height:60px;background:#a78bfa">.</div>',
+    domHtml: '<div class="box cp-fill-purple" style="width:60px;height:60px">.</div>',
     hint: 'Make the box a circle.',
   },
   {
@@ -53,7 +53,7 @@ const LEVELS = [
       'div { opacity: 0.2; }',
     ],
     correctOrder: [0, 2, 1],
-    domHtml: '<div style="background:#a78bfa;width:80px;height:40px">.</div>',
+    domHtml: '<div class="cp-fill-purple" style="width:80px;height:40px">.</div>',
     hint: 'Make it half-transparent.',
   },
   {
@@ -62,7 +62,7 @@ const LEVELS = [
       '.x { transform: translateY(-10px); }',
     ],
     correctOrder: [0, 1],
-    domHtml: '<div class="x" style="background:#34d399;width:60px;height:60px">.</div>',
+    domHtml: '<div class="x cp-fill-green" style="width:60px;height:60px">.</div>',
     hint: 'Lift the box up 10px.',
   },
   {
@@ -81,7 +81,7 @@ const LEVELS = [
       '.b { padding: 16px; }',
     ],
     correctOrder: [0, 2, 1],
-    domHtml: '<div class="b" style="background:#f472b6;display:inline-block">.</div>',
+    domHtml: '<div class="b cp-fill-pink cp-inline">.</div>',
     hint: 'Make padding 32px (the largest).',
   },
   {
@@ -101,7 +101,7 @@ const LEVELS = [
       '.r { rotate: 45deg; }',
     ],
     correctOrder: [0, 1, 2],
-    domHtml: '<div class="r" style="background:#06b6d4;width:40px;height:40px">.</div>',
+    domHtml: '<div class="r cp-fill-cyan" style="width:40px;height:40px">.</div>',
     hint: 'Rotate 45° (final value).',
   },
   {
@@ -111,7 +111,7 @@ const LEVELS = [
       '.x { border: 2px solid white; }',
     ],
     correctOrder: [0, 2, 1],
-    domHtml: '<div class="x" style="width:40px;height:40px;background:#a78bfa">.</div>',
+    domHtml: '<div class="x cp-fill-purple" style="width:40px;height:40px">.</div>',
     hint: 'Make the border 4px.',
   },
   {
@@ -177,6 +177,11 @@ styleTag.textContent = `
 .cp-feedback { padding: 8px; min-height: 32px; }
 .cp-feedback.ok { color: oklch(0.7 0.2 150); }
 .cp-feedback.bad { color: oklch(0.7 0.22 30); }
+.cp-fill-purple { background: #a78bfa; }
+.cp-fill-green { background: #34d399; }
+.cp-fill-pink { background: #f472b6; }
+.cp-fill-cyan { background: #06b6d4; }
+.cp-inline { display: inline-block; min-width: 40px; min-height: 40px; }
 `;
 document.head.appendChild(styleTag);
 

@@ -1,7 +1,7 @@
 /**
  * glossary.js — Glossary Page (Layer 2 / Task 7)
  *
- * Searchable CSS dictionary, 80 entries, sticky letter headers,
+ * Searchable CSS dictionary, 84 entries, sticky letter headers,
  * "/" focus shortcut, random-term jump with flash highlight.
  */
 

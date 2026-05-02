@@ -243,7 +243,7 @@ document.getElementById('lab-randomize').addEventListener('click', () => {
 });
 
 // reset
-document.getElementById('lab-reset').addEventListener('click', () => applyState(DEFAULTS));
+document.getElementById('lab-reset')?.addEventListener('click', () => applyState(DEFAULTS));
 
 // copy CSS
 document.getElementById('lab-copy-css').addEventListener('click', () => {
@@ -324,7 +324,7 @@ function loadFromHash() {
   if (m) {
     try {
       const parsed = JSON.parse(atob(m[1]));
-      applyState({ ...DEFAULTS, ...parsed });
+      applyState({ ...DEFAULTS, ...parsed }, false);
       return;
     } catch {}
   }

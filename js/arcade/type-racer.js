@@ -1,4 +1,4 @@
-import { setHighScore, recordPlay, createOverlay, playSound, state } from './shared.js';
+import { setHighScore, recordPlay, createOverlay, playSound, state, getHighScore } from './shared.js';
 
 const GAME_ID = 'type-racer';
 const root = document.getElementById('game-root');
@@ -26,13 +26,14 @@ const SNIPPETS = [
   'user-select: none;',
 ];
 
-let startTime = null; let typed = 0; let words = 0; let errors = 0; let snippetIdx = 0;
+let startTime = null; let typed = 0; let words = 0; let errors = 0; let totalErrors = 0; let snippetIdx = 0;
 let timerLeft = 60; let timerInt;
 
 root.innerHTML = `
   <div class="game-hud">
     <div class="game-hud__score">Time <strong id="hud-time">60</strong>s</div>
     <div class="game-hud__highscore">WPM <strong id="hud-wpm">0</strong></div>
+    <div class="game-hud__highscore">Best <strong id="hud-best">${getHighScore('type-racer')}</strong></div>
   </div>
   <div class="tr-stage">
     <div class="tr-target" id="tr-target"></div>
@@ -94,6 +95,11 @@ document.getElementById('tr-input').addEventListener('input', (e) => {
       spans[i].classList.add('tr-cur');
     }
   }
+  // Track running error count
+  let errCount = 0;
+  for (let i = 0; i < value.length; i++) { if (value[i] !== s[i]) errCount++; }
+  totalErrors = Math.max(totalErrors, errCount);
+  document.getElementById('tr-errors').textContent = totalErrors;
   if (value === s) {
     typed += s.length;
     words += s.split(/\s+/).length;

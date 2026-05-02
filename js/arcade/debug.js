@@ -83,8 +83,14 @@ function loadLevel() {
   document.getElementById('hud-bug').textContent = levelIdx + 1;
   document.getElementById('db-preview').innerHTML = lvl.html;
   // Apply the (broken) CSS — most won't render meaningfully, that's the point
+  // Scope rules to #db-preview so they don't leak globally
   const styleEl = document.createElement('style');
-  styleEl.textContent = lvl.css.join('\n');
+  styleEl.textContent = lvl.css.map(rule => {
+    // Only prefix if rule has a parseable selector (rules with errors may not parse cleanly)
+    const m = rule.match(/^([^{]+)\{(.*)\}$/s);
+    if (m) return `#db-preview ${m[1].trim()} { ${m[2].trim()} }`;
+    return rule;
+  }).join('\n');
   document.getElementById('db-preview').appendChild(styleEl);
   // Render CSS as clickable lines
   const cssEl = document.getElementById('db-css');

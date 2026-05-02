@@ -109,4 +109,10 @@ document.getElementById('zg-end').addEventListener('click', () => {
   document.getElementById('restart')?.addEventListener('click', () => { overlay.hide(); stones = []; drawAll._ripples = []; document.getElementById('hud-stones').textContent = '0'; drawAll(); });
 });
 
-addEventListener('keydown', (e) => { if (e.key === 'Escape') { stones = []; drawAll._ripples = []; document.getElementById('hud-stones').textContent = '0'; drawAll(); } });
+addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (stones.length === 0 && drawAll._ripples.length === 0) return;
+    if (!confirm('Clear the garden?')) return;
+    stones = []; drawAll._ripples = []; document.getElementById('hud-stones').textContent = '0'; drawAll();
+  }
+});
