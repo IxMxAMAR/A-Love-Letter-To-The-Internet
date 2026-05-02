@@ -1,15 +1,17 @@
 /**
- * speedrun.js - Speed Run Timer
+ * speedrun.js - Speed Run Timer (Layer 2 / Task 11)
  * "A Love Letter to the Web"
- * Activated by ?speedrun=true URL parameter
+ * Activated by ?speedrun=true URL parameter.
+ *
+ * v2 categories:
+ *   - any%      : main pages (index/hub/playground/components)
+ *   - all-zones : hub + 8 zones
+ *   - 100%      : every page including new arcade/lab/achievements/glossary/changelog
  */
 
-// NOTE: Update this list when adding new pages to the site.
-// Layer 2 expansion will add: arcade.html, lab.html, achievements.html, glossary.html, changelog.html
-// Speedrun categories (any%, all-zones, 100%) will be added in Layer 2.
-const SPEEDRUN_PAGES = [
-  'index.html',
-  'hub.html',
+import { state } from '../state.js';
+
+const ZONES = [
   'zones/scroll-animations.html',
   'zones/popover-dialog.html',
   'zones/css-art.html',
@@ -18,9 +20,30 @@ const SPEEDRUN_PAGES = [
   'zones/houdini.html',
   'zones/has-selector.html',
   'zones/cascade-layers.html',
-  'playground.html',
-  'components.html',
 ];
+
+const CATEGORIES = {
+  'any%':      { label: 'Any%',      pages: ['index.html', 'hub.html', 'playground.html', 'components.html'] },
+  'all-zones': { label: 'All Zones', pages: ['hub.html', ...ZONES] },
+  '100%':      { label: '100%',      pages: ['index.html', 'hub.html', 'playground.html', 'components.html', 'arcade.html', 'lab.html', 'achievements.html', 'glossary.html', 'changelog.html', ...ZONES] },
+};
+
+// Read selected category (sticky across pages via sessionStorage)
+function getCategory() {
+  return sessionStorage.getItem('speedrunCategory') || 'any%';
+}
+function setCategory(c) {
+  sessionStorage.setItem('speedrunCategory', c);
+  try { state.set('speedrun.current', { category: c, startedAt: Date.now() }); } catch {}
+}
+
+// Active list of pages for the chosen category
+function getSpeedrunPages() {
+  const cat = getCategory();
+  return (CATEGORIES[cat] || CATEGORIES['any%']).pages;
+}
+
+const SPEEDRUN_PAGES = getSpeedrunPages();
 
 // Normalize current page path relative to site root
 function getCurrentPageKey() {
@@ -82,8 +105,42 @@ timerEl.style.cssText = [
 document.body.appendChild(timerEl);
 
 const startTime = parseInt(sessionStorage.getItem('speedrunStart'), 10);
-const total = SPEEDRUN_PAGES.length;
 let done = false;
+
+// Rebuild category selector overlay (small badge near the timer)
+const catBar = document.createElement('div');
+catBar.id = 'speedrun-cat';
+catBar.style.cssText = [
+  'position:fixed',
+  'top:62px',
+  'right:12px',
+  'z-index:99999',
+  'padding:6px 10px',
+  'background:oklch(10% 0.02 265 / 0.92)',
+  'border:1px solid oklch(60% 0.18 265 / 0.5)',
+  'border-radius:6px',
+  'font-family:monospace',
+  'font-size:11px',
+  'color:oklch(85% 0.05 265)',
+  'backdrop-filter:blur(8px)',
+  'display:flex',
+  'gap:6px',
+  'align-items:center',
+].join(';');
+catBar.innerHTML = '<span style="opacity:0.7;">Cat:</span>'
+  + '<select id="speedrun-cat-select" style="background:transparent;color:inherit;border:1px solid oklch(60% 0.18 265 / 0.5);border-radius:4px;padding:2px 4px;font-family:inherit;font-size:11px;">'
+  + Object.keys(CATEGORIES).map(k => `<option value="${k}">${CATEGORIES[k].label}</option>`).join('')
+  + '</select>';
+document.body.appendChild(catBar);
+const catSelect = catBar.querySelector('#speedrun-cat-select');
+catSelect.value = getCategory();
+catSelect.addEventListener('change', () => {
+  setCategory(catSelect.value);
+  // Reset session-state pages list to match new category
+  sessionStorage.setItem('speedrunVisited', JSON.stringify(visited.filter(p => getSpeedrunPages().includes(p))));
+});
+// Persist initial category in state on first run
+try { if (!state.get('speedrun.current')) state.set('speedrun.current', { category: getCategory(), startedAt: startTime }); } catch {}
 
 function formatTime(ms) {
   const clamped = Math.max(0, ms);
@@ -96,28 +153,49 @@ function formatTime(ms) {
 
 function checkComplete() {
   const v = safeParseJSON(sessionStorage.getItem('speedrunVisited'), []);
-  return SPEEDRUN_PAGES.every(p => v.includes(p));
+  return getSpeedrunPages().every(p => v.includes(p));
 }
 
 function renderTimer() {
   const v = safeParseJSON(sessionStorage.getItem('speedrunVisited'), []);
   const elapsed = Date.now() - startTime;
   const count = v.length;
+  const pages = getSpeedrunPages();
+  const total = pages.length;
+  const cat = getCategory();
 
   if (checkComplete() && !done) {
     done = true;
     timerEl.style.borderColor = 'oklch(70% 0.2 145)';
     timerEl.style.color = 'oklch(85% 0.15 145)';
-    timerEl.innerHTML = '&#127942; Speedrun complete!<br><strong>' + formatTime(elapsed) + '</strong>';
+    timerEl.innerHTML = '&#127942; ' + (CATEGORIES[cat]?.label || cat) + ' complete!<br><strong>' + formatTime(elapsed) + '</strong>';
+
+    // Persist best time per category and emit completion event for achievements
+    try {
+      const best = state.get('speedrun.best') || {};
+      if (!best[cat] || elapsed < best[cat]) {
+        best[cat] = elapsed;
+        state.set('speedrun.best', best);
+      }
+      state.set('speedrun.current', null);
+      state.emit('speedrun:complete', { timeMs: elapsed, category: cat });
+    } catch {}
+
     sessionStorage.removeItem('speedrunStart');
     sessionStorage.removeItem('speedrunVisited');
     return; // stop loop
   }
 
   if (!done) {
-    timerEl.innerHTML = '&#9654; Speedrun<br>'
+    // Show current page split (visited count) and best comparison
+    let bestStr = '';
+    try {
+      const best = state.get('speedrun.best') || {};
+      if (best[cat]) bestStr = ' · best ' + formatTime(best[cat]);
+    } catch {}
+    timerEl.innerHTML = '&#9654; ' + (CATEGORIES[cat]?.label || 'Speedrun') + '<br>'
       + '<strong>' + formatTime(elapsed) + '</strong><br>'
-      + '<span style="font-size:11px;opacity:0.7;">' + count + ' / ' + total + ' pages</span>';
+      + '<span style="font-size:11px;opacity:0.7;">' + count + ' / ' + total + ' pages' + bestStr + '</span>';
     requestAnimationFrame(renderTimer);
   }
 }

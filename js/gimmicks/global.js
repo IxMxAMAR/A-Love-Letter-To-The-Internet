@@ -13,6 +13,7 @@ import { initModes } from './modes.js';
 import { startGhosts, stopGhosts } from './cursor-ghosts.js';
 import { state } from '../state.js';
 import { achievements } from '../achievements.js';
+import '../journey.js';
 
 // Layer 2 / Task 1 — track visit on every page load
 try {

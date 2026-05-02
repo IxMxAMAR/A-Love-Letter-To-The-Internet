@@ -120,3 +120,18 @@ body[data-zone] .back-to-top { right: 168px; }
 }
 .achievement-toast.visible { opacity: 1; transform: translateX(0); }
 .achievement-toast strong { color: oklch(0.85 0.15 290); }
+
+/* Journey mode (Layer 2 / Task 11) — guided tour overlay */
+.journey-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 9000; }
+.journey-tip {
+  position: fixed; max-width: 320px; pointer-events: auto;
+  background: oklch(0.18 0.02 280 / 0.97); color: white;
+  padding: 16px; border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+  border: 1px solid oklch(0.65 0.22 290 / 0.4);
+  transition: top 300ms ease, left 300ms ease;
+}
+.journey-tip p { margin: 0 0 12px; font-size: 0.9rem; }
+.journey-actions { display: flex; gap: 8px; justify-content: flex-end; }
+.journey-actions button { padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+#journey-next { background: oklch(0.65 0.22 290); color: white; border: none; }
+#journey-skip { background: transparent; color: white; border: 1px solid oklch(1 0 0 / 0.2); }
