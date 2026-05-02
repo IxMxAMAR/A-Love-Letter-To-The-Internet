@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+    ┌────────────────────────────────────────────────────────────────┐
+    │   A Love Letter to the Web — Selector Duel                    │
+    │   Arcade game — CSS selector challenges.                       │
+    └────────────────────────────────────────────────────────────────┘
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selector Duel — Arcade — A Love Letter to the Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/transitions.css">
+  <link rel="stylesheet" href="../css/arcade-shared.css">
+  <script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+  <link rel="stylesheet" href="../css/gimmicks.css">
+  <link rel="stylesheet" href="../css/gimmicks-layer1.css">
+</head>
+<body>
+  <a href="#main-content" class="visually-hidden">Skip to main content</a>
+  <header class="page-header" role="banner">
+    <a href="../index.html" class="page-header__logo magnetic">✦ Web Letter</a>
+    <nav class="page-header__nav" aria-label="Site navigation">
+      <a href="../index.html" class="anim-underline magnetic">Timeline</a>
+      <a href="../hub.html" class="anim-underline magnetic">Observatory</a>
+      <a href="../arcade.html" class="anim-underline magnetic" aria-current="page">Arcade</a>
+      <a href="../lab.html" class="anim-underline magnetic">Lab</a>
+      <a href="../achievements.html" class="trophy-icon" aria-label="Achievements">🏆</a>
+    </nav>
+  </header>
+
+  <main id="main-content" class="game-page">
+    <h1 class="game-title">Selector Duel</h1>
+    <div class="game-shell" id="game-root"></div>
+    <a href="../arcade.html" class="game-back">← Back to arcade</a>
+  </main>
+
+  <button id="sfx-toggle" class="sfx-toggle no-micro" aria-label="Toggle sound effects" aria-pressed="false" title="Toggle SFX (M)">&#128263;</button>
+  <div id="fingerprint-badge" aria-hidden="true"></div>
+
+  <script type="module" src="../js/transitions.js"></script>
+  <script type="module" src="../js/gimmicks/global.js"></script>
+  <script type="module" src="../js/arcade/selector-duel.js"></script>
+
+  <!-- Made with love, sweat, and far too much coffee. https://github.com/IxMxAMAR/HTML -->
+</body>
+</html>
