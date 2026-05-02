@@ -267,38 +267,67 @@ document.getElementById('lab-share').addEventListener('click', () => {
   } catch {}
 });
 
-// export PNG via SVG foreignObject
+// export — render current shape as SVG (PNG attempt taints the canvas in Chromium
+// because <foreignObject> rendering doesn't allow toDataURL; we serve SVG as the
+// portable export format and try-then-fallback to PNG if the browser allows it).
 document.getElementById('lab-export').addEventListener('click', () => {
+  let triggered = false;
   try {
     const w = current.width + 80;
     const h = current.height + 80;
     const inlineCSS = Object.entries(buildCSS(current))
       .map(([k, v]) => `${k.replace(/([A-Z])/g, '-$1').toLowerCase()}:${v}`)
       .join(';');
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">
+    // Background fill matches body so the export looks like the editor.
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+      <rect width="100%" height="100%" fill="#0f172a"/>
       <foreignObject x="40" y="40" width="${current.width}" height="${current.height}">
         <div xmlns="http://www.w3.org/1999/xhtml" style="${inlineCSS}"></div>
       </foreignObject>
     </svg>`;
+
+    // Attempt PNG via canvas; if the browser taints the canvas (Chromium does for
+    // foreignObject HTML content), fall back to downloading the SVG directly.
+    const downloadSvg = () => {
+      const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.download = 'lab-creation.svg';
+      a.href = url;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      if (!triggered) { triggered = true; try { state.emit('lab:export', {}); } catch {} }
+    };
+
     const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const img = new Image();
-    img.crossOrigin = 'anonymous';
     img.onload = () => {
-      const c = document.createElement('canvas');
-      c.width = w; c.height = h;
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = '#0f172a';
-      ctx.fillRect(0, 0, w, h);
-      ctx.drawImage(img, 0, 0);
-      const a = document.createElement('a');
-      a.download = 'lab-creation.png';
-      a.href = c.toDataURL('image/png');
-      a.click();
-      URL.revokeObjectURL(url);
-      try { state.emit('lab:export', {}); } catch {}
+      try {
+        const c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        const ctx = c.getContext('2d');
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(0, 0, w, h);
+        ctx.drawImage(img, 0, 0);
+        // toDataURL throws DOMException on tainted canvas — fall through to SVG.
+        const data = c.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.download = 'lab-creation.png';
+        a.href = data;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        if (!triggered) { triggered = true; try { state.emit('lab:export', {}); } catch {} }
+      } catch (taintErr) {
+        URL.revokeObjectURL(url);
+        downloadSvg();
+      }
     };
-    img.onerror = (e) => { console.warn('Export image load failed', e); URL.revokeObjectURL(url); };
+    img.onerror = () => { URL.revokeObjectURL(url); downloadSvg(); };
     img.src = url;
   } catch (e) {
     console.warn('Export failed', e);
