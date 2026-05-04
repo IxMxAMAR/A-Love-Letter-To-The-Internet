@@ -1747,6 +1747,7 @@
   border: 1px solid oklch(0.65 0.22 290 / 0.4);
   backdrop-filter: blur(8px);
 }
+.bas-challenge-hud[hidden] { display: none; }
 .bas-target-shape {
   width: 60px;
   height: 60px;
