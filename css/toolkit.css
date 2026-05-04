@@ -272,6 +272,14 @@
 
 .component-card .code-block {
   position: relative;
+  /* The global `.code-block` rule sets `white-space: pre` so inline raw code
+     text in zone pages keeps its newlines. In Components cards the
+     `.code-block` is a wrapper `<div>` that holds a Copy `<button>` plus a
+     `<pre>` sibling — and the indentation whitespace text nodes between them
+     would render as ~96px of mystery vertical space above every code panel.
+     The actual code is already inside the nested `<pre>`, which preserves
+     formatting on its own, so the wrapper itself can use normal whitespace. */
+  white-space: normal;
 }
 
 .component-card .copy-btn {
