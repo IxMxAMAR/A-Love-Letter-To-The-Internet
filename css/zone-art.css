@@ -1771,8 +1771,24 @@
   color: white;
   border: 1px solid oklch(1 0 0 / 0.15);
   font-size: 0.8rem;
+  font: inherit;
+  font-size: 0.8rem;
+  line-height: 1.2;
+  transition: background 150ms ease, border-color 150ms ease;
 }
-.bas-challenge-hud button:hover { background: oklch(0.65 0.22 290); }
+.bas-challenge-hud button:hover { background: oklch(0.65 0.22 290); border-color: oklch(0.75 0.22 290 / 0.6); }
+.bas-challenge-hud button:focus-visible {
+  outline: 2px solid oklch(0.78 0.18 290);
+  outline-offset: 2px;
+}
+.bas-challenge-hud #bas-exit-challenge {
+  background: oklch(0.18 0.04 30);
+  border-color: oklch(1 0 0 / 0.18);
+}
+.bas-challenge-hud #bas-exit-challenge:hover {
+  background: oklch(0.55 0.22 30);
+  border-color: oklch(0.65 0.22 30 / 0.7);
+}
 .bas-css-output {
   background: oklch(0.1 0.02 280);
   color: oklch(0.7 0.18 200);
