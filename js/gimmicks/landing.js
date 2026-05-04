@@ -196,51 +196,24 @@ function initHypermediaHover() {
   });
 }
 
-// ─── 6. 2010 Card Flip (click → rotateY 180° to show CSS property) ────────────
-const CSS3_BACKS = [
-  'border-radius: 12px;',
-  'linear-gradient(…)',
-  'transform: rotateY(180deg);',
-  'box-shadow: 0 4px 24px rgba(0,0,0,.4);',
-];
-
+// ─── 6. 2010 Card Flip (DISABLED) ─────────────────────────────────────────────
+//
+// Previously wrapped each `.css3-card` in a 3D flipper so clicking would rotate
+// to reveal a CSS snippet on the back face. The flipper relies on
+// `transform-style: preserve-3d` + `backface-visibility: hidden` working all the
+// way up the ancestor chain, but several intermediate parents on `index.html`
+// (notably `#main-content` once it gained `z-index: 1` to stack above the
+// ambient background) introduce 2D rendering contexts that flatten the 3D
+// scene. The result was the back-face leaking through the front while the card
+// was unflipped — clearly visible in the era-2010 showcase.
+//
+// The cards work just fine as plain informational cards (the CSS hover/tilt
+// gimmick still runs), so the cleanest fix is to skip the flip wrapping
+// entirely. If a true 3D flip is desired again, give the cards a dedicated
+// containing block with its own `transform-style: preserve-3d` chain rather
+// than trying to inherit it through the page layout.
 function initCardFlip() {
-  const cards = document.querySelectorAll('.css3-card');
-  cards.forEach((card, i) => {
-    // Wrap card content in a flipper structure
-    const inner = document.createElement('div');
-    inner.className = 'card-flip-inner';
-
-    const front = document.createElement('div');
-    front.className = 'card-flip-front';
-    front.innerHTML = card.innerHTML;
-
-    const back = document.createElement('div');
-    back.className = 'card-flip-back';
-    back.innerHTML = `<code>${CSS3_BACKS[i] || 'CSS3 ✦'}</code>`;
-
-    inner.append(front, back);
-    card.innerHTML = '';
-    card.appendChild(inner);
-    card.classList.add('card-flip-root');
-
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('role', 'button');
-    card.setAttribute('aria-label', (front.querySelector('h3')?.textContent || 'Card') + ' — click to flip');
-
-    card.addEventListener('click', () => {
-      card.classList.toggle('flipped');
-      try { window.__eni?.sfx?.play?.('whoosh'); } catch {}
-    });
-
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        card.classList.toggle('flipped');
-        try { window.__eni?.sfx?.play?.('whoosh'); } catch {}
-      }
-    });
-  });
+  // Intentionally a no-op — see comment above.
 }
 
 // ─── 7. 2010 3D Tilt on Hover ─────────────────────────────────────────────────
